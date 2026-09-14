@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Haller Andernach</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;background:#111;color:#f2eee6}a{color:inherit;text-decoration:none}
+.stage{min-height:100vh;background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.7)),url(https://haller-immobilien.de/wp-content/uploads/2021/04/slide_start_new4.jpg) center/cover;display:flex;flex-direction:column}
+header{display:flex;justify-content:space-between;padding:24px 32px}
+header nav a.primary{border:1px solid #f2eee6;padding:8px 14px}
+.intro{flex:1;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;padding:8vh 32px 48px;align-items:end}
+h1{font-family:Fraunces,serif;font-size:clamp(48px,8vw,92px);line-height:.9;font-weight:500}
+.intro p{max-width:340px;color:#d7d0c4}
+section{padding:72px 32px;max-width:1200px;margin:0 auto}
+.projects{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.projects article{min-height:280px;background-size:cover;background-position:center;display:flex;align-items:end;padding:18px}
+.a{background-image:linear-gradient(transparent,rgba(0,0,0,.55)),url(https://haller-immobilien.de/wp-content/uploads/2024/07/Teamfoto-ohne-Lampen.jpg)}
+.b{background-image:linear-gradient(transparent,rgba(0,0,0,.55)),url(https://haller-immobilien.de/wp-content/uploads/2021/03/Waldemar-Haller_1440x1100.jpg)}
+form{display:grid;gap:12px;max-width:520px}
+input,select,textarea{background:transparent;border:0;border-bottom:1px solid #5c574e;color:#f2eee6;padding:10px 0;font:inherit}
+button{margin-top:8px;background:#f2eee6;color:#111;border:0;padding:14px 18px;font:inherit;cursor:pointer;width:fit-content}
+.ok{display:none;border:1px solid #6d8f6a;padding:12px}
+footer{padding:24px 32px 48px;color:#8a847a;font-size:13px}
+@media(max-width:800px){.intro,.projects{grid-template-columns:1fr}}
+</style></head><body>
+<div class="stage">
+<header><a href="#anfrage"><img src="https://haller-immobilien.de/wp-content/uploads/2024/06/logo_240.png" alt="Haller" style="height:52px"></a>
+<nav><a href="#arbeit">Arbeit</a> <a href="#anfrage" class="primary">Anfrage</a></nav></header>
+<div class="intro"><h1>Haller<br>Andernach</h1>
+<p>Allgemeinmediziner für Wohnraum. Persönlich, zuverlässig, professionell. Andernach, Koblenz, Neuwied.</p></div></div>
+<section id="arbeit"><p style="letter-spacing:.16em;font-size:12px;margin-bottom:18px">AUSGEWÄHLT</p>
+<div class="projects"><article class="a">Team Haller · Andernach</article><article class="b">Waldemar Haller · Geschäftsführung</article></div></section>
+<section id="anfrage"><h2 style="font-family:Fraunces,serif;font-size:48px;font-weight:500;margin-bottom:24px">Eine Anfrage. Wir antworten.</h2>
+<form id="f"><div class="ok" id="ok">Anfrage gespeichert. Produktiv: Mail oder Supabase.</div>
+<select name="intent"><option>Verkauf prüfen</option><option>Kaufbegleitung</option><option>Hausverwaltung</option></select>
+<input name="name" required placeholder="Name"/>
+<input type="email" name="email" required placeholder="E-Mail"/>
+<input name="phone" required placeholder="Telefon"/>
+<input name="place" placeholder="Ort oder Objekt"/>
+<button type="submit">Anfrage senden</button></form>
+<p style="margin-top:28px;color:#b7b0a4">Kirchberg 42 · 56626 Andernach · 02632 9458-0 · info@haller-immobilien.de</p>
+</section>
+<footer>Demo Haven-Struktur · kein offizieller Haller-Auftritt</footer>
+<script>document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();localStorage.setItem('haller-haven-'+Date.now(),JSON.stringify(Object.fromEntries(new FormData(e.target))));document.getElementById('ok').style.display='block';e.target.reset();});</script>
+</body></html>

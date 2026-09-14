@@ -1,2 +1,1 @@
-# haller-haven-demo
-Haller Immobilien Demo — Haven structure, conversion form
+Haller Haven demo with original Haller assets.
