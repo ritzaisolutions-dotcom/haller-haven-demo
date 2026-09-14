@@ -27,19 +27,19 @@ footer{padding:24px 32px 48px;color:#8a847a;font-size:13px}
 <header><a href="#anfrage"><img src="https://haller-immobilien.de/wp-content/uploads/2024/06/logo_240.png" alt="Haller" style="height:52px"></a>
 <nav><a href="#arbeit">Arbeit</a> <a href="#anfrage" class="primary">Anfrage</a></nav></header>
 <div class="intro"><h1>Haller<br>Andernach</h1>
-<p>Allgemeinmediziner für Wohnraum. Persönlich, zuverlässig, professionell. Andernach, Koblenz, Neuwied.</p></div></div>
-<section id="arbeit"><p style="letter-spacing:.16em;font-size:12px;margin-bottom:18px">AUSGEWÄHLT</p>
-<div class="projects"><article class="a">Team Haller · Andernach</article><article class="b">Waldemar Haller · Geschäftsführung</article></div></section>
+<p>Allgemeinmediziner für Wohnraum. Persönlich, zuverlässig, professionell.</p></div></div>
+<section id="arbeit"><div class="projects"><article class="a">Team Haller · Andernach</article><article class="b">Waldemar Haller · Geschäftsführung</article></div></section>
 <section id="anfrage"><h2 style="font-family:Fraunces,serif;font-size:48px;font-weight:500;margin-bottom:24px">Eine Anfrage. Wir antworten.</h2>
-<form id="f"><div class="ok" id="ok">Anfrage gespeichert. Produktiv: Mail oder Supabase.</div>
+<form id="f"><div class="ok" id="ok">Anfrage gesendet. Sie liegt in der Mail.</div>
+<input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
 <select name="intent"><option>Verkauf prüfen</option><option>Kaufbegleitung</option><option>Hausverwaltung</option></select>
 <input name="name" required placeholder="Name"/>
 <input type="email" name="email" required placeholder="E-Mail"/>
 <input name="phone" required placeholder="Telefon"/>
 <input name="place" placeholder="Ort oder Objekt"/>
 <button type="submit">Anfrage senden</button></form>
-<p style="margin-top:28px;color:#b7b0a4">Kirchberg 42 · 56626 Andernach · 02632 9458-0 · info@haller-immobilien.de</p>
 </section>
 <footer>Demo Haven-Struktur · kein offizieller Haller-Auftritt</footer>
-<script>document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();localStorage.setItem('haller-haven-'+Date.now(),JSON.stringify(Object.fromEntries(new FormData(e.target))));document.getElementById('ok').style.display='block';e.target.reset();});</script>
+<script>window.RAIS_FORM={accessKey:"REPLACE_WEB3FORMS_ACCESS_KEY",fromName:"Haller Haven Demo",subject:"Neue Anfrage — Haller Haven"};</script>
+<script src="/form.js"></script>
 </body></html>
