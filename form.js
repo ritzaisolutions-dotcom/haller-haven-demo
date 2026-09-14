@@ -7,6 +7,17 @@
     e.preventDefault();
     var ok = document.getElementById("ok");
     var btn = form.querySelector('[type="submit"]');
+    var privacy = form.querySelector('[name="privacy"]');
+
+    if (privacy && !privacy.checked) {
+      if (ok) {
+        ok.textContent = "Bitte der Datenverarbeitung zustimmen.";
+        ok.style.display = "block";
+      }
+      privacy.focus();
+      return;
+    }
+
     var key = cfg.accessKey || "";
     if (!key || key.indexOf("REPLACE_") === 0) {
       if (ok) {
@@ -32,6 +43,8 @@
     fd.append("access_key", key);
     fd.set("subject", subject);
     fd.append("from_name", cfg.fromName || "Website");
+    fd.set("privacy", "accepted");
+    fd.set("consent_at", new Date().toISOString());
     if (objectId) fd.set("object_id", objectId);
     if (objectTitle) fd.set("object_title", objectTitle);
 

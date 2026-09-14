@@ -94,7 +94,10 @@
       <label>Telefon <input name="phone" required></label>
       <label>Ort / Objekt <input name="place"></label>
       <label>Notiz <textarea name="note"></textarea></label>
-      <p class="muted-note">Mit dem Absenden nehmen Sie die <a href="datenschutz.html">Datenschutzerklärung</a> zur Kenntnis. Daten nur zur Bearbeitung Ihrer Anfrage.</p>
+      <label class="consent">
+        <input type="checkbox" name="privacy" value="accepted" required>
+        <span>Ich willige ein, dass meine Angaben zur Bearbeitung der Anfrage und zur Kontaktaufnahme gespeichert und verarbeitet werden. Details in der <a href="datenschutz.html">Datenschutzerklärung</a>.</span>
+      </label>
       <button class="btn" type="submit">Anfrage absenden</button>
     </form>
   </div>
