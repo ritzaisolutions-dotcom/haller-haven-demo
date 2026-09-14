@@ -176,6 +176,11 @@ a { color: inherit; text-decoration: none; }
   min-height: 78vh;
   object-fit: cover;
   z-index: 0;
+  pointer-events: none;
+}
+
+.hero.overlay video.hero-media {
+  background: #0a0a0a;
 }
 
 .hero.overlay::after {
