@@ -28,9 +28,77 @@
     }
   }
 
-  function inquiryTotal(item) {
+  function inquiryParts(item) {
     var bumps = localBumps();
-    return (Number(item.inquiryCount) || 0) + (Number(bumps[item.id]) || 0);
+    var base = Number(item.inquiryCount) || 0;
+    var local = Number(bumps[item.id]) || 0;
+    return { base: base, local: local, total: base + local };
+  }
+
+  function inquiryTotal(item) {
+    return inquiryParts(item).total;
+  }
+
+  function statsRow(item) {
+    var parts = inquiryParts(item);
+    return {
+      id: item.id || "",
+      title: item.title || "Ohne Titel",
+      place: item.place || "",
+      price: item.price || "",
+      area: item.area || "",
+      rooms: item.rooms || "",
+      status: item.status || "aktiv",
+      enabled: item.enabled !== false ? "an" : "aus",
+      createdAt: item.createdAt || "",
+      createdAtDe: fmtDate(item.createdAt),
+      inquiryBase: parts.base,
+      inquiryLocal: parts.local,
+      inquiryTotal: parts.total,
+      images: (item.images && item.images.length) || 0
+    };
+  }
+
+  function csvEscape(v) {
+    var s = String(v == null ? "" : v);
+    if (/[",\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+    return s;
+  }
+
+  function toCsv(rows) {
+    var headers = [
+      "id", "title", "place", "price", "area", "rooms", "status", "enabled",
+      "createdAt", "inquiryBase", "inquiryLocal", "inquiryTotal", "images"
+    ];
+    var lines = [headers.join(",")];
+    rows.forEach(function (r) {
+      lines.push(headers.map(function (h) { return csvEscape(r[h]); }).join(","));
+    });
+    return lines.join("\r\n");
+  }
+
+  function downloadCsv(filename, rows) {
+    var blob = new Blob(["\uFEFF" + toCsv(rows)], { type: "text/csv;charset=utf-8" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  function slugName(s) {
+    return String(s || "objekt")
+      .toLowerCase()
+      .replace(/[^a-z0-9äöüß]+/gi, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 48) || "objekt";
+  }
+
+  function exportObjectCsv(id) {
+    var item = window.RAIS_STORE.get(id);
+    if (!item) return;
+    var row = statsRow(item);
+    downloadCsv("stats-" + slugName(row.title || row.id) + ".csv", [row]);
   }
 
   function gate() {
@@ -151,8 +219,33 @@
     $("stats").innerHTML =
       '<div class="stat"><span>Inserate</span><b>' + list.length + "</b></div>" +
       '<div class="stat"><span>Online</span><b>' + on + "</b></div>" +
-      '<div class="stat"><span>Anfragen</span><b>' + inquiries + "</b></div>" +
+      '<div class="stat"><span>Anfragen gesamt</span><b>' + inquiries + "</b></div>" +
       '<div class="stat"><span>Verkauft</span><b>' + sold + "</b></div>";
+
+    var tbody = $("stats-rows");
+    if (!tbody) return;
+    tbody.innerHTML = "";
+    if (!list.length) {
+      tbody.innerHTML = '<tr><td colspan="7" class="mut">Keine Objekte.</td></tr>';
+      return;
+    }
+    list
+      .slice()
+      .sort(function (a, b) { return inquiryTotal(b) - inquiryTotal(a); })
+      .forEach(function (item) {
+        var row = statsRow(item);
+        var tr = document.createElement("tr");
+        tr.innerHTML =
+          '<td class="title-cell"><strong>' + esc(row.title) + "</strong><br><span class=\"mut\">" + esc(row.id) + "</span></td>" +
+          "<td>" + esc(row.place) + "</td>" +
+          "<td>" + esc(row.status) + "</td>" +
+          "<td>" + esc(row.enabled) + "</td>" +
+          '<td class="num"><strong>' + row.inquiryTotal + "</strong>" +
+            '<br><span class="mut">' + row.inquiryBase + " + " + row.inquiryLocal + "</span></td>" +
+          "<td>" + esc(row.createdAtDe) + "</td>" +
+          '<td><button type="button" class="ghost sm" data-csv="' + esc(item.id) + '">CSV</button></td>';
+        tbody.appendChild(tr);
+      });
   }
 
   function renderList() {
@@ -166,6 +259,7 @@
     list.forEach(function (item) {
       var img = (item.images && item.images[0]) || "";
       var on = item.enabled !== false;
+      var parts = inquiryParts(item);
       var row = document.createElement("div");
       row.className = "listing";
       row.draggable = true;
@@ -180,13 +274,14 @@
           '<div class="chips">' +
             '<span class="chip ' + (on ? "on" : "off") + '">' + (on ? "angeschaltet" : "aus") + "</span>" +
             '<span class="chip">' + esc(item.status || "aktiv") + "</span>" +
-            '<span class="chip">' + inquiryTotal(item) + " Anfragen</span>" +
+            '<span class="chip">' + parts.total + " Anfragen (" + parts.base + "+" + parts.local + ")</span>" +
             '<span class="chip">seit ' + fmtDate(item.createdAt) + "</span>" +
           "</div>" +
         "</div>" +
         '<div class="actions">' +
           '<label class="switch"><input type="checkbox" data-toggle="' + esc(item.id) + '"' + (on ? " checked" : "") + "> Online</label>" +
           '<button type="button" class="ghost sm" data-edit="' + esc(item.id) + '">Details</button>' +
+          '<button type="button" class="ghost sm" data-csv="' + esc(item.id) + '">CSV</button>' +
           '<button type="button" class="danger sm" data-del="' + esc(item.id) + '">Löschen</button>' +
         "</div>";
       box.appendChild(row);
@@ -280,9 +375,21 @@
     $("form-msg").textContent = "";
   });
 
+  function onCsvClick(e) {
+    var id = e.target.getAttribute("data-csv");
+    if (id) exportObjectCsv(id);
+  }
+
+  $("stats-rows").addEventListener("click", onCsvClick);
+
   $("rows").addEventListener("click", function (e) {
     var ed = e.target.getAttribute("data-edit");
     var del = e.target.getAttribute("data-del");
+    var csv = e.target.getAttribute("data-csv");
+    if (csv) {
+      exportObjectCsv(csv);
+      return;
+    }
     if (ed) {
       fill(window.RAIS_STORE.get(ed));
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -293,6 +400,12 @@
       renderStats();
       renderList();
     }
+  });
+
+  $("csv-all").addEventListener("click", function () {
+    var rows = window.RAIS_STORE.all().map(statsRow);
+    var stamp = new Date().toISOString().slice(0, 10);
+    downloadCsv("stats-alle-objekte-" + stamp + ".csv", rows);
   });
 
   $("rows").addEventListener("change", function (e) {

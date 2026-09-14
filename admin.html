@@ -76,6 +76,36 @@
       margin-top: 4px;
     }
     .stat span { color: var(--mut); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .stats-panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      margin-top: 14px;
+      padding: 16px 18px;
+    }
+    .stats-panel .bar { margin-bottom: 10px; }
+    .stats-table-wrap { overflow-x: auto; }
+    .stats-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .stats-table th,
+    .stats-table td {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+    }
+    .stats-table th {
+      color: var(--mut);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+    }
+    .stats-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .stats-table tr:last-child td { border-bottom: none; }
+    .stats-table .title-cell { white-space: normal; min-width: 160px; }
     label {
       display: block;
       font-size: 11px;
@@ -255,6 +285,31 @@
     <section id="app" hidden>
       <p class="mut" style="margin-bottom:8px">Mandant: <span id="who"></span></p>
       <div class="stats" id="stats"></div>
+      <div class="stats-panel">
+        <div class="bar">
+          <div>
+            <h2>Statistik pro Objekt</h2>
+            <p class="mut">Anfragen = Basiswert + lokale Demo-Zähler dieses Browsers</p>
+          </div>
+          <button type="button" class="ghost sm" id="csv-all">CSV gesamt</button>
+        </div>
+        <div class="stats-table-wrap">
+          <table class="stats-table">
+            <thead>
+              <tr>
+                <th>Objekt</th>
+                <th>Ort</th>
+                <th>Status</th>
+                <th>Online</th>
+                <th class="num">Anfragen</th>
+                <th>Seit</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="stats-rows"></tbody>
+          </table>
+        </div>
+      </div>
 
       <div class="layout">
         <div>
