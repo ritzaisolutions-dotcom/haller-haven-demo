@@ -10,10 +10,13 @@ a.listing-card {
   text-decoration: none;
   display: block;
   cursor: pointer;
-  background: inherit;
-  border: 1px solid currentColor;
+  background: var(--card, #fff);
+  border: 1px solid var(--line, #E2E2E2);
   overflow: hidden;
-  opacity: 0.95;
+}
+
+a.listing-card:hover {
+  border-color: var(--acc, #0073E1);
 }
 
 .listing-card img,
@@ -25,7 +28,7 @@ a.listing-card {
   display: block;
 }
 
-.listing-ph { background: #1a1a1a; }
+.listing-ph { background: #E8E8E8; }
 
 .listing-body { padding: 22px 18px 28px; }
 
@@ -33,22 +36,23 @@ a.listing-card {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-size: 11px;
-  opacity: 0.7;
+  color: var(--mut, #6B6B6B);
 }
 
 .listing-body h3 {
   margin-top: 8px;
   font-size: 22px;
+  color: var(--txt, #222);
 }
 
 .listing-body p {
   margin-top: 8px;
-  opacity: 0.75;
+  color: var(--mut, #6B6B6B);
   font-size: 14px;
 }
 
 .listing-empty {
-  opacity: 0.7;
+  color: var(--mut, #6B6B6B);
   padding: 24px 0;
   font-size: 16px;
 }
