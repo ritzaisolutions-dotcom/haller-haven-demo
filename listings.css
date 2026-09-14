@@ -5,7 +5,10 @@
   margin-top: 40px;
 }
 
-.listing-card {
+a.listing-card {
+  color: inherit;
+  text-decoration: none;
+  display: block;
   background: inherit;
   border: 1px solid currentColor;
   overflow: hidden;

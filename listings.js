@@ -5,8 +5,9 @@
   function card(item) {
     var img = (item.images && item.images[0]) || "";
     var sold = item.status === "verkauft";
-    var el = document.createElement("article");
-    el.className = "listing-card"; el.style.cursor="pointer"; el.addEventListener("click",function(){ location.href="objekt.html?id="+encodeURIComponent(item.id||""); });
+    var el = document.createElement("a");
+    el.className = "listing-card";
+    el.href = "objekt.html?id=" + encodeURIComponent(item.id || "");
     el.innerHTML =
       (img ? '<img src="' + img + '" alt="">' : '<div class="listing-ph"></div>') +
       '<div class="listing-body">' +
