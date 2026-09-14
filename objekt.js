@@ -41,5 +41,8 @@
       if (oid) oid.value = item.id || "";
       if (otitle) otitle.value = item.title || "";
       if (intent) intent.value = "besichtigung";
+      if (window.RAIS_SEO && window.RAIS_SEO.applyListing) {
+        window.RAIS_SEO.applyListing(item);
+      }
     });
 })();

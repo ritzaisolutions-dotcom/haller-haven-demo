@@ -1,0 +1,48 @@
+# Haller Immobilienberatung GmbH (Demo Haven)
+
+> Inhabergeführte Immobilienberatung in Andernach: Verkauf, Kaufbegleitung und Hausverwaltung für Andernach, Koblenz, Neuwied und Mayen-Koblenz.
+
+Diese Seite ist eine **Demo** (kein Live-Mandat). Primäre Firmenadresse und Kontaktdaten entsprechen Haller Immobilienberatung GmbH.
+
+## NAP / Local
+
+- Name: Haller Immobilienberatung GmbH
+- Straße: Kirchberg 42
+- PLZ Ort: 56626 Andernach
+- Region: Rheinland-Pfalz, Deutschland
+- Telefon: +49 2632 9458-0
+- E-Mail: info@haller-immobilien.de
+- Geo: 50.4392, 7.4016
+- Offizielle Site: https://haller-immobilien.de/
+- Demo: https://haller-haven-demo.vercel.app/
+
+## Leistungen
+
+- Immobilienverkauf und Vermarktung
+- Kaufbegleitung / Immobiliensuche
+- Hausverwaltung / Objektmanagement
+- Beratungstermine und Besichtigungen nach Vereinbarung
+
+## Seiten
+
+- [Start](https://haller-haven-demo.vercel.app/): Überblick und Einstieg
+- [Über uns](https://haller-haven-demo.vercel.app/ueber-uns.html): Team und Büro
+- [Leistungen](https://haller-haven-demo.vercel.app/leistungen.html): Verkauf, Kauf, Verwaltung
+- [Objekte](https://haller-haven-demo.vercel.app/objekte.html): Aktuelle Inserate mit Termin-Anfrage
+- [Projekte](https://haller-haven-demo.vercel.app/projekte.html): Referenzprojekte
+- [Kontakt](https://haller-haven-demo.vercel.app/kontakt.html): Anfrage und Bürozeiten
+- [Impressum](https://haller-haven-demo.vercel.app/impressum.html)
+- [Datenschutz](https://haller-haven-demo.vercel.app/datenschutz.html)
+
+## Objekte (Demo)
+
+Besichtigungstermine werden objektbezogen angefragt (Mail-Betreff mit Objektname).
+
+- Eigentumswohnung Andernach Altstadt
+- Einfamilienhaus Namedy
+- Maisonette Koblenz-Metternich
+
+## Optional
+
+- Sitemap: https://haller-haven-demo.vercel.app/sitemap.xml
+- Robots: https://haller-haven-demo.vercel.app/robots.txt

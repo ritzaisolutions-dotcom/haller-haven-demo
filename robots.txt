@@ -1,5 +1,35 @@
 User-agent: *
+Allow: /
+Allow: /llms.txt
+Allow: /sitemap.xml
 Disallow: /admin.html
 Disallow: /admin.js
 Disallow: /store.js
 Disallow: /config.js
+Disallow: /api/
+
+User-agent: GPTBot
+Allow: /
+Allow: /llms.txt
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /llms.txt
+
+User-agent: Google-Extended
+Allow: /
+Allow: /llms.txt
+
+User-agent: anthropic-ai
+Allow: /
+Allow: /llms.txt
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /llms.txt
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /llms.txt
+
+Sitemap: https://haller-haven-demo.vercel.app/sitemap.xml
