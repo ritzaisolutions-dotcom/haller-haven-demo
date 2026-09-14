@@ -11,7 +11,7 @@
     el.innerHTML =
       (img ? '<img src="' + img + '" alt="">' : '<div class="listing-ph"></div>') +
       '<div class="listing-body">' +
-      (sold ? "<small>Verkauft</small>" : "<small>Objekt</small>") +
+      (sold ? "<small>Verkauft</small>" : "<small>Termin möglich</small>") +
       "<h3>" + (item.title || "Ohne Titel") + "</h3>" +
       "<p>" + [item.place, item.area ? item.area + " m²" : "", item.price].filter(Boolean).join(" · ") + "</p>" +
       "</div>";
@@ -20,9 +20,11 @@
 
   function paint(list) {
     root.innerHTML = "";
-    var live = (list || []).filter(function (x) { return x.status !== "verkauft"; });
+    var live = (list || []).filter(function (x) {
+      return x.enabled !== false && x.status !== "verkauft";
+    });
     if (!live.length) {
-      root.innerHTML = "<p class=\"listing-empty\">Noch keine Objekte. Anlage nur im Admin.</p>";
+      root.innerHTML = "<p class=\"listing-empty\">Noch keine freigeschalteten Objekte.</p>";
       return;
     }
     live.forEach(function (item) { root.appendChild(card(item)); });
