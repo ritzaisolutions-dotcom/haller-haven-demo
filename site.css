@@ -537,3 +537,84 @@ body:has(.section:first-of-type) .top {
   background: rgba(10, 10, 10, 0.94);
   border-bottom: 1px solid var(--line);
 }
+
+/* —— Haven motion (Framer-like reveal / grain / hero) —— */
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  opacity: 0.055;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.js-motion .hero.overlay .hero-media {
+  transform: scale(1.08);
+  transition: transform 2.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.js-motion body.is-ready .hero.overlay .hero-media {
+  transform: scale(1);
+}
+
+.js-motion .hero.overlay .hero-copy {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s,
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+}
+
+.js-motion body.is-ready .hero.overlay .hero-copy {
+  opacity: 1;
+  transform: none;
+}
+
+.js-motion [data-reveal] {
+  opacity: 0;
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.js-motion [data-reveal="up"] { transform: translateY(36px); }
+.js-motion [data-reveal="fade"] { transform: none; }
+.js-motion [data-reveal="scale"] {
+  transform: scale(1.04);
+  clip-path: inset(6% 6% 6% 6%);
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+    clip-path 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.js-motion [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 0 0);
+}
+
+.card-media img {
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card:hover .card-media img {
+  transform: scale(1.05);
+}
+
+.btn {
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.btn:hover { transform: translateY(-1px); }
+
+.reduce-motion .grain { display: none; }
+.reduce-motion [data-reveal],
+.reduce-motion .hero.overlay .hero-media,
+.reduce-motion .hero.overlay .hero-copy,
+.reduce-motion .card-media img {
+  opacity: 1 !important;
+  transform: none !important;
+  clip-path: none !important;
+  transition: none !important;
+}
