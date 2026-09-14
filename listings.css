@@ -1,0 +1,7 @@
+.listing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+.listing-card { background:inherit; border:1px solid currentColor; overflow:hidden; }
+.listing-card img, .listing-ph { width:100%; height:180px; object-fit:cover; display:block; }
+.listing-ph { background:#2a2a2a; }
+.listing-body { padding:14px; }
+.listing-body small { letter-spacing:.08em; text-transform:uppercase; font-size:11px; }
+.listing-empty { opacity:.7; }

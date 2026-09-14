@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Haller Andernach</title>
+<link rel="stylesheet" href="site.css"/>
+<link rel="stylesheet" href="listings.css"/>
+</head>
+<body class="haven">
+<header class="top">
+  <a class="brand" href="index.html"><img src="https://haller-immobilien.de/wp-content/uploads/2024/06/logo_240.png" alt="Haller"></a>
+  <nav><a href="index.html">Start</a><a href="ueber-uns.html">Über uns</a><a href="leistungen.html">Leistungen</a><a href="objekte.html">Objekte</a><a href="kontakt.html" aria-current="page">Kontakt</a></nav>
+  <a class="btn" href="kontakt.html">Anfrage</a>
+</header>
+
+<section class="page split">
+  <div>
+    <p class="kicker">Kontakt</p>
+    <h1>Eine Anfrage. Wir antworten.</h1>
+    <p>Kirchberg 42, 56626 Andernach<br>02632 9458-0<br>info@haller-immobilien.de</p>
+  </div>
+  
+<form class="box" id="f" novalidate>
+  <div class="ok" id="ok">Anfrage gesendet. Sie liegt in der Mail.</div>
+  <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+  <label>Anliegen
+    <select name="intent" required>
+      <option value="verkaufen">Immobilie verkaufen</option>
+      <option value="kaufen">Immobilie suchen</option>
+      <option value="verwaltung">Hausverwaltung</option>
+    </select>
+  </label>
+  <label>Name <input name="name" required></label>
+  <label>E-Mail <input type="email" name="email" required></label>
+  <label>Telefon <input name="phone" required></label>
+  <label>Ort / Objekt <input name="place"></label>
+  <label>Notiz <textarea name="note"></textarea></label>
+  <button class="btn" type="submit">Anfrage absenden</button>
+</form>
+</section>
+<footer>
+  <div>Haller Immobilienberatung GmbH · Andernach · Demo, kein Live-Mandat</div>
+  <div><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></div>
+</footer>
+<script>window.RAIS_FORM={accessKey:"REPLACE_WEB3FORMS_ACCESS_KEY",fromName:"Haller Haven",subject:"Anfrage Haller"};</script><script src="form.js"></script>
+
+
+</body></html>
