@@ -260,6 +260,81 @@ a.listing-card:hover {
   font-size: 16px;
 }
 
+/* Hero brand: quote + HALLER acrostic */
+.hero-brand {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: clamp(28px, 5vw, 64px);
+  align-items: end;
+  margin-top: 12px;
+  max-width: 920px;
+}
+
+.hero-quote {
+  margin: 0;
+  max-width: 28ch;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.hero-quote p {
+  margin: 0;
+  font-family: Fraunces, serif;
+  font-size: clamp(22px, 3.2vw, 34px);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.hero-quote footer {
+  margin-top: 14px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.haller-acro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  font-family: Fraunces, serif;
+  font-size: clamp(20px, 2.6vw, 28px);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.haller-acro-line {
+  display: flex;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.haller-acro-letter {
+  color: #0073E1;
+  font-weight: 700;
+  min-width: 0.85em;
+}
+
+.haller-acro-rest {
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 400;
+}
+
+.hero-brand + .actions {
+  margin-top: 28px;
+}
+
+@media (max-width: 720px) {
+  .hero-brand {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+
+  .hero-quote {
+    max-width: 34ch;
+  }
+}
+
 /* Compact heroes on subpages */
 .hero.overlay.page-hero,
 .hero.overlay.page-hero .hero-media {

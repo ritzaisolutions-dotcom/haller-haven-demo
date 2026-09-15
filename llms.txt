@@ -28,6 +28,8 @@ Diese Seite ist eine **Demo** (kein Live-Mandat). Primäre Firmenadresse und Kon
 - [Start](https://haller-haven-demo.vercel.app/): Überblick und Einstieg
 - [Über uns](https://haller-haven-demo.vercel.app/ueber-uns.html): Team und Büro
 - [Leistungen](https://haller-haven-demo.vercel.app/leistungen.html): Verkauf, Kauf, Verwaltung
+- [Verkaufen](https://haller-haven-demo.vercel.app/verkaufen.html): Verkaufsprozess Wertermittlung bis Notar
+- [Hausverwaltung](https://haller-haven-demo.vercel.app/hausverwaltung.html): WEG- und Mietverwaltung
 - [Objekte](https://haller-haven-demo.vercel.app/objekte.html): Aktuelle Inserate mit Termin-Anfrage
 - [Projekte](https://haller-haven-demo.vercel.app/projekte.html): Referenzprojekte
 - [Kontakt](https://haller-haven-demo.vercel.app/kontakt.html): Anfrage und Bürozeiten
