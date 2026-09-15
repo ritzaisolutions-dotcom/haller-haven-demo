@@ -1,6 +1,6 @@
 (function () {
   var cfg = window.RAIS_FORM || {};
-  var form = document.getElementById("f");
+  var form = document.getElementById("f") || document.getElementById("anfrage");
   if (!form) return;
 
   form.addEventListener("submit", function (e) {
@@ -28,14 +28,33 @@
     }
 
     var fd = new FormData(form);
-    var objectId = (fd.get("object_id") || "").toString().trim();
-    var objectTitle = (fd.get("object_title") || fd.get("place") || "").toString().trim();
     var intent = (fd.get("intent") || "").toString();
     var subject = cfg.subject || "Neue Anfrage";
+    var isMulti = !!form.querySelector('input[type="checkbox"][name="object_id"]');
 
-    if (objectTitle) {
-      subject = (intent === "besichtigung" ? "Besichtigung" : "Anfrage") +
-        " · " + objectTitle + " · Haller";
+    var objectIds = [];
+    var objectTitles = [];
+
+    if (isMulti) {
+      Array.prototype.forEach.call(
+        form.querySelectorAll('input[type="checkbox"][name="object_id"]:checked'),
+        function (el) {
+          var id = String(el.value || "").trim();
+          var title = String(el.getAttribute("data-title") || "").trim();
+          if (id) objectIds.push(id);
+          if (title) objectTitles.push(title);
+        }
+      );
+    } else {
+      var singleId = (fd.get("object_id") || "").toString().trim();
+      var singleTitle = (fd.get("object_title") || fd.get("place") || "").toString().trim();
+      if (singleId) objectIds.push(singleId);
+      if (singleTitle) objectTitles.push(singleTitle);
+    }
+
+    if (objectTitles.length) {
+      var prefix = intent === "besichtigung" ? "Besichtigung" : "Anfrage";
+      subject = prefix + " · " + objectTitles.join(" · ") + " · Haller";
     } else if (form.querySelector('[name="subject"]') && fd.get("subject")) {
       subject = fd.get("subject").toString();
     }
@@ -45,8 +64,15 @@
     fd.append("from_name", cfg.fromName || "Website");
     fd.set("privacy", "accepted");
     fd.set("consent_at", new Date().toISOString());
-    if (objectId) fd.set("object_id", objectId);
-    if (objectTitle) fd.set("object_title", objectTitle);
+
+    if (objectIds.length) {
+      fd.set("object_ids", objectIds.join(", "));
+      fd.set("object_id", objectIds[0]);
+    }
+    if (objectTitles.length) {
+      fd.set("object_titles", objectTitles.join(" · "));
+      fd.set("object_title", objectTitles.join(" · "));
+    }
 
     if (btn) btn.disabled = true;
 
@@ -55,19 +81,19 @@
       .then(function (j) {
         if (ok) {
           ok.textContent = j.success
-            ? (objectTitle
-              ? "Termin-Anfrage zu „" + objectTitle + "“ gesendet. Sie liegt objektbezogen in der Mail."
+            ? (objectTitles.length
+              ? "Anfrage zu „" + objectTitles.join("“, „") + "“ gesendet. Sie liegt objektbezogen in der Mail."
               : "Anfrage gesendet. Sie liegt in der Mail.")
             : (j.message || "Senden fehlgeschlagen.");
           ok.style.display = "block";
         }
         if (j.success) {
-          if (objectId) bumpInquiry(objectId);
-          var keepId = objectId;
-          var keepTitle = objectTitle;
+          objectIds.forEach(bumpInquiry);
+          var keepId = objectIds[0] || "";
+          var keepTitle = objectTitles[0] || "";
           form.reset();
-          if (keepId) {
-            var idEl = form.querySelector('[name="object_id"]');
+          if (!isMulti && keepId) {
+            var idEl = form.querySelector('input[type="hidden"][name="object_id"]');
             var titleEl = form.querySelector('[name="object_title"]');
             var placeEl = form.querySelector('[name="place"]');
             if (idEl) idEl.value = keepId;
@@ -88,6 +114,7 @@
   });
 
   function bumpInquiry(objectId) {
+    if (!objectId) return;
     try {
       var k = (window.RAIS_STORE_KEY || "rais-listings-demo") + "-inquiries";
       var map = JSON.parse(localStorage.getItem(k) || "{}");

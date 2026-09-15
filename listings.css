@@ -5,18 +5,81 @@
   margin-top: 40px;
 }
 
-a.listing-card {
+.listing-card {
   color: inherit;
   text-decoration: none;
   display: block;
-  cursor: pointer;
   background: var(--card, #fff);
   border: 1px solid var(--line, #E2E2E2);
   overflow: hidden;
 }
 
-a.listing-card:hover {
+.listing-card:hover {
   border-color: var(--acc, #0073E1);
+}
+
+.listing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.listing-actions .btn {
+  flex: 1 1 auto;
+  text-align: center;
+  min-width: 7.5rem;
+}
+
+.object-pick {
+  display: grid;
+  gap: 10px;
+  margin: 4px 0 14px;
+  padding: 14px;
+  border: 1px solid var(--line, #E2E2E2);
+  background: var(--card, #fff);
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.object-pick-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  font-size: 14px;
+  color: var(--txt, #222);
+  cursor: pointer;
+}
+
+.object-pick-item input {
+  margin-top: 3px;
+  flex: 0 0 auto;
+}
+
+.object-pick-item span {
+  display: grid;
+  gap: 2px;
+}
+
+.object-pick-item small {
+  color: var(--mut, #6B6B6B);
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.object-pick-legend {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--txt, #222);
+  margin-bottom: 8px;
+}
+
+.object-pick-hint {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: var(--mut, #6B6B6B);
 }
 
 .listing-media {

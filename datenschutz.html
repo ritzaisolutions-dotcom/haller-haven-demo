@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Datenschutz · Haller Immobilien Andernach</title>
-<meta name="description" content="Datenschutzerklärung der Haller Immobilienberatung GmbH Andernach."/>
+<meta name="description" content="Datenschutzerklärung der Haller Immobilienberatung GmbH: Hosting bei Vercel, Formulare über Web3Forms, lokale Speicherung und Betroffenenrechte."/>
 <meta name="robots" content="index,follow,max-image-preview:large"/>
 <meta name="author" content="Haller Immobilienberatung GmbH"/>
 <meta name="geo.region" content="DE-RP"/>
@@ -17,12 +17,12 @@
 <meta property="og:locale" content="de_DE"/>
 <meta property="og:site_name" content="Haller Immobilien Andernach"/>
 <meta property="og:title" content="Datenschutz · Haller Immobilien Andernach"/>
-<meta property="og:description" content="Datenschutzerklärung der Haller Immobilienberatung GmbH Andernach."/>
+<meta property="og:description" content="Datenschutzerklärung der Haller Immobilienberatung GmbH: Hosting bei Vercel, Formulare über Web3Forms, lokale Speicherung und Betroffenenrechte."/>
 <meta property="og:url" content="https://haller-haven-demo.vercel.app/datenschutz.html"/>
 <meta property="og:image" content="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Datenschutz · Haller Immobilien Andernach"/>
-<meta name="twitter:description" content="Datenschutzerklärung der Haller Immobilienberatung GmbH Andernach."/>
+<meta name="twitter:description" content="Datenschutzerklärung der Haller Immobilienberatung GmbH: Hosting bei Vercel, Formulare über Web3Forms, lokale Speicherung und Betroffenenrechte."/>
 <meta name="twitter:image" content="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"/>
 <link rel="icon" href="https://haller-immobilien.de/wp-content/uploads/2020/06/favicon32.png" type="image/png"/>
 <link rel="stylesheet" href="site.css"/>
@@ -40,24 +40,313 @@
   <img class="hero-media" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&amp;fit=crop&amp;w=1800&amp;q=80" alt="">
   <div class="hero-copy">
     <p class="kicker">Rechtliches</p>
-    <h1>Datenschutz</h1>
+    <h1>Datenschutzerklärung</h1>
   </div>
 </section>
 
 <section class="page narrow prose">
-  <p>Verantwortlich: Haller Immobilienberatung GmbH, Kirchberg 42, 56626 Andernach, 02632 9458-0, info@haller-immobilien.de.</p>
+  <p class="legal-updated"><strong>Stand:</strong> 15. September 2026. Diese Erklärung beschreibt den tatsächlich im Demo-Code erkennbaren Datenfluss dieser Website (<a href="https://haller-haven-demo.vercel.app/">haller-haven-demo.vercel.app</a>). Sie ist eine Arbeitsgrundlage nach Art.&nbsp;13 DSGVO, keine anwaltliche Beratung und keine Freigabe.</p>
 
-  <h2>Kontaktformular / Leads</h2>
-  <p>Über die Formulare (Kontakt und Objekt/Termin) erheben wir Vorname/Name, E-Mail, Telefon sowie Anliegen, Ort/Objekt und freie Notiz.</p>
-  <p><strong>Zwecke:</strong> Bearbeitung Ihrer Anfrage, Terminvereinbarung (inkl. Besichtigung) und Kontaktaufnahme durch das Büro.</p>
-  <p><strong>Rechtsgrundlage:</strong> Ihre Einwilligung über die Pflicht-Checkbox vor dem Absenden (Art. 6 Abs. 1 lit. a DSGVO). Die Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen (z.&nbsp;B. per Mail an info@haller-immobilien.de).</p>
-  <p><strong>Empfänger:</strong> Die Angaben gehen an die Büro-Mailadresse. In der Demo/Preview über Web3Forms; Live-Ziel ist die Weiterleitung über n8n auf einem EU-Server. Keine Weitergabe zu Werbezwecken an Dritte.</p>
-  <p><strong>Speicherdauer:</strong> für die Bearbeitung der Anfrage, danach Löschung bzw. Aufbewahrung nur soweit gesetzliche Fristen es erfordern. Mitgesendet werden Nachweis der Einwilligung (<code>privacy=accepted</code>) und Zeitstempel (<code>consent_at</code>) für die spätere CRM-/Workflow-Übernahme.</p>
+  <p>Diese Seite ist eine <strong>Design- und Technik-Demo</strong> (kein Live-Mandat). Verantwortliche Stelle bleibt die Haller Immobilienberatung GmbH. Dienste, die auf der bisherigen WordPress-Seite unter haller-immobilien.de laufen (IONOS, Borlabs, IONOS WebAnalytics, Google Fonts, OpenStreetMap, reCAPTCHA), sind auf dieser Demo <strong>nicht</strong> eingebunden und werden hier deshalb nicht als laufende Verarbeitung beschrieben.</p>
 
-  <h2>Hosting &amp; Technik (Demo)</h2>
-  <p>Hosting: Vercel. Formularversand Preview: Web3Forms. Live-Ziel: n8n auf EU-VPS.</p>
-  <p>Es wird kein Cookie-Banner eingesetzt, solange keine Analytics-, Marketing- oder nicht notwendigen Embeds (z.&nbsp;B. Google Maps) aktiv sind. Technisch notwendige Speicherung (z.&nbsp;B. Admin-Session) bleibt davon unberührt.</p>
-  <p class="muted-note">Demo-Hinweis: Vollständiger Datenschutztext wie auf haller-immobilien.de / K3 folgt bei Go-Live. Diese Seite ist keine Rechtsberatung.</p>
+  <h2>Inhalt</h2>
+  <ol class="legal-toc">
+    <li><a href="#blick">1. Datenschutz auf einen Blick</a></li>
+    <li><a href="#hosting">2. Hosting und Server-Logs (Vercel)</a></li>
+    <li><a href="#pflicht">3. Pflichtinformationen</a></li>
+    <li><a href="#inventar">4. Was diese Website tatsächlich verarbeitet</a></li>
+    <li><a href="#erfassung">5. Datenerfassung im Detail</a></li>
+    <li><a href="#dienste">6. Eingesetzte Dienste und Einbindungen</a></li>
+    <li><a href="#nicht">7. Was bewusst nicht läuft</a></li>
+    <li><a href="#stand">8. Aktualität</a></li>
+  </ol>
+
+  <h2 id="blick">1. Datenschutz auf einen Blick</h2>
+  <h3>Wer ist verantwortlich?</h3>
+  <p>Haller Immobilienberatung GmbH, Kirchberg 42, 56626 Andernach. Kontaktdaten stehen im Abschnitt <a href="#verantwortliche">Verantwortliche Stelle</a> und im <a href="impressum.html">Impressum</a>.</p>
+
+  <h3>Wie erfassen wir Daten?</h3>
+  <ul>
+    <li>Daten, die Sie uns mitteilen: Kontakt- und Objektformular, E-Mail, Telefon, Fax.</li>
+    <li>Daten, die beim Aufruf technisch anfallen: IP-Adresse, Zeitpunkt, aufgerufene URL, Browser- und Gerätedaten in den Logs des Hosters.</li>
+    <li>Daten, die Ihr Browser lokal speichert, wenn Sie Objekte ansehen oder das Admin-Backend nutzen: localStorage und ein technisch notwendiges Admin-Cookie.</li>
+    <li>Daten, die Dritte erhalten, weil Bilder oder Schriftarten von deren Servern geladen werden: Unsplash, haller-immobilien.de, auf der Admin-Seite zusätzlich Google Fonts.</li>
+  </ul>
+
+  <h3>Wofür nutzen wir die Daten?</h3>
+  <p>Bereitstellung und Absicherung der Website, Bearbeitung von Anfragen und Besichtigungsterminen, Nachweis der Formular-Einwilligung, interne Objektverwaltung im Browser des jeweiligen Geräts. Es gibt <strong>kein</strong> Analyse-, Marketing- oder Werbe-Tracking auf dieser Demo.</p>
+
+  <h3>Welche Rechte haben Sie?</h3>
+  <p>Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit, Widerruf erteilter Einwilligungen und Widerspruch gegen Verarbeitungen auf Grundlage von Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO sowie Beschwerde bei einer Aufsichtsbehörde. Details in Abschnitt 3.</p>
+
+  <h2 id="hosting">2. Hosting und Server-Logs (Vercel)</h2>
+  <p>Diese Website wird als statische HTML-/CSS-/JS-Anwendung mit einzelnen Serverless-Funktionen bei <strong>Vercel Inc.</strong>, 440 N Barranca Avenue #4133, Covina, CA 91723, USA, gehostet und über das globale Edge-Netzwerk ausgeliefert. Die öffentliche Demo-URL ist <code>haller-haven-demo.vercel.app</code>.</p>
+  <p>Beim Aufruf verarbeitet Vercel als Auftragsverarbeiter (für den Websitebetrieb) bzw. teilweise als eigener Verantwortlicher für service-generierte Daten insbesondere:</p>
+  <ul>
+    <li>IP-Adresse und daraus abgeleiteter ungefährer Standort (Stadt/Land, keine GPS-Genauigkeit)</li>
+    <li>Datum und Uhrzeit, angeforderte URL, Referrer</li>
+    <li>Browsertyp, Betriebssystem, Gerätemerkmale</li>
+    <li>technische Diagnose-, Kapazitäts- und Fehlerdaten</li>
+  </ul>
+  <p><strong>Zwecke:</strong> Auslieferung der Seiten, TLS-Verschlüsselung, Missbrauchsschutz, Stabilität, Nachvollziehbarkeit von Fehlern.</p>
+  <p><strong>Rechtsgrundlagen:</strong> Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO (berechtigtes Interesse an sicherer, schneller Bereitstellung) sowie, soweit der Betrieb der Website vorvertragliche Anfragen erst ermöglicht, Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO. Server-Logs sind für den Kommunikationsvorgang erforderlich; ein Einwilligungsbanner ist dafür nicht vorgesehen.</p>
+  <p><strong>Drittland:</strong> Vercel hat Sitz in den USA und betreibt ein weltweites Edge-Netz. Vercel ist nach eigener Privacy Notice vom 1.&nbsp;Juni 2026 unter dem EU-US Data Privacy Framework zertifiziert. Ergänzend stellt Vercel Standardvertragsklauseln im Data Processing Addendum bereit. Das DPA gilt nach Vercel für <strong>Pro- und Enterprise-Pläne</strong>. Ob für diese Demo ein AVV nach Art.&nbsp;28 DSGVO tatsächlich abgeschlossen ist, ist im Repository nicht belegt und muss vor einem produktiven Go-Live geprüft werden.</p>
+  <p>Quellen: <a href="https://vercel.com/legal/privacy-notice" rel="noopener">Vercel Privacy Notice</a>, <a href="https://vercel.com/legal/dpa" rel="noopener">Vercel DPA</a>, <a href="https://security.vercel.com" rel="noopener">Vercel Security</a>.</p>
+  <p>Die Serverless-Funktionen unter <code>/api/admin-login</code>, <code>/api/admin-check</code> und <code>/api/admin-logout</code> laufen auf derselben Infrastruktur. Sie prüfen ein Passwort gegen die Umgebungsvariable <code>ADMIN_PASSWORD</code> und setzen oder löschen das Cookie <code>rais_admin</code>. Anfragende Besucher der öffentlichen Seiten lösen diese Funktionen nicht aus.</p>
+
+  <h2 id="pflicht">3. Pflichtinformationen</h2>
+  <h3 id="verantwortliche">Verantwortliche Stelle</h3>
+  <p>Haller Immobilienberatung GmbH<br>
+  Kirchberg 42<br>
+  56626 Andernach</p>
+  <p>Telefon: 02632 9458-0<br>
+  E-Mail: <a href="mailto:info@haller-immobilien.de">info@haller-immobilien.de</a></p>
+  <p>Geschäftsführer: Waldemar Haller. Register und USt-IdNr. stehen im Impressum.</p>
+  <p>Ein Datenschutzbeauftragter ist auf der bisherigen Haller-Website nicht benannt und wird hier nicht fingiert. Anfragen zum Datenschutz richten Sie an die vorstehende Adresse.</p>
+
+  <h3>Speicherdauer</h3>
+  <p>Soweit unten keine kürzere oder längere Frist steht, speichern wir personenbezogene Daten nur, solange der Zweck besteht. Nach Widerruf oder berechtigtem Löschverlangen löschen wir, sofern keine gesetzliche Aufbewahrung entgegensteht (insbesondere Handels- und Steuerrecht, typischerweise 6 bzw. 10 Jahre nach AO/HGB, wenn aus einer Anfrage ein Mandat wird).</p>
+
+  <h3>Rechtsgrundlagen</h3>
+  <ul>
+    <li>Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO: Einwilligung, hier vor allem die Pflicht-Checkbox der Formulare</li>
+    <li>§&nbsp;25 Abs.&nbsp;1 TDDDG: Einwilligung, wenn auf dem Endgerät Informationen gespeichert oder ausgelesen werden, die nicht unbedingt erforderlich sind</li>
+    <li>§&nbsp;25 Abs.&nbsp;2 TDDDG: Speicherung/Zugriff ohne Einwilligung, soweit unbedingt erforderlich, um den vom Nutzer ausdrücklich gewünschten Dienst bereitzustellen</li>
+    <li>Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO: vorvertragliche Schritte und Vertrag (Makler-, Verwaltungs- oder Beratungsanfrage)</li>
+    <li>Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;c DSGVO: gesetzliche Pflichten (z.&nbsp;B. Nachweis der Einwilligung nach Art.&nbsp;7 Abs.&nbsp;1 DSGVO, Aufbewahrung)</li>
+    <li>Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO: berechtigtes Interesse (Betrieb, Sicherheit, Abwehr von Missbrauch)</li>
+    <li>Art.&nbsp;46 DSGVO: Drittlandtransfer über Standardvertragsklauseln, soweit einschlägig; Art.&nbsp;45 DSGVO, soweit ein Angemessenheitsbeschluss (z.&nbsp;B. EU-US Data Privacy Framework) greift</li>
+  </ul>
+  <p>Gesetzestexte: <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj" rel="noopener">DSGVO</a>, <a href="https://www.gesetze-im-internet.de/ttdsg/__25.html" rel="noopener">§&nbsp;25 TDDDG</a>.</p>
+
+  <h3>Empfänger</h3>
+  <p>Wir geben Daten nicht zu Werbezwecken weiter. Empfänger oder Kategorien:</p>
+  <ul>
+    <li>Vercel Inc. (Hosting, Logs, Admin-API)</li>
+    <li>Web3Creative / Web3Forms (Formularversand), einschließlich der in deren DPA genannten Unterauftragsverarbeiter</li>
+    <li>E-Mail-Postfach der verantwortlichen Stelle (Zieladresse der Formularbenachrichtigung)</li>
+    <li>Unsplash / Getty (Abruf öffentlich eingebundener Vorschaubilder)</li>
+    <li>der bisherige Webserver von haller-immobilien.de, soweit Logo, Favicon oder Teamfotos von dort geladen werden</li>
+    <li>Google Ireland Ltd. nur beim Aufruf der nicht öffentlich verlinkten Admin-Seite (Web Fonts)</li>
+    <li>Behörden, soweit wir gesetzlich verpflichtet sind</li>
+  </ul>
+
+  <h3>Widerruf von Einwilligungen</h3>
+  <p>Eine erteilte Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen, formlos an <a href="mailto:info@haller-immobilien.de">info@haller-immobilien.de</a>. Die Rechtmäßigkeit der bis dahin erfolgten Verarbeitung bleibt unberührt.</p>
+
+  <h3>Widerspruch (Art.&nbsp;21 DSGVO)</h3>
+  <p>WENN DIE VERARBEITUNG AUF ART.&nbsp;6 ABS.&nbsp;1 LIT.&nbsp;E ODER F DSGVO BERUHT, HABEN SIE JEDERZEIT DAS RECHT, AUS GRÜNDEN, DIE SICH AUS IHRER BESONDEREN SITUATION ERGEBEN, WIDERSPRUCH EINZULEGEN; DIES GILT AUCH FÜR EIN DARAUF GESTÜTZTES PROFILING. WIR VERARBEITEN DIE DATEN DANN NICHT MEHR, ES SEI DENN, WIR WEISEN ZWINGENDE SCHUTZWÜRDIGE GRÜNDE NACH, DIE IHRE INTERESSEN ÜBERWIEGEN, ODER DIE VERARBEITUNG DIENT RECHTSANSPRÜCHEN.</p>
+  <p>BEI VERARBEITUNG ZU DIREKTWERBUNG KÖNNEN SIE JEDERZEIT WIDERSPRECHEN; WIR NUTZEN DIE DATEN DANN NICHT MEHR DAFÜR. AUF DIESER DEMO FINDET KEINE DIREKTWERBUNG ÜBER TRACKING STATT.</p>
+
+  <h3>Betroffenenrechte</h3>
+  <ul>
+    <li>Auskunft (Art.&nbsp;15 DSGVO)</li>
+    <li>Berichtigung (Art.&nbsp;16 DSGVO)</li>
+    <li>Löschung (Art.&nbsp;17 DSGVO)</li>
+    <li>Einschränkung (Art.&nbsp;18 DSGVO)</li>
+    <li>Datenübertragbarkeit (Art.&nbsp;20 DSGVO), soweit die Verarbeitung auf Einwilligung oder Vertrag beruht und automatisiert erfolgt</li>
+  </ul>
+
+  <h3>Beschwerde</h3>
+  <p>Sie können sich bei einer Aufsichtsbehörde beschweren, insbesondere am Ort Ihres gewöhnlichen Aufenthalts, Ihres Arbeitsplatzes oder des mutmaßlichen Verstoßes (Art.&nbsp;77 DSGVO). Für die verantwortliche Stelle in Rheinland-Pfalz ist zuständig:</p>
+  <p>Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Rheinland-Pfalz (LfDI RLP)<br>
+  Hintere Bleiche 34, 55116 Mainz<br>
+  <a href="https://www.datenschutz.rlp.de/" rel="noopener">www.datenschutz.rlp.de</a></p>
+
+  <h3>SSL/TLS</h3>
+  <p>Die Verbindung zur Demo läuft über HTTPS. Eine verschlüsselte Übertragung erkennen Sie am Schloss in der Adresszeile.</p>
+
+  <h3>Drittlandtransfer allgemein</h3>
+  <p>Mit Vercel, Web3Forms (Betreiber in Indien, Infrastruktur u.&nbsp;a. in den USA) und Unsplash können Daten in Staaten ohne DSGVO-Niveau gelangen. US-Anbieter können unter US-Recht zu Offenlegungen gegenüber Behörden verpflichtet sein. Soweit ein Transfermechanismus nötig ist, stützen wir uns auf das EU-US Data Privacy Framework (Art.&nbsp;45 DSGVO), soweit der Empfänger zertifiziert ist, und/oder auf die Standardvertragsklauseln der EU-Kommission (Art.&nbsp;46 DSGVO). Die jeweiligen Garantien können Sie über die verlinkten Anbieterseiten einsehen oder bei uns erfragen.</p>
+
+  <h2 id="inventar">4. Was diese Website tatsächlich verarbeitet</h2>
+  <p>Abgleich gegen den aktuellen Code (Formulare, <code>form.js</code>, <code>store.js</code>, <code>admin.js</code>, <code>api/admin-*.js</code>, eingebundene URLs). Nicht im Code = nicht als laufend behauptet.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Vorgang</th>
+        <th>Daten</th>
+        <th>Rechtsgrundlage</th>
+        <th>Empfänger / Ort</th>
+        <th>Dauer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Seitenaufruf</td>
+        <td>IP, URL, Referrer, User-Agent</td>
+        <td>Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f</td>
+        <td>Vercel (Edge/USA u.&nbsp;a.)</td>
+        <td>Logs nach Praxis des Hosters</td>
+      </tr>
+      <tr>
+        <td>Kontaktformular</td>
+        <td>Name, E-Mail, Telefon, Anliegen, Ort/Hinweis, Notiz, optional ein oder mehrere <code>object_id</code>/<code>object_titles</code>, <code>privacy</code>, <code>consent_at</code></td>
+        <td>Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a; ergänzend lit.&nbsp;b bei vorvertraglicher Anfrage</td>
+        <td>Web3Forms, anschließend Büro-Mail</td>
+        <td>Bearbeitung, danach gesetzliche Fristen; bei Web3Forms bis zu 3 Jahre TTL laut DPA</td>
+      </tr>
+      <tr>
+        <td>Objekt-/Termin-Formular</td>
+        <td>wie Kontakt plus festes <code>object_id</code>, <code>object_title</code>, Wunschtermin</td>
+        <td>wie Kontaktformular</td>
+        <td>wie Kontaktformular</td>
+        <td>wie Kontaktformular</td>
+      </tr>
+      <tr>
+        <td>Honeypot <code>botcheck</code></td>
+        <td>leer bei Menschen</td>
+        <td>Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f (Missbrauchsschutz)</td>
+        <td>Web3Forms</td>
+        <td>nur im jeweiligen Request</td>
+      </tr>
+      <tr>
+        <td>Finanzierungsrechner</td>
+        <td>Kaufpreis, EK, Zins, Tilgung, NK-Schalter</td>
+        <td>keine Übermittlung</td>
+        <td>nur Ihr Browser</td>
+        <td>bis Reload / Tab schließen</td>
+      </tr>
+      <tr>
+        <td>Objektliste lokal</td>
+        <td>listings-JSON im localStorage</td>
+        <td>§&nbsp;25 Abs.&nbsp;2 TDDDG, Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f</td>
+        <td>nur Ihr Gerät</td>
+        <td>bis Sie den Speicher leeren</td>
+      </tr>
+      <tr>
+        <td>Anfragezähler</td>
+        <td>Objekt-ID und Zählwert, keine Namen</td>
+        <td>§&nbsp;25 Abs.&nbsp;2 TDDDG, Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f</td>
+        <td>nur Ihr Gerät</td>
+        <td>bis Sie den Speicher leeren</td>
+      </tr>
+      <tr>
+        <td>Admin-Login</td>
+        <td>Passwort im Request; Cookie <code>rais_admin</code></td>
+        <td>§&nbsp;25 Abs.&nbsp;2 Nr.&nbsp;2 TDDDG, Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f</td>
+        <td>Vercel</td>
+        <td>Cookie 8 Stunden</td>
+      </tr>
+      <tr>
+        <td>Unsplash-Bilder</td>
+        <td>IP, Referrer beim Bildabruf</td>
+        <td>Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f (Darstellung); TDDDG-Risiko siehe unten</td>
+        <td>Unsplash / Getty, USA</td>
+        <td>nach Praxis von Unsplash</td>
+      </tr>
+      <tr>
+        <td>Medien von haller-immobilien.de</td>
+        <td>IP beim Abruf von Logo/Fotos</td>
+        <td>Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f</td>
+        <td>bisheriger Hoster der Live-Site (IONOS laut deren Erklärung)</td>
+        <td>Logs des dortigen Hosters</td>
+      </tr>
+      <tr>
+        <td>Google Fonts (nur Admin)</td>
+        <td>IP beim Schriftabruf</td>
+        <td>Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f für den Admin-Zugang</td>
+        <td>Google</td>
+        <td>nach Praxis von Google</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="erfassung">5. Datenerfassung im Detail</h2>
+
+  <h3>Cookies und vergleichbare Techniken</h3>
+  <p>Auf den öffentlichen Seiten setzen wir <strong>kein</strong> Consent-Banner und <strong>kein</strong> Analyse-Cookie. Bewusst eingesetzte Speicherungen:</p>
+  <ul>
+    <li><strong><code>rais_admin</code></strong> (First-Party-Cookie, HttpOnly, Secure, SameSite=Strict, Path=/, Max-Age 28800 Sekunden = 8 Stunden). Wird nur nach erfolgreichem Admin-Login gesetzt und beim Logout auf Max-Age 0 gelöscht. Inhalt: Ablaufzeitpunkt plus HMAC über <code>ADMIN_PASSWORD</code>. Zweck: Sitzung des Backends. Rechtsgrundlage: §&nbsp;25 Abs.&nbsp;2 Nr.&nbsp;2 TDDDG, Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO. Ohne dieses Cookie kann der ausdrücklich angeforderte Admin-Zugang nicht aufrechterhalten werden.</li>
+    <li><strong>localStorage-Schlüssel <code>rais-listings-haller-haven</code></strong> (<code>config.js</code> / <code>store.js</code>): Objektliste, die der Admin lokal pflegt. Beim ersten Besuch ohne lokale Daten wird öffentlich <code>/listings.json</code> geladen und danach lokal gehalten. Keine Übermittlung an uns.</li>
+    <li><strong>localStorage-Schlüssel <code>rais-listings-haller-haven-inquiries</code></strong> (<code>form.js</code>): Zähler erfolgreicher Objektanfragen je <code>object_id</code> im selben Browser. Enthält keine Namen oder E-Mail-Adressen. Dient der Admin-Statistik auf demselben Gerät und dem CSV-Export. Keine Übermittlung an uns.</li>
+  </ul>
+  <p>Sie können Cookies und lokalen Speicher in Ihrem Browser löschen. Dann entfallen Admin-Sitzung, lokal gecachte Objekte und lokale Anfragezähler.</p>
+
+  <h3>Kontaktformular (kontakt.html)</h3>
+  <p>Pflichtfelder: Anliegen, Name, E-Mail, Telefon, Einwilligungs-Checkbox. Optional: Ort/freier Hinweis, Notiz sowie <strong>ein oder mehrere Objekte</strong> per Checkbox (Titel, Ort, Preis aus <code>listings.json</code>). Versteckt: Honeypot <code>botcheck</code>.</p>
+  <p>Vor dem Absenden muss die Checkbox gesetzt sein. Der Text lautet sinngemäß, dass die Angaben zur Bearbeitung der Anfrage und zur Kontaktaufnahme gespeichert und verarbeitet werden, mit Link auf diese Erklärung. Ohne Häkchen wird nicht gesendet (<code>form.js</code> bricht ab).</p>
+  <p>Beim Absenden ergänzt das Skript: <code>access_key</code>, <code>subject</code>, <code>from_name</code>, <code>privacy=accepted</code>, <code>consent_at</code> (ISO-Zeitstempel). Sind Objekte gewählt, werden <code>object_ids</code> und <code>object_titles</code> mitgesendet; der Mailbetreff enthält alle gewählten Titelnamen. Pro gewählter Objekt-ID steigt der lokale Anfragezähler im Browser. <code>privacy</code> und <code>consent_at</code> dienen dem Nachweis nach Art.&nbsp;7 Abs.&nbsp;1 DSGVO für eine spätere CRM-/Workflow-Übernahme.</p>
+  <p>Ziel im Code ist ausschließlich <code>POST https://api.web3forms.com/submit</code>. Es gibt kein serverseitiges Haller-Backend für das Formular und aktuell <strong>kein n8n</strong> in diesem Repository.</p>
+  <p><strong>Hinweis zum Demo-Stand:</strong> Der Access-Key steht noch auf dem Platzhalter <code>REPLACE_WEB3FORMS_ACCESS_KEY</code>. Solange das so ist, werden Anfragen im Browser abgewiesen und gehen nicht an Web3Forms. Die nachfolgende Beschreibung gilt für den vorgesehenen, im Code verdrahteten Versandweg, sobald ein echter Key gesetzt ist.</p>
+
+  <h3>Objekt- und Termin-Formular (objekt.html)</h3>
+  <p>Zusätzlich zu den Kontaktdaten: Anliegen (Besichtigung, Kaufinteresse, Finanzierung), versteckte Felder <code>object_id</code> und <code>object_title</code> für genau dieses Inserat, schreibgeschütztes Objektfeld, Wunschtermin/Notiz. Die Einwilligung umfasst ausdrücklich Terminvereinbarung. Der Mailbetreff wird objektbezogen gesetzt („Besichtigung · [Titel] · Haller“ oder „Anfrage · [Titel] · Haller“). Der Anker <code>#anfrage</code> springt vom Objektkarten-Button direkt zum Formular.</p>
+  <p>Nach erfolgreichem Versand erhöht derselbe Browser den lokalen Zähler für diese Objekt-ID.</p>
+
+  <h3>Anfrage per E-Mail, Telefon oder Fax</h3>
+  <p>Wenn Sie uns direkt schreiben oder anrufen, verarbeiten wir die dabei anfallenden Daten (Name, Kontaktdaten, Inhalt, ggf. Anschlussdaten) zur Bearbeitung. Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO bei vorvertraglichem Bezug, sonst Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO, oder Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO falls wir eine Einwilligung einholen. Speicherung bis Abschluss plus gesetzliche Fristen.</p>
+
+  <h3>Finanzierungsrechner (Startseite)</h3>
+  <p>Der Rechner (<code>calc.js</code>) rechnet Kaufpreis, Eigenkapital, Zinssatz, Tilgung und optionale RLP-Nebenkosten (5&nbsp;% Grunderwerbsteuer, ca. 2&nbsp;% Notar/Grundbuch, optionaler Makleranteil) ausschließlich in Ihrem Browser. Es werden keine Werte an uns, Vercel-Functions oder Web3Forms gesendet. Es wird kein localStorage und kein Cookie dafür gesetzt.</p>
+
+  <h3>Öffentliche Objektliste</h3>
+  <p><code>listings.json</code> enthält Demo-Inserate (Titel, Preis, Fläche, Ort, Status, Beschreibung, Bild-URLs, Anlegezeit, Zähler). Das sind redaktionelle Inhalte, keine Daten von Websitebesuchern. Bild-URLs zeigen derzeit auf Unsplash (siehe unten).</p>
+
+  <h3>Admin-Bereich</h3>
+  <p><code>admin.html</code> ist nicht in der öffentlichen Navigation. Login sendet das Passwort an <code>/api/admin-login</code>. Es gibt keine Nutzerkonten Dritter. Listen, Reihenfolge, Sichtbarkeit und CSV-Export liegen im localStorage des jeweiligen Geräts. CSV-Dateien enthalten Objektmetadaten und Zähler, keine Formular-Klardaten von Interessenten (die liegen in der Mail/bei Web3Forms).</p>
+
+  <h3>JSON-LD / SEO</h3>
+  <p><code>seo.js</code> schreibt strukturierte Daten (RealEstateAgent, RealEstateListing) in die Seite. Dafür werden keine zusätzlichen Drittserver aufgerufen. Canonical, Open Graph und <code>llms.txt</code> sind statische Angaben.</p>
+
+  <h3>Bewegung / Motion</h3>
+  <p><code>motion.js</code> prüft lokal <code>prefers-reduced-motion</code> und nutzt IntersectionObserver. Keine Telemetrie.</p>
+
+  <h2 id="dienste">6. Eingesetzte Dienste und Einbindungen</h2>
+
+  <h3>Web3Forms (Formularversand)</h3>
+  <p>Anbieter/Auftragsverarbeiter: <strong>Web3Creative</strong>, Betreiber von Web3Forms, mit Verarbeitung u.&nbsp;a. von Indien aus. Endpunkt im Code: <code>https://api.web3forms.com/submit</code>.</p>
+  <p>Rolle laut DPA vom 13.&nbsp;Juli 2026: Haller bzw. der Websitebetreiber ist Verantwortlicher für die Formulardaten, Web3Creative ist Auftragsverarbeiter. Das DPA wird nach Angabe des Anbieters durch Nutzung des Dienstes einbezogen und enthält Standardvertragsklauseln für Transfers aus dem EWR.</p>
+  <p>Verarbeitet werden die Formularfelder plus technische Metadaten (u.&nbsp;a. IP, Zeitstempel, Referrer, soweit der Dienst sie miterfasst). Zweck: Entgegennahme, Spam-Filter, E-Mail-Zustellung an das konfigurierte Postfach.</p>
+  <p>Unterauftragsverarbeiter laut Annex 3 des DPA (Stand 13.&nbsp;Juli 2026):</p>
+  <ul>
+    <li>Amazon Web Services, Inc. — Hosting, Speicher, Datenbank, Versand über Amazon SES</li>
+    <li>Cloudflare, Inc. — CDN, DNS, Edge-Sicherheit des Submit-Endpunkts</li>
+    <li>Hetzner Online GmbH — Anwendungsserver in der EU (Deutschland/Finnland)</li>
+    <li>CleanTalk Inc. und Automattic Inc. (Akismet) — Spamabwehr, erhalten laut DPA IP und E-Mail der Absender</li>
+  </ul>
+  <p>Speicherung: Das DPA nennt eine physische Aufbewahrung der Submissions von bis zu drei Jahren (Time-to-Live); die Sichtbarkeit im Dashboard hängt vom Tarif ab. Die Privacy Policy des Anbieters nennt zusätzlich tarifabhängige kürzere Fristen. Maßgeblich ist die jeweils aktuelle Fassung beim Anbieter.</p>
+  <p>Quellen: <a href="https://web3forms.com/privacy" rel="noopener">Web3Forms Privacy</a>, <a href="https://web3forms.com/dpa" rel="noopener">Web3Forms DPA</a>.</p>
+
+  <h3>Unsplash (Vorschaubilder und Open-Graph-Bilder)</h3>
+  <p>Viele Seiten, Objektgalerien und Social-Preview-Bilder laden Dateien von <code>images.unsplash.com</code>. Anbieter der Plattform Unsplash ist Unsplash Inc. (Getty Images). Beim Laden erfährt der Bildserver mindestens Ihre IP-Adresse und typischerweise den HTTP-Referrer.</p>
+  <p>Zweck: Illustration der Demo, nicht Nutzeranalyse durch uns. Rechtsgrundlage unsererseits: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO. Ob Unsplash auf dem Endgerät eigene Cookies setzt, steuern wir nicht. Einwilligung nach §&nbsp;25 Abs.&nbsp;1 TDDDG wird derzeit <strong>nicht</strong> eingeholt; das ist ein bewusst offenes Risiko dieser Demo und sollte vor Go-Live durch lokale Bilder ersetzt oder hinter Consent gelegt werden. Die RAIS-eigene Site hostet Medien lokal und weist Unsplash ausdrücklich als abgelöst aus — dieser Demo-Stand tut das noch nicht.</p>
+  <p>Informationen des Anbieters: <a href="https://unsplash.com/privacy" rel="noopener">unsplash.com/privacy</a>.</p>
+
+  <h3>Medien von haller-immobilien.de</h3>
+  <p>Logo, Favicon und mehrere Team- bzw. Portraitfotos werden von der bestehenden WordPress-Installation unter haller-immobilien.de geladen, nicht aus dem Ordner <code>assets/</code>. Partnerlogos und die Unterschrift liegen lokal unter <code>assets/</code>. Der Abruf der Remote-Dateien erzeugt Verbindungsdaten beim dortigen Hoster (auf der Live-Datenschutzerklärung von Haller: 1&amp;1 IONOS SE). Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO (einheitlicher Markenauftritt der Demo).</p>
+
+  <h3>Hero-Video</h3>
+  <p>Die Datei <code>hero_video.mp4</code> liegt auf diesem Host und wird von Vercel ausgeliefert. Kein YouTube, kein Vimeo, kein zusätzlicher Player-Tracker.</p>
+
+  <h3>Google Fonts nur im Admin</h3>
+  <p>Die öffentlichen Seiten nutzen lokale CSS-Schriften, nicht Google Fonts. Nur <code>admin.html</code> lädt Fraunces und Inter von <code>fonts.googleapis.com</code> / <code>fonts.gstatic.com</code>. Dadurch erhält Google die IP der Person, die das Backend öffnet. Öffentliche Besucher sind nicht betroffen. Quelle: <a href="https://policies.google.com/privacy?hl=de" rel="noopener">Google Privacy</a>.</p>
+
+  <h3>Externe Links (Trust-Strip und Partner)</h3>
+  <p>Verlinkt sind unter anderem MPLUS Architekten, Rahmig, Sprung &amp; Risos, VDIV und ein Immowelt-Profil. Beim bloßen Anzeigen der lokal gespeicherten Logos entsteht keine Verbindung zu diesen Seiten. Erst ein Klick führt Sie zum jeweiligen Anbieter; dann gilt dessen Datenschutzerklärung. Anne Ehl Stiftung ist ohne Link hinterlegt.</p>
+
+  <h3>GitHub</h3>
+  <p>Der Quellcode liegt in einem GitHub-Repository. Websitebesucher stellen dabei keine Verbindung zu GitHub her, außer sie öffnen das Repository selbst.</p>
+
+  <h2 id="nicht">7. Was bewusst nicht läuft</h2>
+  <p>Im aktuellen Demo-Code <strong>nicht</strong> vorhanden und daher hier nicht als Verarbeitung behauptet:</p>
+  <ul>
+    <li>Cookie-Banner, Klaro, Borlabs oder ein anderes Consent-Management</li>
+    <li>Google Analytics, IONOS WebAnalytics, Vercel Web Analytics, Meta-Pixel, Tag-Manager</li>
+    <li>Google Maps, OpenStreetMap-Kacheln, reCAPTCHA</li>
+    <li>Cal.com, Calendly, Sentry, Supabase, Notion, YouTube-Embeds</li>
+    <li>n8n-Webhook (früher als Live-Ziel genannt, im Frontend nicht verdrahtet)</li>
+    <li>Google-Unternehmensprofil-Widget</li>
+  </ul>
+  <p>Sobald einer dieser Dienste aktiviert wird, muss diese Erklärung und ggf. ein Consent-Banner angepasst werden, bevor der Dienst lädt.</p>
+
+  <h3>Geplanter, noch nicht aktiver Live-Pfad</h3>
+  <p>Für den späteren Produktivbetrieb ist intern vorgesehen, Formulare statt Web3Forms über eine n8n-Instanz auf einem EU-Server an das Büro weiterzuleiten. Das ist Absicht, kein Ist-Zustand. Solange <code>form.js</code> auf <code>api.web3forms.com</code> zeigt, gilt Abschnitt 6 zu Web3Forms.</p>
+
+  <h2 id="stand">8. Aktualität</h2>
+  <p>Diese Datenschutzerklärung gilt ab 15.&nbsp;September 2026. Sie wird angepasst, wenn sich Code, Dienste oder Recht ändern. Die jeweils aktuelle Fassung steht unter dieser URL.</p>
+  <p>Wesentliche Änderungen an Einwilligungen holen wir erneut ein, soweit das Gesetz das verlangt.</p>
+  <p class="muted-note">Arbeitsgrundlage, ausgerichtet an Art.&nbsp;13 DSGVO und am tatsächlichen Stack dieser Demo. Keine Rechtsberatung. Vor einem öffentlichen Go-Live: AVV mit Vercel prüfen, Web3Forms-Key und DPA dokumentieren, Unsplash-Hotlinking ersetzen oder consent-fähig machen, n8n nur beschreiben, wenn es wirklich sendet.</p>
 </section>
 
 <footer>

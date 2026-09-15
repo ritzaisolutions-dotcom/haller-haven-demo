@@ -89,10 +89,15 @@
           <option value="allgemein">Allgemeine Frage</option>
         </select>
       </label>
+      <fieldset class="object-pick-wrap">
+        <legend class="object-pick-legend">Objekte (optional)</legend>
+        <p class="object-pick-hint">Wählen Sie ein oder mehrere Inserate — wir wissen dann direkt, worum es geht. Leer lassen ist möglich.</p>
+        <div id="object-pick" class="object-pick" aria-label="Objekte auswählen"></div>
+      </fieldset>
       <label>Name <input name="name" required></label>
       <label>E-Mail <input type="email" name="email" required></label>
       <label>Telefon <input name="phone" required></label>
-      <label>Ort / Objekt <input name="place"></label>
+      <label>Ort / freier Hinweis <input name="place" placeholder="z. B. Namedy, Wunschlage …"></label>
       <label>Notiz <textarea name="note"></textarea></label>
       <label class="consent">
         <input type="checkbox" name="privacy" value="accepted" required>
@@ -108,7 +113,9 @@
   <div><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></div>
 </footer>
 <script>window.RAIS_FORM={accessKey:"REPLACE_WEB3FORMS_ACCESS_KEY",fromName:"Haller Haven",subject:"Anfrage Haller"};</script>
+<script src="config.js"></script>
 <script src="form.js"></script>
+<script src="listings.js"></script>
 <script src="nav.js"></script>
 <script src="seo.js"></script>
 </body>

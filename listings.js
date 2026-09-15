@@ -1,14 +1,26 @@
 (function () {
   var fullRoot = document.getElementById("listing-grid");
   var homeRoot = document.getElementById("home-listings");
-  if (!fullRoot && !homeRoot) return;
+  var pickRoot = document.getElementById("object-pick");
+  if (!fullRoot && !homeRoot && !pickRoot) return;
+
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
 
   function card(item) {
     var images = (item.images || []).filter(Boolean);
     var sold = item.status === "verkauft";
-    var el = document.createElement("a");
+    var id = encodeURIComponent(item.id || "");
+    var detailHref = "objekt.html?id=" + id;
+    var askHref = detailHref + "#anfrage";
+
+    var el = document.createElement("article");
     el.className = "listing-card";
-    el.href = "objekt.html?id=" + encodeURIComponent(item.id || "");
 
     var media = document.createElement("div");
     media.className = "listing-media";
@@ -109,8 +121,12 @@
     body.className = "listing-body";
     body.innerHTML =
       (sold ? "<small>Verkauft</small>" : "<small>Termin möglich</small>") +
-      "<h3>" + (item.title || "Ohne Titel") + "</h3>" +
-      "<p>" + [item.place, item.area ? item.area + " m²" : "", item.price].filter(Boolean).join(" · ") + "</p>";
+      "<h3>" + esc(item.title || "Ohne Titel") + "</h3>" +
+      "<p>" + esc([item.place, item.area ? item.area + " m²" : "", item.price].filter(Boolean).join(" · ")) + "</p>" +
+      '<div class="listing-actions">' +
+        '<a class="btn ghost" href="' + detailHref + '">Details</a>' +
+        '<a class="btn" href="' + askHref + '">Anfrage</a>' +
+      "</div>";
 
     el.appendChild(media);
     el.appendChild(body);
@@ -136,14 +152,38 @@
     live.forEach(function (item) { root.appendChild(card(item)); });
   }
 
+  function paintPick(root, list) {
+    if (!root) return;
+    root.innerHTML = "";
+    var live = liveOnly(list);
+    if (!live.length) {
+      root.innerHTML =
+        '<p class="muted-note">Derzeit keine freigeschalteten Objekte zur Auswahl. Sie können die Anfrage trotzdem absenden.</p>';
+      return;
+    }
+    live.forEach(function (item) {
+      var label = document.createElement("label");
+      label.className = "object-pick-item";
+      var meta = [item.place, item.price].filter(Boolean).join(" · ");
+      label.innerHTML =
+        '<input type="checkbox" name="object_id" value="' + esc(item.id || "") + '" data-title="' + esc(item.title || "") + '">' +
+        "<span><strong>" + esc(item.title || "Ohne Titel") + "</strong>" +
+        (meta ? "<small>" + esc(meta) + "</small>" : "") +
+        "</span>";
+      root.appendChild(label);
+    });
+  }
+
   fetch("/listings.json", { cache: "no-store" })
     .then(function (r) { return r.ok ? r.json() : []; })
     .then(function (list) {
       paint(fullRoot, list);
       paint(homeRoot, list, 3);
+      paintPick(pickRoot, list);
     })
     .catch(function () {
       paint(fullRoot, []);
       paint(homeRoot, [], 3);
+      paintPick(pickRoot, []);
     });
 })();
