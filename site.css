@@ -20,6 +20,14 @@
     --pad-x: clamp(20px, 5vw, 32px);
     --pad-y: clamp(48px, 8vw, 72px);
   }
+
+  .top {
+    gap: 8px 10px;
+  }
+
+  .top .btn {
+    margin-left: 0;
+  }
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
