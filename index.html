@@ -34,7 +34,7 @@
 <header class="top">
   <a class="brand" href="index.html"><img src="assets/brand/logo_240.png" alt="Haller"></a>
   <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menü</button>
-  <nav id="site-nav" aria-label="Hauptnavigation"><a href="objekte.html">Objekte</a><a href="verkaufen.html">Verkaufen</a><a href="hausverwaltung.html">Hausverwaltung</a></nav>
+  <nav id="site-nav" aria-label="Hauptnavigation"><a href="#objekte-home">Objekte</a><a href="verkaufen.html">Verkaufen</a><a href="hausverwaltung.html">Hausverwaltung</a></nav>
   <a class="btn" href="kontakt.html">Kontakt</a>
 </header>
 
@@ -73,7 +73,7 @@
       <h2>Aktuelle Inserate</h2>
     </div>
     <div class="actions">
-      <a class="btn ghost" href="objekte.html">Alle Objekte ansehen</a>
+      <a class="btn ghost" href="objekte.html">Alle Objekte</a>
     </div>
   </div>
   <div id="home-listings" class="listing-grid" data-reveal="up"></div>
@@ -84,8 +84,11 @@
     <p class="kicker">Kalkulation</p>
     <h2>Erste Preis- und Ratenübersicht</h2>
     <p style="color:var(--mut);margin-top:10px;max-width:48ch">Unverbindliche Schätzung — wie bei gängigen Finanzierungsrechnern: Kaufpreis, Eigenkapital, Zins/Tilgung und optionale Nebenkosten für Rheinland-Pfalz.</p>
+    <div class="actions" style="margin-top:18px">
+      <button type="button" class="btn" id="calc-toggle" aria-expanded="false" aria-controls="calc-panel">Rechner öffnen</button>
+    </div>
   </div>
-  <div class="calc" data-reveal="up">
+  <div class="calc" id="calc-panel" hidden data-reveal="up">
     <div class="calc-modules">
       <div class="calc-module">
         <h3>01 · Kaufpreis</h3>

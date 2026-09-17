@@ -16,6 +16,9 @@
   var outTotal = document.getElementById("calc-out-total");
   var outHint = document.getElementById("calc-out-hint");
 
+  var panel = document.getElementById("calc-panel");
+  var toggleBtn = document.getElementById("calc-toggle");
+
   var GRUNDERWERB_RLP = 0.05;
   var NOTAR_GRUNDBUCH = 0.02;
 
@@ -71,6 +74,30 @@
     if (brokerWrap) brokerWrap.hidden = !withNk;
   }
 
+  function isOpen() {
+    return panel && !panel.hidden;
+  }
+
+  function setOpen(open, opts) {
+    opts = opts || {};
+    if (!panel) return;
+    panel.hidden = !open;
+    if (toggleBtn) {
+      toggleBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      toggleBtn.textContent = open ? "Rechner schließen" : "Rechner öffnen";
+    }
+    if (open) {
+      compute();
+      if (opts.scroll) {
+        root.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  }
+
+  function openFromHash() {
+    if (location.hash === "#rechner") setOpen(true, { scroll: true });
+  }
+
   [priceEl, equityEl, rateEl, amortEl, brokerEl].forEach(function (el) {
     if (!el) return;
     el.addEventListener("input", compute);
@@ -78,5 +105,21 @@
   });
   if (nkToggle) nkToggle.addEventListener("change", compute);
 
-  compute();
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", function () {
+      var next = !isOpen();
+      setOpen(next, { scroll: next });
+    });
+  }
+
+  document.querySelectorAll('a[href="#rechner"]').forEach(function (link) {
+    link.addEventListener("click", function () {
+      setOpen(true, { scroll: true });
+    });
+  });
+
+  window.addEventListener("hashchange", openFromHash);
+  openFromHash();
+
+  if (isOpen()) compute();
 })();

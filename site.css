@@ -975,6 +975,9 @@ body:not(:has(.hero.overlay)) #site-nav a:hover { color: var(--txt); }
   align-items: start;
   margin-top: 8px;
 }
+.calc[hidden] {
+  display: none !important;
+}
 .calc-modules {
   display: grid;
   gap: 18px;
