@@ -7,5 +7,3 @@ window.RAIS_HOME_MAX = 6;
 window.RAIS_LISTINGS_URL = "/api/listings";
 /** After browser→Web3Forms success, metrics are recorded here. */
 window.RAIS_INQUIRIES_URL = "/api/inquiries";
-/** Browser loads Web3Forms key from here (Cloudflare blocks Vercel→Web3Forms). */
-window.RAIS_FORM_CONFIG_URL = "/api/form-config";

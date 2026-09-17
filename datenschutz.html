@@ -133,7 +133,7 @@
   <ul>
     <li>Vercel Inc. (Hosting, Logs, Admin-/Formular-API) — AVV abgeschlossen</li>
     <li>Supabase (EU Frankfurt): Objektliste, Anfragezähler, Consent-Protokoll, Rate-Limits — AVV abgeschlossen</li>
-    <li>Web3Creative / Web3Forms (Formularversand, serverseitig über <code>/api/inquiries</code>), einschließlich der in deren DPA genannten Unterauftragsverarbeiter — AVV/DPA abgeschlossen</li>
+    <li>Web3Creative / Web3Forms (Formularversand aus dem Browser), einschließlich der in deren DPA genannten Unterauftragsverarbeiter — AVV/DPA abgeschlossen</li>
     <li>E-Mail-Postfach der verantwortlichen Stelle (Zieladresse der Formularbenachrichtigung)</li>
     <li>Behörden, soweit wir gesetzlich verpflichtet sind</li>
   </ul>
@@ -192,11 +192,11 @@
   <h3>Kontaktformular (kontakt.html)</h3>
   <p>Pflichtfelder: Anliegen, Name, E-Mail, Telefon, Einwilligungs-Checkbox. Optional: Ort/freier Hinweis, Notiz sowie <strong>ein oder mehrere Objekte</strong> per Checkbox. Versteckt: Honeypot <code>botcheck</code>.</p>
   <p>Vor dem Absenden muss die Checkbox gesetzt sein. Ohne Häkchen wird nicht gesendet.</p>
-  <p>Der Browser sendet die Formulardaten an unsere Function <code>POST /api/inquiries</code>. Der Server validiert Eingaben, ruft Web3Forms mit dem serverseitigen Schlüssel <code>WEB3FORMS_ACCESS_KEY</code> auf und schreibt bei Erfolg einen minimalen Inquiry-Eintrag sowie Zählerstände in Supabase. Der Web3Forms-Key liegt nicht im HTML.</p>
+  <p>Der Browser sendet die Formulardaten direkt an Web3Forms (<code>https://api.web3forms.com/submit</code>) mit dem öffentlichen Access-Key (übliches Web3Forms-Clientmuster). Nach erfolgreichem Versand meldet der Browser optional <code>POST /api/inquiries</code>, damit wir Anfragezähler in Supabase aktualisieren können — ohne erneuten Mailversand.</p>
   <p>Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO (Einwilligung über die Checkbox); ergänzend Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO, wenn die Anfrage vorvertraglich ist.</p>
 
   <h3>Objekt- und Termin-Formular (objekt.html)</h3>
-  <p>Zusätzlich zu den Kontaktdaten: Anliegen (Besichtigung, Kaufinteresse, Finanzierung), versteckte Felder <code>object_id</code> und <code>object_title</code> für genau dieses Inserat, schreibgeschütztes Objektfeld, Wunschtermin/Notiz. Die Einwilligung umfasst ausdrücklich Terminvereinbarung. Der Mailbetreff wird objektbezogen gesetzt. Derselbe Server-Pfad <code>/api/inquiries</code> gilt wie beim Kontaktformular.</p>
+  <p>Zusätzlich zu den Kontaktdaten: Anliegen (Besichtigung, Kaufinteresse, Finanzierung), versteckte Felder <code>object_id</code> und <code>object_title</code> für genau dieses Inserat, schreibgeschütztes Objektfeld, Wunschtermin/Notiz. Die Einwilligung umfasst ausdrücklich Terminvereinbarung. Der Mailbetreff wird objektbezogen gesetzt. Versand wie beim Kontaktformular: Browser → Web3Forms, optional Metrics über <code>/api/inquiries</code>.</p>
 
   <h3>Anfrage per E-Mail, Telefon oder Telefax</h3>
   <p>Wenn Sie uns direkt schreiben oder anrufen, verarbeiten wir die dabei anfallenden Daten (Name, Kontaktdaten, Inhalt, ggf. Anschlussdaten) zur Bearbeitung. Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO bei vorvertraglichem Bezug, sonst Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO, oder Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO falls wir eine Einwilligung einholen. Speicherung bis Abschluss plus gesetzliche Fristen.</p>
@@ -217,7 +217,7 @@
   <h2 id="dienste">6. Plugins und Tools</h2>
 
   <h3>Web3Forms (Formularversand)</h3>
-  <p>Anbieter/Auftragsverarbeiter: <strong>Web3Creative</strong>, Betreiber von Web3Forms, mit Verarbeitung u.&nbsp;a. von Indien aus. Aufruf ausschließlich serverseitig aus <code>/api/inquiries</code> an <code>https://api.web3forms.com/submit</code> (Schlüssel nur als Env <code>WEB3FORMS_ACCESS_KEY</code>).</p>
+  <p>Anbieter/Auftragsverarbeiter: <strong>Web3Creative</strong>, Betreiber von Web3Forms, mit Verarbeitung u.&nbsp;a. von Indien aus. Aufruf aus dem Browser an <code>https://api.web3forms.com/submit</code> mit dem öffentlichen Access-Key (Web3Forms-Standard; der Key ist kein Geheimnis im klassischen Sinne).</p>
   <p>Rolle laut DPA vom 13.&nbsp;Juli 2026: Haller bzw. der Websitebetreiber ist Verantwortlicher für die Formulardaten, Web3Creative ist Auftragsverarbeiter. Das DPA ist abgeschlossen und enthält Standardvertragsklauseln für Transfers aus dem EWR.</p>
   <p>Verarbeitet werden die Formularfelder plus technische Metadaten (u.&nbsp;a. IP, Zeitstempel, Referrer, soweit der Dienst sie miterfasst). Zweck: Entgegennahme, Spam-Filter, E-Mail-Zustellung an das konfigurierte Postfach.</p>
   <p>Unterauftragsverarbeiter laut Annex 3 des DPA (Stand 13.&nbsp;Juli 2026):</p>
@@ -255,7 +255,7 @@
     <li>Google-Unternehmensprofil-Widget</li>
     <li>externes Consent-CDN (Klaro ist lokal unter <code>vendor/klaro/</code>)</li>
   </ul>
-  <p>Solange <code>/api/inquiries</code> Web3Forms aufruft, gilt der Abschnitt zu Web3Forms. Ein späterer Versand über n8n auf einem EU-Server würde erst nach der Umstellung hier beschrieben.</p>
+  <p>Solange Formulare Web3Forms nutzen, gilt der Abschnitt zu Web3Forms. Ein späterer Versand über n8n auf einem EU-Server würde erst nach der Umstellung hier beschrieben.</p>
 
   <h2 id="inventar">7. Verarbeitungsübersicht</h2>
   <p>Abgleich gegen den aktuellen Code. Nicht im Code = nicht als laufend behauptet.</p>

@@ -3,7 +3,7 @@
 Website der Haller Immobilienberatung GmbH (Andernach). Canonical: **https://haller-immobilien.de/**
 
 - **Preview (bis DNS):** https://haller-haven-demo.vercel.app/
-- **Formulare:** Browser → Web3Forms (key via `/api/form-config`); metrics via `/api/inquiries`. Env: `WEB3FORMS_ACCESS_KEY`
+- **Formulare:** Browser → Web3Forms (public access key in `form.js`); metrics via `/api/inquiries`
 - **Admin:** Vercel Env `ADMIN_PASSWORD` + `ADMIN_SESSION_SECRET`; Objekte live über **`/admin`** (Startseite max. 6)
 - **Listings:** Supabase-Tabellen `website_listings` / `website_inquiries` (Env: `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY`)
 - **Bilder (Upload):** Supabase Storage bucket `listing-images` (öffentlich lesbar)
@@ -17,7 +17,7 @@ Website der Haller Immobilienberatung GmbH (Andernach). Canonical: **https://hal
 |---|---|
 | `ADMIN_PASSWORD` | Shared admin password (plain or `sha256:<hex>`) |
 | `ADMIN_SESSION_SECRET` | HMAC secret for the admin cookie (separate from password) |
-| `WEB3FORMS_ACCESS_KEY` | Web3Forms key (served to browser via `/api/form-config`) |
+| `WEB3FORMS_ACCESS_KEY` | Optional / legacy; live forms use the public key in `form.js` |
 | `SUPABASE_URL` | Haller Supabase project URL |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server-only service role (listings, consent, uploads) |
 

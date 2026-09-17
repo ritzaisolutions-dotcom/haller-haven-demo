@@ -3,13 +3,15 @@
   var form = document.getElementById("f") || document.getElementById("anfrage");
   if (!form) return;
 
+  // Web3Forms access keys are meant for the browser (official client pattern).
+  var ACCESS_KEY = "7c1a6a5f-913b-4860-97a8-87d2a6097cf7";
   var recordUrl = window.RAIS_INQUIRIES_URL || "/api/inquiries";
-  var configUrl = window.RAIS_FORM_CONFIG_URL || "/api/form-config";
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
+
     var ok = document.getElementById("ok");
-    var btn = form.querySelector('[type="submit"]');
+    var btn = form.querySelector('button[type="submit"]');
     var privacy = form.querySelector('[name="privacy"]');
 
     if (privacy && !privacy.checked) {
@@ -23,13 +25,10 @@
 
     var fd = new FormData(form);
     var intent = (fd.get("intent") || "").toString();
-    var subject = cfg.subject || "Neue Anfrage";
     var isMulti = !!form.querySelector('input[type="checkbox"][name="object_id"]');
 
     var objectIds = [];
     var objectTitles = [];
-    var objectRefs = [];
-    var objectTypes = [];
 
     if (isMulti) {
       Array.prototype.forEach.call(
@@ -37,91 +36,61 @@
         function (el) {
           var id = String(el.value || "").trim();
           var title = String(el.getAttribute("data-title") || "").trim();
-          var ref = String(el.getAttribute("data-ref") || "").trim();
-          var typ = String(el.getAttribute("data-type") || "").trim();
           if (id) objectIds.push(id);
           if (title) objectTitles.push(title);
-          if (ref) objectRefs.push(ref);
-          if (typ) objectTypes.push(typ);
         }
       );
     } else {
       var singleId = (fd.get("object_id") || "").toString().trim();
       var singleTitle = (fd.get("object_title") || fd.get("place") || "").toString().trim();
-      var singleRef = (fd.get("object_ref") || "").toString().trim();
-      var singleType = (fd.get("object_type") || "").toString().trim();
       if (singleId) objectIds.push(singleId);
       if (singleTitle) objectTitles.push(singleTitle);
-      if (singleRef) objectRefs.push(singleRef);
-      if (singleType) objectTypes.push(singleType);
     }
 
+    var subject = cfg.subject || "Neue Anfrage";
     if (objectTitles.length) {
       var prefix =
         intent === "besichtigung" || intent === "objekt"
           ? "Besichtigung / Objektinteresse"
           : "Anfrage";
       subject = prefix + " · " + objectTitles.join(" · ") + " · Haller";
-    } else if (form.querySelector('[name="subject"]') && fd.get("subject")) {
-      subject = fd.get("subject").toString();
     }
 
-    if (btn) btn.disabled = true;
+    // Web3Forms expects "message"; our forms use "note".
+    var note = (fd.get("note") || fd.get("message") || "").toString().trim();
+    if (note) fd.set("message", note);
+    fd.delete("note");
 
-    fetch(configUrl, { credentials: "same-origin", cache: "no-store" })
-      .then(function (r) {
-        return r.json().then(function (j) {
-          return { ok: r.ok, status: r.status, body: j };
+    fd.append("access_key", ACCESS_KEY);
+    fd.append("subject", subject);
+    fd.append("from_name", cfg.fromName || "Haller Haven Website");
+    fd.set("privacy", "accepted");
+    fd.append("consent_at", new Date().toISOString());
+    if (objectTitles.length) {
+      fd.set("object_titles", objectTitles.join(" · "));
+      fd.set("object_title", objectTitles.join(" · "));
+    }
+
+    var originalText = btn ? btn.textContent : "";
+    if (btn) {
+      btn.textContent = "Wird gesendet …";
+      btn.disabled = true;
+    }
+
+    fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: fd
+    })
+      .then(function (response) {
+        return response.json().then(function (data) {
+          return { ok: response.ok, data: data };
         });
       })
-      .then(function (cfgRes) {
-        if (!cfgRes.ok || !cfgRes.body || !cfgRes.body.accessKey) {
-          var err = new Error("form_unconfigured");
-          err.status = cfgRes.status;
-          throw err;
-        }
-
-        var mailFd = new FormData();
-        mailFd.append("access_key", cfgRes.body.accessKey);
-        mailFd.append("subject", subject);
-        mailFd.append("from_name", cfgRes.body.fromName || cfg.fromName || "Haller Haven Website");
-        mailFd.append("name", (fd.get("name") || "").toString());
-        mailFd.append("email", (fd.get("email") || "").toString());
-        var phone = (fd.get("phone") || fd.get("tel") || "").toString();
-        var message = (fd.get("message") || fd.get("msg") || "").toString();
-        if (phone) mailFd.append("phone", phone);
-        if (message) mailFd.append("message", message);
-        if (intent) mailFd.append("intent", intent);
-        mailFd.append("privacy", "accepted");
-        mailFd.append("consent_at", new Date().toISOString());
-        if (objectIds.length) {
-          mailFd.append("object_ids", objectIds.join(", "));
-          mailFd.append("object_id", objectIds[0]);
-        }
-        if (objectTitles.length) {
-          mailFd.append("object_titles", objectTitles.join(" · "));
-          mailFd.append("object_title", objectTitles.join(" · "));
-        }
-        if (objectRefs[0]) mailFd.append("object_ref", objectRefs[0]);
-        if (objectTypes[0]) mailFd.append("object_type", objectTypes[0]);
-        var place = (fd.get("place") || "").toString();
-        if (place) mailFd.append("place", place);
-
-        return fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          body: mailFd
-        }).then(function (r) {
-          return r.json().then(function (j) {
-            return { ok: r.ok, body: j };
-          });
-        });
-      })
-      .then(function (mailRes) {
-        var j = mailRes.body || {};
-        if (!mailRes.ok || !j.success) {
-          var err = new Error((j && j.message) || "mail_failed");
-          err.status = 502;
-          throw err;
+      .then(function (result) {
+        if (!result.ok || !result.data || !result.data.success) {
+          throw new Error(
+            (result.data && result.data.message) || "Senden fehlgeschlagen."
+          );
         }
 
         // Best-effort metrics; mail already sent.
@@ -160,20 +129,18 @@
             }
           });
       })
-      .catch(function (err) {
+      .catch(function (error) {
         if (ok) {
-          if (err && err.status === 503) {
-            ok.textContent = "Formular derzeit nicht konfiguriert. Bitte später erneut versuchen.";
-          } else if (err && err.status === 429) {
-            ok.textContent = "Zu viele Anfragen. Bitte kurz warten.";
-          } else {
-            ok.textContent = (err && err.message) || "Senden fehlgeschlagen.";
-          }
+          ok.textContent =
+            (error && error.message) || "Senden fehlgeschlagen. Bitte erneut versuchen.";
           ok.style.display = "block";
         }
       })
       .finally(function () {
-        if (btn) btn.disabled = false;
+        if (btn) {
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }
       });
   });
 })();
