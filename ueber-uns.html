@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8"/>
@@ -27,7 +27,7 @@
 <link rel="icon" href="https://haller-immobilien.de/wp-content/uploads/2020/06/favicon32.png" type="image/png"/>
 <link rel="stylesheet" href="site.css"/>
 <link rel="stylesheet" href="listings.css"/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/klaro@0.7.18/dist/klaro.min.css"/>
+<link rel="stylesheet" href="vendor/klaro/klaro.min.css"/>
 </head>
 <body class="haven">
 <header class="top">
@@ -61,9 +61,9 @@
   </div>
 
   <div class="trust-strip" style="margin-top:48px" aria-label="Partner und Kooperationen">
-    <a class="trust-item" href="https://haller-immobilien.de/" target="_blank" rel="noopener noreferrer" title="Anne Ehl Stiftung (Fördert Kinder in Bildung, Kultur &amp; Sport)">
+    <span class="trust-item" title="Anne Ehl Stiftung (Fördert Kinder in Bildung, Kultur &amp; Sport)">
       <img src="assets/ehl.jpg" alt="Anne Ehl Stiftung" loading="lazy">
-    </a>
+    </span>
     <a class="trust-item" href="https://mplus-architekten.de/" target="_blank" rel="noopener noreferrer" title="MPLUS Architekten">
       <img src="assets/mplus.jpg" alt="MPLUS Architekten" loading="lazy">
     </a>
@@ -216,9 +216,10 @@
   <div><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="agb.html">AGB</a> · <a href="#" onclick="if(window.klaro){klaro.show();} return false;">Cookie-Einstellungen</a></div>
 </footer>
 <script defer type="text/javascript" src="klaro-config.js"></script>
-<script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/klaro@0.7.18/dist/klaro.min.js"></script>
+<script defer type="text/javascript" src="vendor/klaro/klaro.min.js"></script>
 <script src="nav.js"></script>
 <script src="motion.js"></script>
+<script src="config.js"></script>
 <script src="seo.js"></script>
 </body>
 </html>

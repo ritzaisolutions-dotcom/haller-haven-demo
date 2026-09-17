@@ -1,52 +1,46 @@
-# SOP — Admin-Panel (alle drei Templates)
+# SOP — Admin-Panel (Haller Haven)
 
-Pfad: `/admin.html`  
-Gilt für Formed, Ambience, Haven. Dieselbe Datei.
+Pfad: `/admin.html`
 
 ## Kann da jeder dran?
 
 **Öffentliche Seite:** ja, `/admin.html` ist eine normale URL. Wer den Link kennt, sieht das Login.
 
-**Login jetzt (Preview / Demo):** Passwort steht in `config.js` (`window.RAIS_ADMIN.password`).
-Das ist **kein** Schloss. Jeder mit „Seite Quelltext“ liest das Passwort.
-Zweck: der Makler klickt nicht aus Versehen ins Formular. Es hält keinen Angreifer.
+**Login:** Passwort liegt in der Vercel-Umgebungsvariable **`ADMIN_PASSWORD`** (Serverless: `api/admin-login.js`). Nicht in `config.js`, nicht im Git-Repo.
 
-Wenn das Passwort noch `REPLACE_ADMIN_PASSWORD` ist, bleibt das Panel zu. Absicht.
+Wenn `ADMIN_PASSWORD` fehlt, antwortet Login mit 503. Absicht.
 
-**Produktion (Pflicht vor Go-Live R2):** eines von beiden, sonst kein Admin auf der Kundendomain.
+**Produktion (Pflicht vor Go-Live):**
 
-1. Vercel Deployment Protection — Passwort nur in Vercel, nicht im Repo.
-2. Besser: Supabase Auth, eine E-Mail = der Makler. Listings in der Tabelle, nicht in localStorage.
+1. Starkes Passwort nur in Vercel Env setzen (nie committen).
+2. Optional: Vercel Deployment Protection für `/admin.html`.
+3. Langfristig besser: echte Auth + Listings in einer DB (nicht nur localStorage).
 
-Ohne 1 oder 2 darf `/admin.html` nicht auf der Live-Domain liegen (Datei nicht deployen oder Vercel ignorieren).
+Ohne gesetztes Env darf das Admin-Panel auf der Kundendomain nicht als „fertig“ gelten.
 
 ## Wo die Objekte liegen
 
 | Umgebung | Speicher | Wer sieht die Objekte |
 |---|---|---|
-| Preview / dieser Browser | `localStorage` | nur dieses Gerät |
+| Preview / dieser Browser (Admin-Edits) | `localStorage` (`rais-listings-haller-haven`) | nur dieses Gerät |
 | Öffentliche Seite | `/listings.json` im Repo | jeder Besucher |
-| Live nach AN-0015 | Supabase Tenant | jeder Besucher, Admin nur Login |
 
 Admin → Objekt anlegen → **JSON exportieren** → `listings.json` ersetzen → deployen.
-Sonst bleibt die Startseite leer. localStorage vom Admin erscheint nicht bei Website-Besuchern.
+Sonst bleibt die Startseite bei Besuchern unverändert. localStorage vom Admin erscheint nicht bei Website-Besuchern.
 
 ## Felder (nicht erweitern)
 
-title, price, area, rooms, place, status (`aktiv`\|`verkauft`), note, images (max. 12, WebP, lange Kante 1600).
-
-Bilder nur im Admin. Kein WhatsApp, kein Zip an Kevin.
+title, price, area, rooms, place, status (`aktiv`|`verkauft`), note, images (max. 12), inquiryCount, enabled, createdAt.
 
 ## Personalize
 
 In `config.js`:
 
-- `tenant`: Kurzname der Firma, z. B. `mueller-koeln`
-- `password`: nur Preview. Nie das Live-Passwort committen.
+- `tenant`: Kurzname, z. B. `haller-haven`
+- `RAIS_SITE_BASE`: Canonical-Origin (Go-Live: Domain tauschen + sitemap/robots/llms/HTML-Canonicals)
 
 ## Stop
 
 - Kein Live-Passwort in Git.
 - Kein Admin-Link in der öffentlichen Navigation.
 - `robots.txt` verbietet `/admin.html`.
-- Ohne AVV keine Personen im Formular. Admin-Fotos sind Objektdaten, trotzdem nicht öffentlich indexieren.

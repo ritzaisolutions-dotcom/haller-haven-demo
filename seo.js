@@ -1,5 +1,5 @@
 (function () {
-  var BASE = "https://haller-haven-demo.vercel.app";
+  var BASE = (window.RAIS_SITE_BASE || "https://haller-haven-demo.vercel.app").replace(/\/$/, "");
   var LOGO = "https://haller-immobilien.de/wp-content/uploads/2024/06/logo_240.png";
   var OG_DEFAULT = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80";
 

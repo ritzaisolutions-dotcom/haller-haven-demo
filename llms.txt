@@ -35,6 +35,7 @@ Diese Seite ist eine **Demo** (kein Live-Mandat). Primäre Firmenadresse und Kon
 - [Kontakt](https://haller-haven-demo.vercel.app/kontakt.html): Anfrage und Bürozeiten
 - [Impressum](https://haller-haven-demo.vercel.app/impressum.html)
 - [Datenschutz](https://haller-haven-demo.vercel.app/datenschutz.html)
+- [AGB](https://haller-haven-demo.vercel.app/agb.html)
 
 ## Objekte (Demo)
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8"/>
@@ -27,7 +27,7 @@
 <link rel="icon" href="https://haller-immobilien.de/wp-content/uploads/2020/06/favicon32.png" type="image/png"/>
 <link rel="stylesheet" href="site.css"/>
 <link rel="stylesheet" href="listings.css"/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/klaro@0.7.18/dist/klaro.min.css"/>
+<link rel="stylesheet" href="vendor/klaro/klaro.min.css"/>
 </head>
 <body class="haven">
 <div class="grain" aria-hidden="true"></div>
@@ -76,7 +76,9 @@
       <a class="btn ghost" href="objekte.html">Alle Objekte ansehen</a>
     </div>
   </div>
-  <div id="home-listings" class="listing-grid" data-reveal="up">
+  <div id="home-listings" class="listing-grid" data-reveal="up"></div>
+  <noscript>
+  <div class="listing-grid">
     <article class="listing-card">
       <div class="listing-media">
         <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Eigentumswohnung · Andernach Altstadt" loading="lazy">
@@ -120,6 +122,7 @@
       </div>
     </article>
   </div>
+  </noscript>
 </section>
 
 <section class="section" id="rechner">
@@ -246,9 +249,9 @@
     <h2>Besondere Leistungen — für uns selbstverständlich</h2>
   </div>
   <div class="trust-strip" data-reveal="up">
-    <a class="trust-item" href="https://haller-immobilien.de/" target="_blank" rel="noopener noreferrer" title="Anne Ehl Stiftung (Fördert Kinder in Bildung, Kultur &amp; Sport)">
+    <span class="trust-item" title="Anne Ehl Stiftung (Fördert Kinder in Bildung, Kultur &amp; Sport)">
       <img src="assets/ehl.jpg" alt="Anne Ehl Stiftung" loading="lazy">
-    </a>
+    </span>
     <a class="trust-item" href="https://mplus-architekten.de/" target="_blank" rel="noopener noreferrer" title="MPLUS Architekten">
       <img src="assets/mplus.jpg" alt="MPLUS Architekten" loading="lazy">
     </a>
@@ -322,8 +325,9 @@
   <div><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="agb.html">AGB</a> · <a href="#" onclick="if(window.klaro){klaro.show();} return false;">Cookie-Einstellungen</a></div>
 </footer>
 <script defer type="text/javascript" src="klaro-config.js"></script>
-<script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/klaro@0.7.18/dist/klaro.min.js"></script>
+<script defer type="text/javascript" src="vendor/klaro/klaro.min.js"></script>
 <script>window.RAIS_FORM={accessKey:"REPLACE_WEB3FORMS_ACCESS_KEY",fromName:"Haller Haven",subject:"Anfrage Haller"};</script>
+<script src="config.js"></script>
 <script src="form.js"></script>
 <script src="listings.js"></script>
 <script src="calc.js"></script>

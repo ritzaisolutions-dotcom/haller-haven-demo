@@ -19,21 +19,17 @@ var klaroConfig = {
       },
       consentNotice: {
         changeDescription: 'Es gab Änderungen seit Ihrem letzten Besuch. Bitte aktualisieren Sie Ihre Auswahl.',
-        description: 'Wir nutzen Cookies und essenzielle Technologien für den Betrieb und die Verbesserung unserer Website. Sie können Ihre Einstellungen jederzeit im Footer anpassen.',
+        description: 'Wir speichern nur technisch notwendige Einstellungen für den Betrieb der Website. Sie können Ihre Auswahl jederzeit im Footer anpassen.',
         learnMore: 'Einstellungen anpassen',
-        acceptAll: 'Alle akzeptieren',
+        acceptAll: 'Verstanden',
         acceptSelected: 'Auswahl speichern',
-        decline: 'Nur essentielle'
+        decline: 'Schließen'
       },
       purposes: {
-        necessary: 'Technisch Notwendig',
-        analytics: 'Statistik & Reichweite'
+        necessary: 'Technisch notwendig'
       },
       necessary: {
-        description: 'Technisch erforderliche Funktionen für den Betrieb der Website (z. B. lokale Inserate-Speicherung, Admin-Sitzung).'
-      },
-      googleAnalytics: {
-        description: 'Reichweitenmessung und anonymisierte Besucherstatistiken zur Optimierung des Webangebots.'
+        description: 'Technisch erforderliche Funktionen für den Betrieb der Website (z. B. lokale Inserate-Speicherung, Admin-Sitzung, Speicherung Ihrer Consent-Auswahl).'
       }
     }
   },
@@ -44,14 +40,6 @@ var klaroConfig = {
       purposes: ['necessary'],
       required: true,
       default: true
-    },
-    {
-      name: 'googleAnalytics',
-      title: 'Google Analytics (Anonyme Statistik)',
-      purposes: ['analytics'],
-      cookies: [/^_ga/, /^_gid/, /^_gat/],
-      required: false,
-      default: false
     }
   ]
 };
