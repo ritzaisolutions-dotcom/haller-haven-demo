@@ -180,6 +180,17 @@
     live.forEach(function (item) { root.appendChild(card(item)); });
   }
 
+  function showLoading(root) {
+    if (!root) return;
+    root.innerHTML = '<p class="listing-empty" role="status">Objekte werden geladen …</p>';
+  }
+
+  function showError(root) {
+    if (!root) return;
+    root.innerHTML =
+      '<p class="listing-empty" role="alert">Objekte konnten nicht geladen werden. Bitte Seite neu laden oder <a href="kontakt.html">Kontakt aufnehmen</a>.</p>';
+  }
+
   function paintPick(root, list) {
     if (!root) return;
     root.innerHTML = "";
@@ -259,6 +270,8 @@
   }
 
   function load() {
+    showLoading(fullRoot);
+    showLoading(homeRoot);
     return fetch(API, { cache: "no-store" })
       .then(function (r) {
         if (!r.ok) throw new Error("api");
@@ -266,13 +279,21 @@
       })
       .catch(function () {
         return fetch("/listings.json", { cache: "no-store" })
-          .then(function (r) { return r.ok ? r.json() : []; });
+          .then(function (r) {
+            if (!r.ok) throw new Error("json");
+            return r.json();
+          });
       })
       .then(function (list) {
         apply(Array.isArray(list) ? list : []);
       })
       .catch(function () {
-        apply([]);
+        showError(fullRoot);
+        showError(homeRoot);
+        if (pickRoot) {
+          pickRoot.innerHTML =
+            '<p class="muted-note" role="alert">Objektliste nicht verfügbar. Sie können die Anfrage trotzdem absenden.</p>';
+        }
       });
   }
 

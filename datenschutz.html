@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>Datenschutz · Haller Immobilien Andernach</title>
 <meta name="description" content="Datenschutzerklärung der Haller Immobilienberatung GmbH: Hosting bei Vercel, Formulare über Web3Forms, lokale Speicherung und Betroffenenrechte."/>
 <meta name="robots" content="index,follow,max-image-preview:large"/>
@@ -259,7 +259,7 @@
   <p>Wir nutzen auf unserer Website den Open-Source Consent-Manager <strong>Klaro!</strong> zur Verwaltung Ihrer Privatsphäre-Einstellungen. Klaro wird von unserem eigenen Host ausgeliefert (<code>vendor/klaro/</code>) — es findet beim Laden des Consent-Tools keine Verbindung zu einem externen Consent-CDN statt. Ihre Auswahl wird <strong>lokal auf Ihrem Endgerät</strong> im <code>localStorage</code> (Schlüssel <code>klaro</code>) gespeichert, damit der Banner Ihre Entscheidung merkt.</p>
   <p>Zusätzlich speichern wir zur Erfüllung unserer Nachweispflicht nach Art.&nbsp;7 Abs.&nbsp;1 DSGVO jedes Einwilligungs- bzw. Änderungsereignis serverseitig in einer Datenbank bei Supabase (Projektregion EU, Frankfurt). Verarbeitet werden: Zeitpunkt der Entscheidung (<code>consent_at</code>), Empfangszeit beim Server, Aktion (<code>accept</code> / <code>decline</code> / <code>change</code>), gewählte Dienste als JSON, eine anonyme <code>visitor_key</code> (Zufalls-UUID im localStorage-Schlüssel <code>rais-consent-vid</code>), Seitenpfad, Host sowie ein gekürzter User-Agent. Es werden keine Namen, E-Mail-Adressen oder IP-Adressen in diesem Protokoll gespeichert. Die Übermittlung erfolgt über unsere Vercel-Function <code>/api/consent-log</code> (kein direkter Browser-Zugriff mit Service-Schlüssel).</p>
   <p><strong>Rechtsgrundlage:</strong> Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;c DSGVO i.&nbsp;V.&nbsp;m. Art.&nbsp;7 Abs.&nbsp;1 DSGVO sowie Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO (berechtigtes Interesse an der rechtssicheren Verwaltung von Einwilligungen). Derzeit sind keine optionalen Analyse- oder Marketing-Dienste aktiv; der Banner führt den essenziellen Betriebsdienst.</p>
-  <p><strong>Speicherdauer:</strong> Consent-Protokolleinträge werden für <strong>36 Monate</strong> aufbewahrt und anschließend gelöscht. Die lokale Auswahl können Sie jederzeit über den Link <a href="#" onclick="if(window.klaro){klaro.show();} return false;">Cookie-Einstellungen</a> in der Fußzeile ändern oder durch Löschen der Browserdaten entfernen.</p>
+  <p><strong>Speicherdauer:</strong> Consent-Protokolleinträge werden für <strong>36 Monate</strong> aufbewahrt und anschließend automatisch gelöscht (täglicher Retention-Lauf in der Supabase-Datenbank, Funktion <code>website_consent_log_retention_run</code>). Die lokale Auswahl können Sie jederzeit über <button type="button" class="cookie-settings" onclick="if(window.klaro){klaro.show();}">Cookie-Einstellungen</button> in der Fußzeile ändern oder durch Löschen der Browserdaten entfernen.</p>
   <p>Auftragsverarbeitung: Supabase Inc. bzw. die jeweils benannte EU-Verarbeitungsgesellschaft für das Hosting der Datenbank (AVV/DPA mit dem Anbieter erforderlich, sobald produktiv genutzt). Details zum Hosting der Website bei Vercel siehe Abschnitt Hosting.</p>
 
   <h3>Weitere lokale Speicherungen:</h3>

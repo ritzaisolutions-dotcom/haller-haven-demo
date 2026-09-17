@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="robots" content="noindex,nofollow" />
   <title>Objekte verwalten · Haller</title>
   <link rel="icon" href="https://haller-immobilien.de/wp-content/uploads/2020/06/favicon32.png" type="image/png" />
@@ -31,7 +31,7 @@
       font-size: 17px;
     }
     :focus-visible { outline: 3px solid var(--acc); outline-offset: 2px; }
-    .wrap { max-width: 980px; margin: 0 auto; padding: 28px 20px 80px; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 28px 20px calc(80px + env(safe-area-inset-bottom, 0px)); }
     h1 {
       font-size: clamp(28px, 4vw, 36px);
       font-weight: 650;
@@ -142,6 +142,7 @@
       padding: 10px 14px;
       font-size: 14px;
       border-radius: 8px;
+      min-height: 44px;
     }
     button:disabled, .switch input:disabled { opacity: 0.4; cursor: not-allowed; }
     .ok-banner {
@@ -216,7 +217,8 @@
     .chip {
       font-size: 13px;
       font-weight: 600;
-      padding: 5px 10px;
+      padding: 8px 12px;
+      min-height: 32px;
       border-radius: 999px;
       border: 1px solid var(--line);
       background: var(--bg);
@@ -272,12 +274,19 @@
       position: absolute;
       top: 4px; right: 4px;
       margin: 0;
-      padding: 2px 8px;
+      padding: 0;
+      width: 44px;
+      height: 44px;
+      min-height: 44px;
       background: rgba(34, 34, 34, 0.85);
       border: none;
       border-radius: 6px;
-      font-size: 14px;
+      font-size: 18px;
+      line-height: 1;
       color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     #login-msg:not(:empty) { color: var(--off); font-weight: 600; margin-top: 12px; }
     #form-msg:not(:empty) { color: var(--acc); margin-top: 12px; font-weight: 600; }

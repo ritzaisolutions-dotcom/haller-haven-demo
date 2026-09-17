@@ -8,6 +8,7 @@
 .listing-filter {
   margin: 0;
   padding: 8px 14px;
+  min-height: 44px;
   font: inherit;
   font-size: 12px;
   letter-spacing: 0.08em;
@@ -18,15 +19,21 @@
   cursor: pointer;
 }
 
-.listing-filter.is-on,
-.listing-filter:hover {
+.listing-filter.is-on {
   border-color: var(--acc, #0073E1);
   color: var(--acc, #0073E1);
 }
 
+.listing-filter:hover:not(.is-on),
+.listing-filter:active:not(.is-on),
+.listing-filter:focus-visible:not(.is-on) {
+  border-color: var(--acc, #0073E1);
+  color: var(--txt, #222);
+}
+
 .listing-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 32px;
   margin-top: 40px;
 }
@@ -57,7 +64,8 @@
   overflow: hidden;
 }
 
-.listing-card:hover {
+.listing-card:hover,
+.listing-card:active {
   border-color: var(--acc, #0073E1);
 }
 
@@ -90,6 +98,8 @@
   align-items: flex-start;
   gap: 10px;
   margin: 0;
+  padding: 8px 0;
+  min-height: 44px;
   font-size: 14px;
   color: var(--txt, #222);
   cursor: pointer;
@@ -98,11 +108,13 @@
 .object-pick-item input {
   margin-top: 3px;
   flex: 0 0 auto;
+  accent-color: var(--acc, #0073E1);
 }
 
 .object-pick-item span {
   display: grid;
   gap: 2px;
+  min-width: 0;
 }
 
 .object-pick-item small {
@@ -148,8 +160,8 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   margin: 0;
   padding: 0;
   border: none;
@@ -171,7 +183,8 @@
 .listing-nav.prev { left: 10px; }
 .listing-nav.next { right: 10px; }
 
-.listing-nav:hover {
+.listing-nav:hover,
+.listing-nav:active {
   background: #fff;
   color: var(--acc, #0073E1);
 }
@@ -183,24 +196,36 @@
   bottom: 14px;
   display: flex;
   justify-content: center;
-  gap: 6px;
+  gap: 4px;
   z-index: 2;
   pointer-events: none;
 }
 
 .listing-dot {
   pointer-events: auto;
-  width: 7px;
-  height: 7px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   margin: 0;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.55);
+  background: transparent;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-.listing-dot.is-on {
+.listing-dot::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.listing-dot.is-on::before {
   background: #fff;
 }
 
@@ -248,10 +273,5 @@
   .listing-ph {
     height: 280px;
     min-height: 240px;
-  }
-
-  .listing-nav {
-    width: 32px;
-    height: 32px;
   }
 }

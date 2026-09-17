@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>Kontakt · Haller Immobilien Andernach</title>
 <meta name="description" content="Kontakt und Beratungstermin: Kirchberg 42, 56626 Andernach · 02632 9458-0 · info@haller-immobilien.de"/>
 <meta name="robots" content="index,follow,max-image-preview:large"/>
@@ -96,9 +96,9 @@
         <p class="object-pick-hint">Wählen Sie ein oder mehrere aktuelle Inserate — die Mail kommt mit Objektbezug ins Büro. Leer lassen ist möglich.</p>
         <div id="object-pick" class="object-pick" aria-label="Objekte auswählen"></div>
       </fieldset>
-      <label>Name <input name="name" required></label>
-      <label>E-Mail <input type="email" name="email" required></label>
-      <label>Telefon <input name="phone" required></label>
+      <label>Name <input name="name" autocomplete="name" required></label>
+      <label>E-Mail <input type="email" name="email" autocomplete="email" required></label>
+      <label>Telefon <input type="tel" name="phone" autocomplete="tel" inputmode="tel" required></label>
       <label>Ort / freier Hinweis <input name="place" placeholder="z. B. Namedy, Wunschlage …"></label>
       <label>Notiz <textarea name="note"></textarea></label>
       <label class="consent">
@@ -122,7 +122,7 @@
     <a href="impressum.html">Impressum</a>
     <a href="datenschutz.html">Datenschutz</a>
     <a href="agb.html">AGB</a>
-    <a href="#" onclick="if(window.klaro){klaro.show();} return false;">Cookie-Einstellungen</a>
+    <button type="button" class="cookie-settings" onclick="if(window.klaro){klaro.show();}">Cookie-Einstellungen</button>
   </div>
 </footer>
 <script defer type="text/javascript" src="klaro-config.js"></script>
