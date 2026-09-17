@@ -281,7 +281,7 @@
     imgs.forEach(function (src, i) {
       var d = document.createElement("div");
       d.className = "thumb-edit";
-      d.innerHTML = "<img src=\"" + src + "\" alt=\"\"><button type=\"button\" data-i=\"" + i + "\">×</button>";
+      d.innerHTML = "<img src=\"" + src + "\" alt=\"\"><button type=\"button\" data-i=\"" + i + "\" aria-label=\"Bild entfernen\">×</button>";
       box.appendChild(d);
     });
     $("imgcount").textContent = imgs.length + " / 12";
