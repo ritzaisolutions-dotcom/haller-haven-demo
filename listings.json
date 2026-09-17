@@ -1,69 +1,350 @@
 [
   {
-    "id": "o-andernach-altstadt",
-    "title": "Eigentumswohnung · Andernach Altstadt",
-    "price": "289.000 €",
-    "area": "92",
+    "id": "k-neuwied-neubau-2zkb",
+    "title": "Zukunftsgerecht wohnen: 2-ZKB Neubauwohnung mit überdachter Loggia – barrierefrei und komfortabel",
+    "price": "270.000 €",
+    "area": "66",
+    "rooms": "2",
+    "place": "Neuwied",
+    "type": "kauf",
+    "category": "Wohnung",
+    "ref": "RN270",
+    "status": "aktiv",
+    "enabled": true,
+    "featured": true,
+    "note": "Aktuelles Kaufangebot. Besichtigung nach Terminvereinbarung.",
+    "images": [
+      "assets/objekte/k-neuwied-neubau-2zkb/01.jpg",
+      "assets/objekte/k-neuwied-neubau-2zkb/02.jpg",
+      "assets/objekte/k-neuwied-neubau-2zkb/03.jpg",
+      "assets/objekte/k-neuwied-neubau-2zkb/04.jpg",
+      "assets/objekte/k-neuwied-neubau-2zkb/05.jpg",
+      "assets/objekte/k-neuwied-neubau-2zkb/06.jpg"
+    ],
+    "links": {
+      "is24": "https://www.immobilienscout24.de/expose/170460433",
+      "immowelt": "https://www.immowelt.de/expose/0db062b2-8c4e-4b43-a352-0acce51d98ce"
+    },
+    "createdAt": "2026-09-17T12:00:00.000Z",
+    "inquiryCount": 0
+  },
+  {
+    "id": "k-andernach-4zkb-balkon",
+    "title": "Freiheit statt Miete: Komplett modernisierte 4-Zimmer-ETW mit BALKON und EINBAUKÜCHE – 84 m²",
+    "price": "195.000 €",
+    "area": "84",
+    "rooms": "4",
+    "place": "Andernach",
+    "type": "kauf",
+    "category": "Wohnung",
+    "ref": "DA195",
+    "status": "aktiv",
+    "enabled": true,
+    "featured": true,
+    "note": "Aktuelles Kaufangebot. Besichtigung nach Terminvereinbarung.",
+    "images": [
+      "assets/objekte/k-andernach-4zkb-balkon/01.jpg",
+      "assets/objekte/k-andernach-4zkb-balkon/02.jpg",
+      "assets/objekte/k-andernach-4zkb-balkon/03.jpg",
+      "assets/objekte/k-andernach-4zkb-balkon/04.jpg",
+      "assets/objekte/k-andernach-4zkb-balkon/05.jpg",
+      "assets/objekte/k-andernach-4zkb-balkon/06.jpg"
+    ],
+    "links": {
+      "is24": "https://www.immobilienscout24.de/expose/170402978",
+      "immowelt": "https://www.immowelt.de/expose/9d43489e-2593-43a3-994d-69281275fad5"
+    },
+    "createdAt": "2026-09-17T12:00:00.000Z",
+    "inquiryCount": 0
+  },
+  {
+    "id": "k-weissenthurm-3zkb",
+    "title": "Charmantes Zuhause mit Geschichte – Fairer Kaufpreis, vielseitige Möglichkeiten – ca. 84 m²",
+    "price": "165.000 €",
+    "area": "84",
+    "rooms": "3",
+    "place": "Weißenthurm",
+    "type": "kauf",
+    "category": "Wohnung",
+    "ref": "MW165",
+    "status": "aktiv",
+    "enabled": true,
+    "featured": true,
+    "note": "Aktuelles Kaufangebot. Besichtigung nach Terminvereinbarung.",
+    "images": [
+      "assets/objekte/k-weissenthurm-3zkb/01.jpg",
+      "assets/objekte/k-weissenthurm-3zkb/02.jpg",
+      "assets/objekte/k-weissenthurm-3zkb/03.jpg",
+      "assets/objekte/k-weissenthurm-3zkb/04.jpg",
+      "assets/objekte/k-weissenthurm-3zkb/05.jpg",
+      "assets/objekte/k-weissenthurm-3zkb/06.jpg"
+    ],
+    "links": {
+      "is24": "https://www.immobilienscout24.de/expose/169619449",
+      "immowelt": "https://www.immowelt.de/expose/da44436d-5051-42c8-932d-4f24bf514ee6"
+    },
+    "createdAt": "2026-09-17T12:00:00.000Z",
+    "inquiryCount": 0
+  },
+  {
+    "id": "k-andernach-etw-balkon",
+    "title": "KAPITALANLAGE – bezahlbarer Start ins EIGENTUM: Gemütliche und funktionale ETW mit BALKON, 70 m²",
+    "price": "139.000 €",
+    "area": "70",
+    "rooms": "2",
+    "place": "Andernach",
+    "type": "kauf",
+    "category": "Wohnung",
+    "ref": "KSA139",
+    "status": "aktiv",
+    "enabled": true,
+    "featured": true,
+    "note": "Aktuelles Kaufangebot. Besichtigung nach Terminvereinbarung.",
+    "images": [
+      "assets/objekte/k-andernach-etw-balkon/01.jpg",
+      "assets/objekte/k-andernach-etw-balkon/02.jpg",
+      "assets/objekte/k-andernach-etw-balkon/03.jpg",
+      "assets/objekte/k-andernach-etw-balkon/04.jpg",
+      "assets/objekte/k-andernach-etw-balkon/05.jpg",
+      "assets/objekte/k-andernach-etw-balkon/06.jpg"
+    ],
+    "links": {
+      "is24": "https://www.immobilienscout24.de/expose/167126182",
+      "immowelt": "https://www.immowelt.de/expose/58e1ffbd-c817-4809-91fe-be0165c4f7d1"
+    },
+    "createdAt": "2026-09-17T12:00:00.000Z",
+    "inquiryCount": 0
+  },
+  {
+    "id": "k-nickenich-haus-ausbau",
+    "title": "Raum für Familie, Generationen oder Kapitalanlage – vielseitige Immobilie mit Ausbaupotenzial",
+    "price": "265.000 €",
+    "area": "330",
+    "rooms": "6",
+    "place": "Nickenich",
+    "type": "kauf",
+    "category": "Haus",
+    "ref": "MN265",
+    "status": "aktiv",
+    "enabled": true,
+    "featured": true,
+    "note": "Aktuelles Kaufangebot. Besichtigung nach Terminvereinbarung.",
+    "images": [
+      "assets/objekte/k-nickenich-haus-ausbau/01.jpg",
+      "assets/objekte/k-nickenich-haus-ausbau/02.jpg",
+      "assets/objekte/k-nickenich-haus-ausbau/03.jpg",
+      "assets/objekte/k-nickenich-haus-ausbau/04.jpg",
+      "assets/objekte/k-nickenich-haus-ausbau/05.jpg",
+      "assets/objekte/k-nickenich-haus-ausbau/06.jpg"
+    ],
+    "links": {
+      "is24": "https://www.immobilienscout24.de/expose/170396831",
+      "immowelt": "https://www.immowelt.de/expose/ce17ac96-01ca-4108-9458-714ed993140f"
+    },
+    "createdAt": "2026-09-17T12:00:00.000Z",
+    "inquiryCount": 0
+  },
+  {
+    "id": "k-andernach-kirchberg-efh",
+    "title": "Wohnglück auf dem KIRCHBERG – Modernisiertes EFH mit Einliegerwohnung, Garten und Garage",
+    "price": "525.000 €",
+    "area": "173",
+    "rooms": "6",
+    "place": "Andernach",
+    "type": "kauf",
+    "category": "Haus",
+    "ref": "AL525",
+    "status": "aktiv",
+    "enabled": true,
+    "featured": true,
+    "note": "Aktuelles Kaufangebot. Besichtigung nach Terminvereinbarung.",
+    "images": [
+      "assets/objekte/k-andernach-kirchberg-efh/01.jpg",
+      "assets/objekte/k-andernach-kirchberg-efh/02.jpg",
+      "assets/objekte/k-andernach-kirchberg-efh/03.jpg",
+      "assets/objekte/k-andernach-kirchberg-efh/04.jpg",
+      "assets/objekte/k-andernach-kirchberg-efh/05.jpg",
+      "assets/objekte/k-andernach-kirchberg-efh/06.jpg"
+    ],
+    "links": {
+      "is24": "https://www.immobilienscout24.de/expose/169947368",
+      "immowelt": "https://www.immowelt.de/expose/6aed8265-4121-412c-945f-1a2541539616"
+    },
+    "createdAt": "2026-09-17T12:00:00.000Z",
+    "inquiryCount": 0
+  },
+  {
+    "id": "k-nickenich-dhh-2012",
+    "title": "Zukunftssichere Doppelhaushälfte BJ 2012: Energieeffizient mit 2 TERRASSEN, GARTEN, Garage/Carport",
+    "price": "595.000 €",
+    "area": "135",
+    "rooms": "4",
+    "place": "Nickenich",
+    "type": "kauf",
+    "category": "Doppelhaushälfte",
+    "ref": "ON595",
+    "status": "aktiv",
+    "enabled": true,
+    "featured": false,
+    "note": "Aktuelles Kaufangebot. Besichtigung nach Terminvereinbarung.",
+    "images": [
+      "assets/objekte/k-nickenich-dhh-2012/01.jpg",
+      "assets/objekte/k-nickenich-dhh-2012/02.jpg",
+      "assets/objekte/k-nickenich-dhh-2012/03.jpg",
+      "assets/objekte/k-nickenich-dhh-2012/04.jpg",
+      "assets/objekte/k-nickenich-dhh-2012/05.jpg",
+      "assets/objekte/k-nickenich-dhh-2012/06.jpg"
+    ],
+    "links": {
+      "is24": "https://www.immobilienscout24.de/expose/167328272",
+      "immowelt": "https://www.immowelt.de/expose/0fd79027-ce4d-43e3-8901-332e0278971a"
+    },
+    "createdAt": "2026-09-17T12:00:00.000Z",
+    "inquiryCount": 0
+  },
+  {
+    "id": "k-andernach-panorama-efh",
+    "title": "Panoramablick auf Andernach: EFH mit 230 m² Wohnfläche, Einliegerwohnung 52 m², 1.469 m² Grundst.",
+    "price": "315.000 €",
+    "area": "230",
+    "rooms": "6",
+    "place": "Andernach",
+    "type": "kauf",
+    "category": "Haus",
+    "ref": "KA315",
+    "status": "aktiv",
+    "enabled": true,
+    "featured": false,
+    "note": "Aktuelles Kaufangebot. Besichtigung nach Terminvereinbarung.",
+    "images": [
+      "assets/objekte/k-andernach-panorama-efh/01.jpg",
+      "assets/objekte/k-andernach-panorama-efh/02.jpg",
+      "assets/objekte/k-andernach-panorama-efh/03.jpg",
+      "assets/objekte/k-andernach-panorama-efh/04.jpg",
+      "assets/objekte/k-andernach-panorama-efh/05.jpg",
+      "assets/objekte/k-andernach-panorama-efh/06.jpg"
+    ],
+    "links": {
+      "is24": "https://www.immobilienscout24.de/expose/166070850",
+      "immowelt": "https://www.immowelt.de/expose/f9907024-1707-4b40-9060-2bdbfd19e407"
+    },
+    "createdAt": "2026-09-17T12:00:00.000Z",
+    "inquiryCount": 0
+  },
+  {
+    "id": "m-neuwied-2zkb-balkon",
+    "title": "Für SINGLES oder PAARE: Mietwohnung mit guter Raumaufteilung, 62 m² 2 ZKB mit BALKON, Option GARAGE",
+    "price": "620 € / Monat",
+    "area": "62",
+    "rooms": "2",
+    "place": "Neuwied",
+    "type": "miete",
+    "category": "Wohnung",
+    "ref": "HN620",
+    "status": "aktiv",
+    "enabled": true,
+    "featured": false,
+    "note": "Aktuelles Mietangebot. Besichtigung nach Terminvereinbarung.",
+    "images": [
+      "assets/objekte/m-neuwied-2zkb-balkon/01.jpg",
+      "assets/objekte/m-neuwied-2zkb-balkon/02.jpg",
+      "assets/objekte/m-neuwied-2zkb-balkon/03.jpg",
+      "assets/objekte/m-neuwied-2zkb-balkon/04.jpg",
+      "assets/objekte/m-neuwied-2zkb-balkon/05.jpg",
+      "assets/objekte/m-neuwied-2zkb-balkon/06.jpg"
+    ],
+    "links": {
+      "is24": "https://www.immobilienscout24.de/expose/169290261",
+      "immowelt": "https://www.immowelt.de/expose/f3d1e2cd-7602-4e74-a4a7-65792fd2e8d8"
+    },
+    "createdAt": "2026-09-17T12:00:00.000Z",
+    "inquiryCount": 0
+  },
+  {
+    "id": "m-andernach-terrasse-garten",
+    "title": "Begehrte Lage – großzügige 90 m² mit Sonnenterrasse, Garten und stilvollem Parkett",
+    "price": "1.100 € / Monat",
+    "area": "90",
     "rooms": "3",
     "place": "Andernach",
+    "type": "miete",
+    "category": "Wohnung",
+    "ref": "PA1100",
     "status": "aktiv",
     "enabled": true,
-    "note": "Helle Etagenwohnung nahe Rheinpromenade. Balkon, Einbauküche, Keller. Ideal als Eigennutz oder Kapitalanlage. Besichtigung nach Termin.",
+    "featured": false,
+    "note": "Aktuelles Mietangebot. Besichtigung nach Terminvereinbarung.",
     "images": [
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"
+      "assets/objekte/m-andernach-terrasse-garten/01.jpg",
+      "assets/objekte/m-andernach-terrasse-garten/02.jpg",
+      "assets/objekte/m-andernach-terrasse-garten/03.jpg",
+      "assets/objekte/m-andernach-terrasse-garten/04.jpg",
+      "assets/objekte/m-andernach-terrasse-garten/05.jpg",
+      "assets/objekte/m-andernach-terrasse-garten/06.jpg"
     ],
-    "createdAt": "2026-08-12T09:00:00.000Z",
-    "inquiryCount": 7
+    "links": {
+      "is24": "https://www.immobilienscout24.de/expose/170603289",
+      "immowelt": "https://www.immowelt.de/expose/f3b4a5fc-30e1-4a8b-bf30-4f788dd83ca5"
+    },
+    "createdAt": "2026-09-17T12:00:00.000Z",
+    "inquiryCount": 0
   },
   {
-    "id": "o-namedy-efh",
-    "title": "Einfamilienhaus mit Garten · Namedy",
-    "price": "475.000 €",
-    "area": "148",
-    "rooms": "5",
-    "place": "Andernach-Namedy",
+    "id": "m-andernach-dachgeschoss",
+    "title": "Großzügige 3-Zimmer-Dachgeschosswohnung mit 120 m², 2 Balkonen & neuer Wärmepumpe",
+    "price": "1.080 € / Monat",
+    "area": "120",
+    "rooms": "3",
+    "place": "Andernach",
+    "type": "miete",
+    "category": "Wohnung",
+    "ref": "BJ1430",
     "status": "aktiv",
     "enabled": true,
-    "note": "Familienhaus mit Südgarten, Garage und ausgebautem Dachgeschoss. Ruhige Lage, gute Anbindung nach Koblenz. Terminbuchung über das Formular.",
+    "featured": false,
+    "note": "Aktuelles Mietangebot. Besichtigung nach Terminvereinbarung.",
     "images": [
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1600047509807-ba8f99d36b3d?auto=format&fit=crop&w=1600&q=80"
+      "assets/objekte/m-andernach-dachgeschoss/01.jpg",
+      "assets/objekte/m-andernach-dachgeschoss/02.jpg",
+      "assets/objekte/m-andernach-dachgeschoss/03.jpg",
+      "assets/objekte/m-andernach-dachgeschoss/04.jpg",
+      "assets/objekte/m-andernach-dachgeschoss/05.jpg",
+      "assets/objekte/m-andernach-dachgeschoss/06.jpg"
     ],
-    "createdAt": "2026-08-28T11:30:00.000Z",
-    "inquiryCount": 4
+    "links": {
+      "is24": "https://www.immobilienscout24.de/expose/167895981",
+      "immowelt": "https://www.immowelt.de/expose/a7d17dae-2c2b-425b-a5a2-a2c87707ac1b"
+    },
+    "createdAt": "2026-09-17T12:00:00.000Z",
+    "inquiryCount": 0
   },
   {
-    "id": "o-koblenz-maisonette",
-    "title": "Maisonette-Wohnung · Koblenz-Metternich",
-    "price": "339.000 €",
-    "area": "118",
+    "id": "m-mendig-efh",
+    "title": "Einfamilienhaus mit Charakter zur Miete mit Wintergarten, Freisitz, Garten und Garage",
+    "price": "1.080 € / Monat",
+    "area": "107",
     "rooms": "4",
-    "place": "Koblenz",
+    "place": "Mendig",
+    "type": "miete",
+    "category": "Einfamilienhaus",
+    "ref": "BM1080",
     "status": "aktiv",
     "enabled": true,
-    "note": "Zwei Ebenen, Dachterrasse, offene Wohnküche. Fußbodenheizung. Besichtigungstermine nach Vereinbarung.",
+    "featured": false,
+    "note": "Aktuelles Mietangebot. Besichtigung nach Terminvereinbarung.",
     "images": [
-      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1600&q=80",
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=80"
+      "assets/objekte/m-mendig-efh/01.jpg",
+      "assets/objekte/m-mendig-efh/02.jpg",
+      "assets/objekte/m-mendig-efh/03.jpg",
+      "assets/objekte/m-mendig-efh/04.jpg",
+      "assets/objekte/m-mendig-efh/05.jpg",
+      "assets/objekte/m-mendig-efh/06.jpg"
     ],
-    "createdAt": "2026-09-02T14:15:00.000Z",
-    "inquiryCount": 12
-  },
-  {
-    "id": "o-neuwied-mfh",
-    "title": "Mehrfamilienhaus · Neuwied",
-    "price": "790.000 €",
-    "area": "286",
-    "rooms": "9",
-    "place": "Neuwied",
-    "status": "aktiv",
-    "enabled": false,
-    "note": "Kapitalanlage mit drei Wohneinheiten. Aktuell deaktiviert — nur im Admin sichtbar.",
-    "images": [
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1600&q=80"
-    ],
-    "createdAt": "2026-07-18T08:00:00.000Z",
-    "inquiryCount": 2
+    "links": {
+      "is24": "https://www.immobilienscout24.de/expose/170073223",
+      "immowelt": "https://www.immowelt.de/expose/ab224508-1fa4-4dbd-9b5e-cabf7ad59c9c"
+    },
+    "createdAt": "2026-09-17T12:00:00.000Z",
+    "inquiryCount": 0
   }
 ]

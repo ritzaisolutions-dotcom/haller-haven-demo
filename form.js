@@ -34,6 +34,8 @@
 
     var objectIds = [];
     var objectTitles = [];
+    var objectRefs = [];
+    var objectTypes = [];
 
     if (isMulti) {
       Array.prototype.forEach.call(
@@ -41,19 +43,30 @@
         function (el) {
           var id = String(el.value || "").trim();
           var title = String(el.getAttribute("data-title") || "").trim();
+          var ref = String(el.getAttribute("data-ref") || "").trim();
+          var typ = String(el.getAttribute("data-type") || "").trim();
           if (id) objectIds.push(id);
           if (title) objectTitles.push(title);
+          if (ref) objectRefs.push(ref);
+          if (typ) objectTypes.push(typ);
         }
       );
     } else {
       var singleId = (fd.get("object_id") || "").toString().trim();
       var singleTitle = (fd.get("object_title") || fd.get("place") || "").toString().trim();
+      var singleRef = (fd.get("object_ref") || "").toString().trim();
+      var singleType = (fd.get("object_type") || "").toString().trim();
       if (singleId) objectIds.push(singleId);
       if (singleTitle) objectTitles.push(singleTitle);
+      if (singleRef) objectRefs.push(singleRef);
+      if (singleType) objectTypes.push(singleType);
     }
 
     if (objectTitles.length) {
-      var prefix = intent === "besichtigung" ? "Besichtigung" : "Anfrage";
+      var prefix =
+        intent === "besichtigung" || intent === "objekt"
+          ? "Besichtigung / Objektinteresse"
+          : "Anfrage";
       subject = prefix + " · " + objectTitles.join(" · ") + " · Haller";
     } else if (form.querySelector('[name="subject"]') && fd.get("subject")) {
       subject = fd.get("subject").toString();
@@ -72,6 +85,14 @@
     if (objectTitles.length) {
       fd.set("object_titles", objectTitles.join(" · "));
       fd.set("object_title", objectTitles.join(" · "));
+    }
+    if (objectRefs.length) {
+      fd.set("object_refs", objectRefs.join(", "));
+      fd.set("object_ref", objectRefs[0]);
+    }
+    if (objectTypes.length) {
+      fd.set("object_types", objectTypes.join(", "));
+      fd.set("object_type", objectTypes[0]);
     }
 
     if (btn) btn.disabled = true;

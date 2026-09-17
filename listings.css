@@ -1,8 +1,51 @@
+.listing-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.listing-filter {
+  margin: 0;
+  padding: 8px 14px;
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--line, #E2E2E2);
+  color: var(--mut, #6B6B6B);
+  cursor: pointer;
+}
+
+.listing-filter.is-on,
+.listing-filter:hover {
+  border-color: var(--acc, #0073E1);
+  color: var(--acc, #0073E1);
+}
+
 .listing-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 32px;
   margin-top: 40px;
+}
+
+.listing-type-chip {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(0, 115, 225, 0.92);
+  padding: 4px 9px;
+}
+
+.listing-type-chip.is-rent {
+  background: rgba(34, 34, 34, 0.72);
 }
 
 .listing-card {
@@ -38,7 +81,7 @@
   padding: 14px;
   border: 1px solid var(--line, #E2E2E2);
   background: var(--card, #fff);
-  max-height: 220px;
+  max-height: 320px;
   overflow-y: auto;
 }
 

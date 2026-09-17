@@ -83,6 +83,7 @@
       <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
       <label>Anliegen
         <select name="intent" required>
+          <option value="objekt">Interesse an Objekt(en) / Besichtigung</option>
           <option value="verkaufen">Immobilie verkaufen</option>
           <option value="kaufen">Immobilie kaufen</option>
           <option value="vermietung">Vermietung</option>
@@ -91,8 +92,8 @@
         </select>
       </label>
       <fieldset class="object-pick-wrap">
-        <legend class="object-pick-legend">Objekte (optional)</legend>
-        <p class="object-pick-hint">Wählen Sie ein oder mehrere Inserate — wir wissen dann direkt, worum es geht. Leer lassen ist möglich.</p>
+        <legend class="object-pick-legend">Interessierte Objekte</legend>
+        <p class="object-pick-hint">Wählen Sie ein oder mehrere aktuelle Inserate — die Mail kommt mit Objektbezug ins Büro. Leer lassen ist möglich.</p>
         <div id="object-pick" class="object-pick" aria-label="Objekte auswählen"></div>
       </fieldset>
       <label>Name <input name="name" required></label>

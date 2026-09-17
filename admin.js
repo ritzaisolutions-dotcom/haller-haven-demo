@@ -1,6 +1,7 @@
 (function () {
   var cfg = window.RAIS_ADMIN || {};
   var dragId = null;
+  var HOME_MAX = Number(window.RAIS_HOME_MAX) || 6;
 
   function $(id) { return document.getElementById(id); }
 
@@ -39,6 +40,38 @@
     return inquiryParts(item).total;
   }
 
+  function msg(text, isErr) {
+    var el = $("form-msg");
+    el.textContent = text || "";
+    el.classList.toggle("is-err", !!isErr);
+  }
+
+  function handleAuthError(err) {
+    if (err && err.status === 401) {
+      $("app").hidden = true;
+      $("gate").hidden = false;
+      $("out").hidden = true;
+      $("login-msg").textContent = "Sitzung abgelaufen. Bitte erneut anmelden.";
+      return true;
+    }
+    return false;
+  }
+
+  function afterSave(promise, okText) {
+    return promise
+      .then(function () {
+        msg(okText || "Gespeichert — sofort live.");
+        renderStats();
+        renderList();
+      })
+      .catch(function (err) {
+        if (handleAuthError(err)) return;
+        msg(err.message || "Fehler beim Speichern", true);
+        renderStats();
+        renderList();
+      });
+  }
+
   function statsRow(item) {
     var parts = inquiryParts(item);
     return {
@@ -50,6 +83,7 @@
       rooms: item.rooms || "",
       status: item.status || "aktiv",
       enabled: item.enabled !== false ? "an" : "aus",
+      featured: item.featured === true ? "ja" : "nein",
       createdAt: item.createdAt || "",
       createdAtDe: fmtDate(item.createdAt),
       inquiryBase: parts.base,
@@ -67,7 +101,7 @@
 
   function toCsv(rows) {
     var headers = [
-      "id", "title", "place", "price", "area", "rooms", "status", "enabled",
+      "id", "title", "place", "price", "area", "rooms", "status", "enabled", "featured",
       "createdAt", "inquiryBase", "inquiryLocal", "inquiryTotal", "images"
     ];
     var lines = [headers.join(",")];
@@ -130,10 +164,15 @@
     $("app").hidden = false;
     $("out").hidden = false;
     $("who").textContent = cfg.tenant || "demo";
-    window.RAIS_STORE.seedFromPublic().then(function () {
-      renderStats();
-      renderList();
-    });
+    window.RAIS_STORE.seedFromPublic()
+      .then(function () {
+        renderStats();
+        renderList();
+      })
+      .catch(function (err) {
+        if (handleAuthError(err)) return;
+        msg(err.message || "Laden fehlgeschlagen", true);
+      });
   }
 
   function compress(file) {
@@ -164,6 +203,29 @@
     });
   }
 
+  function uploadDataUrl(dataUrl, listingId) {
+    return fetch("/api/upload", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ dataUrl: dataUrl, listingId: listingId || "misc" })
+    }).then(function (r) {
+      return r.json().then(function (j) {
+        if (r.status === 401) {
+          var err = new Error("unauthorized");
+          err.status = 401;
+          throw err;
+        }
+        if (!r.ok) {
+          var e = new Error((j && j.error) || "Upload fehlgeschlagen");
+          e.status = r.status;
+          throw e;
+        }
+        return j.url;
+      });
+    });
+  }
+
   function formItem() {
     return {
       id: $("fid").value || ("o-" + Date.now()),
@@ -172,9 +234,17 @@
       area: $("area").value.trim(),
       rooms: $("rooms").value.trim(),
       place: $("place").value.trim(),
+      type: $("type").value || "kauf",
+      category: $("category").value.trim(),
+      ref: $("ref").value.trim(),
       status: $("status").value,
       enabled: $("enabled").value === "true",
+      featured: $("featured").value === "true",
       note: $("note").value.trim(),
+      links: {
+        is24: $("link-is24").value.trim(),
+        immowelt: $("link-immowelt").value.trim()
+      },
       images: JSON.parse($("images").value || "[]"),
       createdAt: $("createdAt").value || new Date().toISOString(),
       inquiryCount: Number($("inquiryCount").value) || 0
@@ -188,9 +258,15 @@
     $("area").value = item ? item.area : "";
     $("rooms").value = item ? item.rooms : "";
     $("place").value = item ? item.place : "";
+    $("type").value = item && item.type === "miete" ? "miete" : "kauf";
+    $("category").value = item ? (item.category || "") : "";
+    $("ref").value = item ? (item.ref || "") : "";
     $("status").value = item ? item.status : "aktiv";
     $("enabled").value = item && item.enabled === false ? "false" : "true";
+    $("featured").value = item && item.featured === true ? "true" : "false";
     $("note").value = item ? item.note : "";
+    $("link-is24").value = item && item.links ? (item.links.is24 || "") : "";
+    $("link-immowelt").value = item && item.links ? (item.links.immowelt || "") : "";
     $("images").value = JSON.stringify(item && item.images ? item.images : []);
     $("createdAt").value = item && item.createdAt ? item.createdAt : "";
     $("inquiryCount").value = item ? String(item.inquiryCount || 0) : "0";
@@ -215,18 +291,24 @@
     var list = window.RAIS_STORE.all();
     var on = list.filter(function (x) { return x.enabled !== false && x.status !== "verkauft"; }).length;
     var sold = list.filter(function (x) { return x.status === "verkauft"; }).length;
+    var featured = list.filter(function (x) {
+      return x.featured === true && x.enabled !== false && x.status !== "verkauft";
+    }).length;
     var inquiries = list.reduce(function (n, x) { return n + inquiryTotal(x); }, 0);
     $("stats").innerHTML =
       '<div class="stat"><span>Inserate</span><b>' + list.length + "</b></div>" +
       '<div class="stat"><span>Online</span><b>' + on + "</b></div>" +
+      '<div class="stat"><span>Startseite</span><b>' + featured + "/" + HOME_MAX + "</b></div>" +
       '<div class="stat"><span>Anfragen gesamt</span><b>' + inquiries + "</b></div>" +
       '<div class="stat"><span>Verkauft</span><b>' + sold + "</b></div>";
+
+    $("feat-counter").innerHTML = "Startseite <b>" + featured + "</b> / " + HOME_MAX;
 
     var tbody = $("stats-rows");
     if (!tbody) return;
     tbody.innerHTML = "";
     if (!list.length) {
-      tbody.innerHTML = '<tr><td colspan="7" class="mut">Keine Objekte.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="mut">Keine Objekte.</td></tr>';
       return;
     }
     list
@@ -240,6 +322,7 @@
           "<td>" + esc(row.place) + "</td>" +
           "<td>" + esc(row.status) + "</td>" +
           "<td>" + esc(row.enabled) + "</td>" +
+          "<td>" + esc(row.featured) + "</td>" +
           '<td class="num"><strong>' + row.inquiryTotal + "</strong>" +
             '<br><span class="mut">' + row.inquiryBase + " + " + row.inquiryLocal + "</span></td>" +
           "<td>" + esc(row.createdAtDe) + "</td>" +
@@ -252,14 +335,19 @@
     var box = $("rows");
     box.innerHTML = "";
     var list = window.RAIS_STORE.all();
+    var featuredCount = list.filter(function (x) {
+      return x.featured === true && x.enabled !== false && x.status !== "verkauft";
+    }).length;
     if (!list.length) {
-      box.innerHTML = '<p class="empty">Noch keine Objekte. Rechts anlegen oder Live-Seed laden.</p>';
+      box.innerHTML = '<p class="empty">Noch keine Objekte. Rechts anlegen oder Neu laden.</p>';
       return;
     }
     list.forEach(function (item) {
       var img = (item.images && item.images[0]) || "";
       var on = item.enabled !== false;
+      var feat = item.featured === true;
       var parts = inquiryParts(item);
+      var featDisabled = !feat && (featuredCount >= HOME_MAX || !on);
       var row = document.createElement("div");
       row.className = "listing";
       row.draggable = true;
@@ -269,17 +357,20 @@
         '<div class="thumb">' + (img ? '<img src="' + img + '" alt="">' : "") + "</div>" +
         '<div class="meta">' +
           "<strong>" + esc(item.title || "Ohne Titel") + "</strong>" +
-          "<p>" + esc([item.place, item.area ? item.area + " m²" : "", item.rooms ? item.rooms + " Zi." : "", item.price].filter(Boolean).join(" · ")) + "</p>" +
+          "<p>" + esc([item.type === "miete" ? "Miete" : "Kauf", item.place, item.area ? item.area + " m²" : "", item.rooms ? item.rooms + " Zi." : "", item.price].filter(Boolean).join(" · ")) + "</p>" +
           (item.note ? "<p>" + esc(item.note.slice(0, 110)) + (item.note.length > 110 ? "…" : "") + "</p>" : "") +
           '<div class="chips">' +
-            '<span class="chip ' + (on ? "on" : "off") + '">' + (on ? "angeschaltet" : "aus") + "</span>" +
+            '<span class="chip ' + (on ? "on" : "off") + '">' + (on ? "online" : "offline") + "</span>" +
+            (feat ? '<span class="chip feat">Startseite</span>' : "") +
             '<span class="chip">' + esc(item.status || "aktiv") + "</span>" +
-            '<span class="chip">' + parts.total + " Anfragen (" + parts.base + "+" + parts.local + ")</span>" +
+            '<span class="chip">' + parts.total + " Anfragen</span>" +
             '<span class="chip">seit ' + fmtDate(item.createdAt) + "</span>" +
           "</div>" +
         "</div>" +
         '<div class="actions">' +
           '<label class="switch"><input type="checkbox" data-toggle="' + esc(item.id) + '"' + (on ? " checked" : "") + "> Online</label>" +
+          '<label class="switch"><input type="checkbox" data-featured="' + esc(item.id) + '"' +
+            (feat ? " checked" : "") + (featDisabled ? " disabled" : "") + "> Startseite</label>" +
           '<button type="button" class="ghost sm" data-edit="' + esc(item.id) + '">Details</button>' +
           '<button type="button" class="ghost sm" data-csv="' + esc(item.id) + '">CSV</button>' +
           '<button type="button" class="danger sm" data-del="' + esc(item.id) + '">Löschen</button>' +
@@ -323,9 +414,7 @@
       if (from < 0 || to < 0) return;
       ids.splice(from, 1);
       ids.splice(to, 0, dragId);
-      window.RAIS_STORE.reorder(ids);
-      renderStats();
-      renderList();
+      afterSave(window.RAIS_STORE.reorder(ids), "Reihenfolge live.");
     });
   }
 
@@ -344,10 +433,28 @@
     var have = JSON.parse($("images").value || "[]");
     var room = 12 - have.length;
     if (room <= 0) return;
-    Promise.all(files.slice(0, room).map(compress)).then(function (urls) {
-      $("images").value = JSON.stringify(have.concat(urls));
-      paintThumbs();
-    });
+    var listingId = $("fid").value || ("new-" + Date.now());
+    msg("Bilder werden hochgeladen …");
+    Promise.all(files.slice(0, room).map(compress))
+      .then(function (dataUrls) {
+        return dataUrls.reduce(function (chain, dataUrl) {
+          return chain.then(function (urls) {
+            return uploadDataUrl(dataUrl, listingId).then(function (url) {
+              urls.push(url);
+              return urls;
+            });
+          });
+        }, Promise.resolve([]));
+      })
+      .then(function (urls) {
+        $("images").value = JSON.stringify(have.concat(urls));
+        paintThumbs();
+        msg(urls.length + " Bild(er) hochgeladen.");
+      })
+      .catch(function (err) {
+        if (handleAuthError(err)) return;
+        msg(err.message || "Upload fehlgeschlagen", true);
+      });
     e.target.value = "";
   });
 
@@ -362,17 +469,29 @@
 
   $("save").addEventListener("click", function () {
     var item = formItem();
-    if (!item.title) { $("form-msg").textContent = "Titel fehlt."; return; }
-    window.RAIS_STORE.upsert(item);
-    $("form-msg").textContent = "Gespeichert. Für die öffentliche Seite: JSON exportieren.";
-    fill(null);
-    renderStats();
-    renderList();
+    if (!item.title) { msg("Titel fehlt.", true); return; }
+    if (item.featured && item.enabled === false) {
+      item.featured = false;
+      $("featured").value = "false";
+    }
+    var others = window.RAIS_STORE.all().filter(function (x) {
+      return x.id !== item.id && x.featured === true && x.enabled !== false && x.status !== "verkauft";
+    }).length;
+    if (item.featured && others >= HOME_MAX) {
+      msg("Startseite ist voll (max. " + HOME_MAX + "). Ein anderes Objekt abwählen.", true);
+      return;
+    }
+    afterSave(
+      window.RAIS_STORE.upsert(item).then(function () {
+        fill(null);
+      }),
+      "Gespeichert — sofort live."
+    );
   });
 
   $("reset").addEventListener("click", function () {
     fill(null);
-    $("form-msg").textContent = "";
+    msg("");
   });
 
   function onCsvClick(e) {
@@ -395,10 +514,12 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
     if (del && confirm("Objekt löschen?")) {
-      window.RAIS_STORE.remove(del);
-      if ($("fid").value === del) fill(null);
-      renderStats();
-      renderList();
+      afterSave(
+        window.RAIS_STORE.remove(del).then(function () {
+          if ($("fid").value === del) fill(null);
+        }),
+        "Gelöscht — sofort live."
+      );
     }
   });
 
@@ -409,29 +530,34 @@
   });
 
   $("rows").addEventListener("change", function (e) {
-    var id = e.target.getAttribute("data-toggle");
-    if (!id) return;
-    window.RAIS_STORE.setEnabled(id, e.target.checked);
-    renderStats();
-    renderList();
+    var idToggle = e.target.getAttribute("data-toggle");
+    var idFeat = e.target.getAttribute("data-featured");
+    if (idToggle) {
+      afterSave(
+        window.RAIS_STORE.setEnabled(idToggle, e.target.checked),
+        e.target.checked ? "Online — live." : "Offline — live."
+      );
+      return;
+    }
+    if (idFeat) {
+      afterSave(
+        window.RAIS_STORE.setFeatured(idFeat, e.target.checked),
+        e.target.checked ? "Auf Startseite — live." : "Von Startseite entfernt — live."
+      );
+    }
   });
 
   $("sync").addEventListener("click", function () {
-    fetch("/listings.json", { cache: "no-store" })
-      .then(function (r) { return r.ok ? r.json() : []; })
+    window.RAIS_STORE.reload()
       .then(function (list) {
-        if (!Array.isArray(list) || !list.length) {
-          $("form-msg").textContent = "Live-JSON leer oder nicht erreichbar.";
-          return;
-        }
-        window.RAIS_STORE.replaceAll(list);
         fill(null);
         renderStats();
         renderList();
-        $("form-msg").textContent = list.length + " Objekte aus listings.json geladen.";
+        msg(list.length + " Objekte neu geladen.");
       })
-      .catch(function () {
-        $("form-msg").textContent = "Live-JSON konnte nicht geladen werden.";
+      .catch(function (err) {
+        if (handleAuthError(err)) return;
+        msg(err.message || "Neu laden fehlgeschlagen", true);
       });
   });
 
@@ -439,7 +565,7 @@
     var blob = new Blob([window.RAIS_STORE.exportJson()], { type: "application/json" });
     var a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "listings.json";
+    a.download = "listings-backup.json";
     a.click();
   });
 

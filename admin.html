@@ -58,7 +58,7 @@
     }
     .stats {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 10px;
       margin-top: 8px;
     }
@@ -152,9 +152,18 @@
     }
     button.danger:hover { background: #fef3f2; }
     button.sm { margin-top: 0; padding: 7px 10px; font-size: 11px; letter-spacing: 0.04em; }
+    button:disabled, .switch input:disabled { opacity: 0.45; cursor: not-allowed; }
     .warn {
       background: var(--warn-bg);
       border: 1px solid #c5daf5;
+      padding: 12px 14px;
+      font-size: 13px;
+      margin-top: 12px;
+    }
+    .ok-banner {
+      background: #f0faf4;
+      border: 1px solid #b7e0c8;
+      color: var(--ok);
       padding: 12px 14px;
       font-size: 13px;
       margin-top: 12px;
@@ -210,6 +219,7 @@
     }
     .chip.on { color: var(--ok); border-color: #b7e0c8; background: #f0faf4; }
     .chip.off { color: #b42318; border-color: #f2c4c0; background: #fef3f2; }
+    .chip.feat { color: var(--acc); border-color: #c5daf5; background: #eef5fc; }
     .listing .actions {
       display: flex;
       flex-direction: column;
@@ -250,14 +260,21 @@
     }
     #login-msg:not(:empty) { color: #b42318; }
     #form-msg:not(:empty) { color: var(--acc); margin-top: 8px; }
+    #form-msg.is-err { color: #b42318; }
     .empty { padding: 28px 12px; text-align: center; color: var(--mut); }
+    .feat-counter {
+      font-size: 12px;
+      color: var(--mut);
+      margin-top: 8px;
+    }
+    .feat-counter b { color: var(--txt); }
     @media (max-width: 900px) {
       .layout { grid-template-columns: 1fr; }
       .stats { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 560px) {
       .listing { flex-wrap: wrap; }
-      .listing .actions { flex-direction: row; width: 100%; }
+      .listing .actions { flex-direction: row; width: 100%; flex-wrap: wrap; }
       .listing .handle { padding-top: 8px; }
     }
   </style>
@@ -301,6 +318,7 @@
                 <th>Ort</th>
                 <th>Status</th>
                 <th>Online</th>
+                <th>Start</th>
                 <th class="num">Anfragen</th>
                 <th>Seit</th>
                 <th></th>
@@ -318,13 +336,14 @@
               <div>
                 <h2>Inserate</h2>
                 <p class="mut">Ziehen zum Sortieren · Reihenfolge = öffentliche Liste</p>
+                <p class="feat-counter" id="feat-counter">Startseite <b>0</b> / 6</p>
               </div>
               <div>
-                <button type="button" class="ghost sm" id="sync">Live laden</button>
-                <button type="button" class="ghost sm" id="dl">JSON exportieren</button>
+                <button type="button" class="ghost sm" id="sync">Neu laden</button>
+                <button type="button" class="ghost sm" id="dl">Backup herunterladen</button>
               </div>
             </div>
-            <p class="warn">Besucher sehen <code>listings.json</code>. Nach Änderungen: exportieren → Datei ersetzen → deployen.</p>
+            <p class="ok-banner">Änderungen (Online / Startseite / Speichern) sind sofort live für alle Besucher.</p>
             <div id="rows"></div>
           </div>
         </div>
@@ -344,6 +363,14 @@
               <label>Ort <input id="place" /></label>
             </div>
             <div class="grid">
+              <label>Art
+                <select id="type">
+                  <option value="kauf">Kauf</option>
+                  <option value="miete">Miete</option>
+                </select>
+              </label>
+              <label>Kategorie <input id="category" placeholder="Wohnung, Haus …" /></label>
+              <label>Objekt-Nr. <input id="ref" placeholder="RN270" /></label>
               <label>Status
                 <select id="status">
                   <option value="aktiv">aktiv</option>
@@ -356,6 +383,16 @@
                   <option value="false">aus</option>
                 </select>
               </label>
+              <label>Startseite
+                <select id="featured">
+                  <option value="false">nein</option>
+                  <option value="true">ja (max. 6)</option>
+                </select>
+              </label>
+            </div>
+            <div class="grid">
+              <label>ImmoScout24-Link <input id="link-is24" placeholder="https://www.immobilienscout24.de/expose/…" /></label>
+              <label>Immowelt-Link <input id="link-immowelt" placeholder="https://www.immowelt.de/expose/…" /></label>
             </div>
             <label>Beschreibung <textarea id="note"></textarea></label>
             <label>Bilder max. 12
