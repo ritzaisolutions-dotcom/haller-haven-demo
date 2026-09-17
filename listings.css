@@ -112,16 +112,8 @@
 }
 
 .object-pick-item span {
-  display: grid;
-  gap: 2px;
   min-width: 0;
-}
-
-.object-pick-item small {
-  color: var(--mut, #6B6B6B);
-  font-size: 12px;
-  letter-spacing: 0;
-  text-transform: none;
+  line-height: 1.35;
 }
 
 .object-pick-legend {

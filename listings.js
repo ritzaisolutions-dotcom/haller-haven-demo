@@ -24,12 +24,14 @@
     return item.type === "miete" ? "Miete" : "Kauf";
   }
 
-  function card(item) {
+  function card(item, opts) {
+    opts = opts || {};
     var images = (item.images || []).filter(Boolean);
     var sold = item.status === "verkauft";
     var id = encodeURIComponent(item.id || "");
     var detailHref = "objekt.html?id=" + id;
     var askHref = detailHref + "#anfrage";
+    var askOnly = opts.askOnly === true;
 
     var el = document.createElement("article");
     el.className = "listing-card";
@@ -140,14 +142,19 @@
 
     var body = document.createElement("div");
     body.className = "listing-body";
+    var actions = askOnly
+      ? '<div class="listing-actions">' +
+          '<a class="btn" href="' + askHref + '">Anfrage</a>' +
+        "</div>"
+      : '<div class="listing-actions">' +
+          '<a class="btn ghost" href="' + detailHref + '">Details</a>' +
+          '<a class="btn" href="' + askHref + '">Anfrage</a>' +
+        "</div>";
     body.innerHTML =
       (sold ? "<small>Verkauft</small>" : "<small>Termin möglich</small>") +
       "<h3>" + esc(item.title || "Ohne Titel") + "</h3>" +
       "<p>" + esc([item.place, item.area ? item.area + " m²" : "", item.price].filter(Boolean).join(" · ")) + "</p>" +
-      '<div class="listing-actions">' +
-        '<a class="btn ghost" href="' + detailHref + '">Details</a>' +
-        '<a class="btn" href="' + askHref + '">Anfrage</a>' +
-      "</div>";
+      actions;
 
     el.appendChild(media);
     el.appendChild(body);
@@ -181,7 +188,9 @@
         '<p class="listing-empty">Aktuell keine freigeschalteten Objekte. <a href="kontakt.html">Anfrage senden</a> oder später wieder vorbeischauen.</p>';
       return;
     }
-    live.forEach(function (item) { root.appendChild(card(item)); });
+    live.forEach(function (item) {
+      root.appendChild(card(item, { askOnly: !opts.home && root === fullRoot }));
+    });
   }
 
   function showLoading(root) {
@@ -211,18 +220,20 @@
     live.forEach(function (item) {
       var label = document.createElement("label");
       label.className = "object-pick-item";
-      var meta = [typeLabel(item), item.place, item.price].filter(Boolean).join(" · ");
+      var shortLabel = [item.place, item.rooms ? item.rooms + " Zi." : "", typeLabel(item)]
+        .filter(Boolean)
+        .join(" · ");
+      if (!shortLabel) shortLabel = item.ref || item.id || "Objekt";
       var input = document.createElement("input");
       input.type = "checkbox";
       input.name = "object_id";
       input.value = item.id || "";
-      input.setAttribute("data-title", item.title || "");
+      input.setAttribute("data-title", item.title || shortLabel);
       input.setAttribute("data-ref", item.ref || "");
       input.setAttribute("data-type", item.type || "kauf");
       var span = document.createElement("span");
-      span.innerHTML =
-        "<strong>" + esc(item.title || "Ohne Titel") + "</strong>" +
-        (meta ? "<small>" + esc(meta) + "</small>" : "");
+      span.textContent = shortLabel;
+      if (item.title) label.title = item.title;
       label.appendChild(input);
       label.appendChild(span);
       root.appendChild(label);

@@ -5,5 +5,7 @@ window.RAIS_SITE_BASE = "https://haller-immobilien.de";
 window.RAIS_HOME_MAX = 6;
 /** Live listings endpoint (Supabase-backed; no static JSON fallback). */
 window.RAIS_LISTINGS_URL = "/api/listings";
-/** Server-side inquiry endpoint (Web3Forms key stays on the server). */
+/** After browser→Web3Forms success, metrics are recorded here. */
 window.RAIS_INQUIRIES_URL = "/api/inquiries";
+/** Browser loads Web3Forms key from here (Cloudflare blocks Vercel→Web3Forms). */
+window.RAIS_FORM_CONFIG_URL = "/api/form-config";

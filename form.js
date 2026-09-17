@@ -3,7 +3,8 @@
   var form = document.getElementById("f") || document.getElementById("anfrage");
   if (!form) return;
 
-  var endpoint = window.RAIS_INQUIRIES_URL || "/api/inquiries";
+  var recordUrl = window.RAIS_INQUIRIES_URL || "/api/inquiries";
+  var configUrl = window.RAIS_FORM_CONFIG_URL || "/api/form-config";
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -65,69 +66,109 @@
       subject = fd.get("subject").toString();
     }
 
-    var payload = {
-      name: (fd.get("name") || "").toString(),
-      email: (fd.get("email") || "").toString(),
-      phone: (fd.get("phone") || fd.get("tel") || "").toString(),
-      message: (fd.get("message") || fd.get("msg") || "").toString(),
-      intent: intent,
-      subject: subject,
-      privacy: true,
-      place: (fd.get("place") || "").toString(),
-      object_ref: objectRefs[0] || (fd.get("object_ref") || "").toString(),
-      object_type: objectTypes[0] || (fd.get("object_type") || "").toString(),
-      object_id: objectIds,
-      object_ids: objectIds,
-      page_path: location.pathname + location.search
-    };
-
     if (btn) btn.disabled = true;
 
-    fetch(endpoint, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      credentials: "same-origin",
-      body: JSON.stringify(payload)
-    })
+    fetch(configUrl, { credentials: "same-origin", cache: "no-store" })
       .then(function (r) {
         return r.json().then(function (j) {
           return { ok: r.ok, status: r.status, body: j };
         });
       })
-      .then(function (res) {
-        var j = res.body || {};
-        var titles = j.objectTitles || objectTitles;
+      .then(function (cfgRes) {
+        if (!cfgRes.ok || !cfgRes.body || !cfgRes.body.accessKey) {
+          var err = new Error("form_unconfigured");
+          err.status = cfgRes.status;
+          throw err;
+        }
+
+        var mailFd = new FormData();
+        mailFd.append("access_key", cfgRes.body.accessKey);
+        mailFd.append("subject", subject);
+        mailFd.append("from_name", cfgRes.body.fromName || cfg.fromName || "Haller Haven Website");
+        mailFd.append("name", (fd.get("name") || "").toString());
+        mailFd.append("email", (fd.get("email") || "").toString());
+        var phone = (fd.get("phone") || fd.get("tel") || "").toString();
+        var message = (fd.get("message") || fd.get("msg") || "").toString();
+        if (phone) mailFd.append("phone", phone);
+        if (message) mailFd.append("message", message);
+        if (intent) mailFd.append("intent", intent);
+        mailFd.append("privacy", "accepted");
+        mailFd.append("consent_at", new Date().toISOString());
+        if (objectIds.length) {
+          mailFd.append("object_ids", objectIds.join(", "));
+          mailFd.append("object_id", objectIds[0]);
+        }
+        if (objectTitles.length) {
+          mailFd.append("object_titles", objectTitles.join(" · "));
+          mailFd.append("object_title", objectTitles.join(" · "));
+        }
+        if (objectRefs[0]) mailFd.append("object_ref", objectRefs[0]);
+        if (objectTypes[0]) mailFd.append("object_type", objectTypes[0]);
+        var place = (fd.get("place") || "").toString();
+        if (place) mailFd.append("place", place);
+
+        return fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: mailFd
+        }).then(function (r) {
+          return r.json().then(function (j) {
+            return { ok: r.ok, body: j };
+          });
+        });
+      })
+      .then(function (mailRes) {
+        var j = mailRes.body || {};
+        if (!mailRes.ok || !j.success) {
+          var err = new Error((j && j.message) || "mail_failed");
+          err.status = 502;
+          throw err;
+        }
+
+        // Best-effort metrics; mail already sent.
+        return fetch(recordUrl, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          credentials: "same-origin",
+          body: JSON.stringify({
+            privacy: true,
+            intent: intent,
+            object_ids: objectIds,
+            object_id: objectIds,
+            page_path: location.pathname + location.search
+          })
+        })
+          .catch(function () {
+            return null;
+          })
+          .then(function () {
+            if (ok) {
+              ok.textContent = objectTitles.length
+                ? "Anfrage zu „" + objectTitles.join("“, „") + "“ gesendet. Sie liegt objektbezogen in der Mail."
+                : "Anfrage gesendet. Sie liegt in der Mail.";
+              ok.style.display = "block";
+            }
+            var keepId = objectIds[0] || "";
+            var keepTitle = objectTitles[0] || "";
+            form.reset();
+            if (!isMulti && keepId) {
+              var idEl = form.querySelector('input[type="hidden"][name="object_id"]');
+              var titleEl = form.querySelector('[name="object_title"]');
+              var placeEl = form.querySelector('[name="place"]');
+              if (idEl) idEl.value = keepId;
+              if (titleEl) titleEl.value = keepTitle;
+              if (placeEl) placeEl.value = keepTitle;
+            }
+          });
+      })
+      .catch(function (err) {
         if (ok) {
-          if (res.ok && j.success) {
-            ok.textContent = titles.length
-              ? "Anfrage zu „" + titles.join("“, „") + "“ gesendet. Sie liegt objektbezogen in der Mail."
-              : "Anfrage gesendet. Sie liegt in der Mail.";
-          } else if (res.status === 503) {
+          if (err && err.status === 503) {
             ok.textContent = "Formular derzeit nicht konfiguriert. Bitte später erneut versuchen.";
-          } else if (res.status === 429) {
+          } else if (err && err.status === 429) {
             ok.textContent = "Zu viele Anfragen. Bitte kurz warten.";
           } else {
-            ok.textContent = j.message || j.error || "Senden fehlgeschlagen.";
+            ok.textContent = (err && err.message) || "Senden fehlgeschlagen.";
           }
-          ok.style.display = "block";
-        }
-        if (res.ok && j.success) {
-          var keepId = objectIds[0] || "";
-          var keepTitle = objectTitles[0] || "";
-          form.reset();
-          if (!isMulti && keepId) {
-            var idEl = form.querySelector('input[type="hidden"][name="object_id"]');
-            var titleEl = form.querySelector('[name="object_title"]');
-            var placeEl = form.querySelector('[name="place"]');
-            if (idEl) idEl.value = keepId;
-            if (titleEl) titleEl.value = keepTitle;
-            if (placeEl) placeEl.value = keepTitle;
-          }
-        }
-      })
-      .catch(function () {
-        if (ok) {
-          ok.textContent = "Netzwerkfehler. Nochmal senden.";
           ok.style.display = "block";
         }
       })
