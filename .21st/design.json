@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "project": {
+    "name": "haller-haven-demo",
+    "productType": "marketing-site",
+    "stack": ["static-html", "vanilla-js", "custom-css", "vercel"]
+  },
+  "sources": {
+    "tokens": ["site.css", "listings.css"],
+    "components": [],
+    "assets": [],
+    "instructions": ["README.md", "Haller_update.md"]
+  },
+  "design": {
+    "colorMode": "light",
+    "colors": {
+      "bg": "#F8F8F8",
+      "card": "#FFFFFF",
+      "line": "#E2E2E2",
+      "txt": "#222222",
+      "mut": "#6B6B6B",
+      "acc": "#0073E1",
+      "accDeep": "#5472D2",
+      "ghost": "#959898",
+      "acro": "#00A8CA"
+    },
+    "typography": {
+      "sans": "Inter, system-ui, sans-serif",
+      "serif": "Fraunces, serif",
+      "bodySize": "15px"
+    },
+    "spacing": {
+      "padX": "clamp(48px, 6vw, 72px)",
+      "padY": "clamp(80px, 10vw, 120px)",
+      "content": "1280px",
+      "gapGrid": "32px"
+    },
+    "radius": {
+      "default": "0"
+    },
+    "shadows": {},
+    "motion": {
+      "reduceMotionClass": "reduce-motion"
+    },
+    "density": "comfortable",
+    "breakpoints": {
+      "navDesktop": "901px",
+      "contentStack": "900px",
+      "heroStack": "720px",
+      "listingGallery": "700px"
+    }
+  },
+  "components": {
+    "installed": [],
+    "preferredPrimitives": [
+      ".btn",
+      ".btn.ghost",
+      ".card",
+      ".listing-card",
+      ".listing-filter",
+      ".wrap",
+      ".section",
+      ".top",
+      "#site-nav"
+    ],
+    "patterns": ["header-absolute-over-hero", "hamburger-below-901", "listing-grid-cards"]
+  },
+  "constraints": {
+    "must": [
+      "Preserve German copy and Haller brand colors (#0073E1 accent)",
+      "Reuse existing .btn / .card / .listing-* primitives; do not invent a parallel component system",
+      "Prefer token overrides (--pad-x on small screens) over one-off pixel values",
+      "Keep tap targets >= 44px on mobile",
+      "Support safe-area-inset on header, nav, and footer"
+    ],
+    "avoid": [
+      "React/shadcn conversion",
+      "Silent brand/identity redesign",
+      "Sticky glass nav or mobile call bar unless explicitly requested",
+      "Shrinking gallery controls below 44px on small screens"
+    ]
+  },
+  "decisions": [
+    {
+      "id": "mobile-pad-override",
+      "summary": "Below 900px, --pad-x drops to ~20-24px and --pad-y to ~48-64px for usable content width on 320px devices."
+    },
+    {
+      "id": "viewport-fit-cover",
+      "summary": "All live HTML pages use viewport-fit=cover with env(safe-area-inset-*) on chrome."
+    }
+  ],
+  "evidence": [],
+  "generatedAt": "2026-09-17T13:19:30.361Z"
+}

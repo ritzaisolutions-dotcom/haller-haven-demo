@@ -20,14 +20,6 @@
     --pad-x: clamp(20px, 5vw, 32px);
     --pad-y: clamp(48px, 8vw, 72px);
   }
-
-  .top {
-    gap: 8px 10px;
-  }
-
-  .top .btn {
-    margin-left: 0;
-  }
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -174,6 +166,24 @@ a.listing-card:hover {
   }
   .top .btn {
     order: 3;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .top {
+    gap: 8px 10px;
+  }
+
+  .brand {
+    margin-right: auto;
+  }
+
+  .nav-toggle {
+    margin-left: 0;
+  }
+
+  .top .btn {
     margin-left: 0;
   }
 }
