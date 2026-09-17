@@ -48,39 +48,41 @@
   <div id="xg"></div>
   <p><a href="objekte.html">Zurück zur Liste</a></p>
   
-<form class="box" id="anfrage" novalidate>
-  <div class="ok" id="ok">Anfrage gesendet. Sie liegt in der Mail.</div>
-  <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
-  <input type="hidden" name="object_id" value="">
-  <input type="hidden" name="object_title" value="">
-  <p class="muted-note" style="margin-bottom:12px">Diese Anfrage gilt nur für dieses Objekt. Betreff und Mail gehen objektbezogen ins Büro-Postfach.</p>
-  <label>Anliegen
-    <select name="intent" required>
-      <option value="besichtigung">Besichtigungstermin</option>
-      <option value="kaufen">Kaufinteresse / Infos</option>
-      <option value="finanzierung">Finanzierung klären</option>
-    </select>
-  </label>
-  <label>Name <input name="name" required></label>
-  <label>E-Mail <input type="email" name="email" required></label>
-  <label>Telefon <input name="phone" required></label>
-  <label>Objekt <input name="place" readonly></label>
-  <label>Wunschtermin / Notiz <textarea name="note" placeholder="z. B. Samstag Vormittag, ab 15 Uhr …"></textarea></label>
-  <label class="consent">
-    <input type="checkbox" name="privacy" value="accepted" required>
-    <span>Ich willige ein, dass meine Angaben zur Bearbeitung der Anfrage, Terminvereinbarung und Kontaktaufnahme gespeichert und verarbeitet werden. Details in der <a href="datenschutz.html">Datenschutzerklärung</a>.</span>
-  </label>
-  <button class="btn" type="submit">Termin anfragen</button>
-</form>
+  <form class="box" id="anfrage" novalidate>
+    <div class="ok" id="ok">Anfrage gesendet. Sie liegt in der Mail.</div>
+    <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+    <input type="hidden" name="object_id" value="">
+    <input type="hidden" name="object_title" value="">
+    <p class="muted-note" style="margin-bottom:12px">Diese Anfrage gilt nur für dieses Objekt. Betreff und Mail gehen objektbezogen ins Büro-Postfach.</p>
+    <label>Anliegen
+      <select name="intent" required>
+        <option value="besichtigung">Besichtigungstermin</option>
+        <option value="kaufen">Kaufinteresse / Infos</option>
+        <option value="finanzierung">Finanzierung klären</option>
+      </select>
+    </label>
+    <label>Name <input name="name" required></label>
+    <label>E-Mail <input type="email" name="email" required></label>
+    <label>Telefon <input name="phone" required></label>
+    <label>Objekt <input name="place" readonly></label>
+    <label>Wunschtermin / Notiz <textarea name="note" placeholder="z. B. Samstag Vormittag, ab 15 Uhr …"></textarea></label>
+    <label class="consent">
+      <input type="checkbox" name="privacy" value="accepted" required>
+      <span>Ich willige ein, dass meine Angaben zur Bearbeitung der Anfrage, Terminvereinbarung und Kontaktaufnahme gespeichert und verarbeitet werden. Details in der <a href="datenschutz.html">Datenschutzerklärung</a>.</span>
+    </label>
+    <button class="btn" type="submit">Termin anfragen</button>
+  </form>
 </section>
+
 <footer>
   <div>Haller Immobilienberatung GmbH · Andernach · Demo, kein Live-Mandat</div>
   <div><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></div>
 </footer>
 <script>window.RAIS_FORM={accessKey:"REPLACE_WEB3FORMS_ACCESS_KEY",fromName:"Haller Haven",subject:"Anfrage Haller"};</script>
 <script src="config.js"></script>
+<script src="nav.js"></script>
+<script src="motion.js"></script>
 <script src="form.js"></script>
 <script src="seo.js"></script>
 <script src="objekt.js"></script>
-<script src="nav.js"></script>
 </body></html>
