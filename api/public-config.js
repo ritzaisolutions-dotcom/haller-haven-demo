@@ -1,6 +1,7 @@
-const { isAdmin } = require("../lib/auth");
+const { HOME_MAX, SITE_BASE } = require("../lib/constants");
 const { applyCors } = require("../lib/cors");
 
+/** Public runtime config — no secrets. */
 module.exports = async function handler(req, res) {
   applyCors(res, req.headers.origin || "", "GET, OPTIONS");
 
@@ -8,16 +9,15 @@ module.exports = async function handler(req, res) {
     res.status(204).end();
     return;
   }
-
   if (req.method !== "GET") {
     res.status(405).json({ ok: false });
     return;
   }
 
-  if (!isAdmin(req)) {
-    res.status(401).json({ ok: false });
-    return;
-  }
-
-  res.status(200).json({ ok: true });
+  res.status(200).json({
+    ok: true,
+    homeMax: HOME_MAX,
+    siteBase: SITE_BASE,
+    listingsUrl: "/api/listings"
+  });
 };

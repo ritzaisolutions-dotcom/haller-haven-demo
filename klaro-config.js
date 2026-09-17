@@ -95,7 +95,7 @@ var klaroConfig = {
       },
       necessary: {
         description:
-          "Technisch erforderliche Funktionen für den Betrieb der Website (z. B. lokale Inserate-Speicherung, Admin-Sitzung, Speicherung Ihrer Consent-Auswahl).",
+          "Technisch erforderliche Funktionen für den Betrieb der Website (Admin-Sitzung, Speicherung Ihrer Consent-Auswahl, serverseitige Formularverarbeitung).",
       },
     },
   },

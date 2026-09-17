@@ -5,37 +5,32 @@
   var heroImg = document.querySelector(".page-hero .hero-media");
   var API = window.RAIS_LISTINGS_URL || "/api/listings";
 
-  function esc(s) {
-    return String(s == null ? "" : s)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
+  function isPublicListing(item) {
+    return !!(item && item.enabled !== false && item.status !== "verkauft");
+  }
+
+  function isSafeHttps(url) {
+    if (!url || typeof url !== "string") return false;
+    try {
+      var u = new URL(url.trim());
+      return u.protocol === "https:";
+    } catch (e) {
+      return false;
+    }
   }
 
   if (box) {
     box.innerHTML = '<p class="listing-empty" role="status">Objekt wird geladen …</p>';
   }
 
-  function loadList() {
-    return fetch(API, { cache: "no-store" })
-      .then(function (r) {
-        if (!r.ok) throw new Error("api");
-        return r.json();
-      })
-      .catch(function () {
-        return fetch("/listings.json", { cache: "no-store" })
-          .then(function (r) {
-            if (!r.ok) throw new Error("json");
-            return r.json();
-          });
-      });
-  }
-
-  loadList()
+  fetch(API, { cache: "no-store" })
+    .then(function (r) {
+      if (!r.ok) throw new Error("api");
+      return r.json();
+    })
     .then(function (list) {
       var item = (list || []).filter(function (x) { return x.id === id; })[0];
-      if (!item || item.enabled === false) {
+      if (!item || !isPublicListing(item)) {
         if (title) title.textContent = "Objekt nicht verfügbar";
         if (box) box.innerHTML = "<p>Dieses Objekt ist gerade nicht freigeschaltet.</p>";
         return;
@@ -48,11 +43,17 @@
         heroImg.alt = item.title || "Objektfoto";
       }
 
-      var imgs = (item.images || [])
-        .map(function (s) {
-          return '<img src="' + esc(s) + '" alt="' + esc(item.title || "") + '" loading="lazy" style="width:100%;max-height:420px;object-fit:cover;margin-bottom:8px">';
-        })
-        .join("");
+      box.innerHTML = "";
+      (item.images || []).forEach(function (src) {
+        if (!src) return;
+        var img = document.createElement("img");
+        img.src = src;
+        img.alt = item.title || "";
+        img.loading = "lazy";
+        img.style.cssText = "width:100%;max-height:420px;object-fit:cover;margin-bottom:8px";
+        box.appendChild(img);
+      });
+
       var meta = [
         item.type === "miete" ? "Miete" : "Kauf",
         item.category,
@@ -62,25 +63,39 @@
         item.price
       ].filter(Boolean).join(" · ");
 
-      var links = [];
-      if (item.links && item.links.is24) {
-        links.push('<a href="' + esc(item.links.is24) + '" target="_blank" rel="noopener noreferrer">ImmoScout24</a>');
-      }
-      if (item.links && item.links.immowelt) {
-        links.push('<a href="' + esc(item.links.immowelt) + '" target="_blank" rel="noopener noreferrer">Immowelt</a>');
-      }
-      var refLine = item.ref
-        ? '<p class="muted-note">Objekt-Nr. ' + esc(item.ref) +
-          (links.length ? " · " + links.join(" · ") : "") + "</p>"
-        : (links.length ? '<p class="muted-note">' + links.join(" · ") + "</p>" : "");
+      var metaP = document.createElement("p");
+      var strong = document.createElement("strong");
+      strong.textContent = meta;
+      metaP.appendChild(strong);
+      box.appendChild(metaP);
 
-      if (box) {
-        box.innerHTML =
-          imgs +
-          "<p><strong>" + esc(meta) + "</strong></p>" +
-          refLine +
-          "<p>" + esc(item.note || "") + "</p>";
+      var links = [];
+      if (item.links && isSafeHttps(item.links.is24)) {
+        links.push({ href: item.links.is24.trim(), label: "ImmoScout24" });
       }
+      if (item.links && isSafeHttps(item.links.immowelt)) {
+        links.push({ href: item.links.immowelt.trim(), label: "Immowelt" });
+      }
+
+      if (item.ref || links.length) {
+        var refP = document.createElement("p");
+        refP.className = "muted-note";
+        if (item.ref) refP.appendChild(document.createTextNode("Objekt-Nr. " + item.ref));
+        links.forEach(function (link, i) {
+          if (item.ref || i > 0) refP.appendChild(document.createTextNode(" · "));
+          var a = document.createElement("a");
+          a.href = link.href;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.textContent = link.label;
+          refP.appendChild(a);
+        });
+        box.appendChild(refP);
+      }
+
+      var noteP = document.createElement("p");
+      noteP.textContent = item.note || "";
+      box.appendChild(noteP);
 
       var place = document.querySelector("[name=place]");
       var oid = document.querySelector("[name=object_id]");

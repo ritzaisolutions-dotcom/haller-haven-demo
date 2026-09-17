@@ -16,6 +16,10 @@
       .replace(/"/g, "&quot;");
   }
 
+  function isPublicListing(item) {
+    return !!(item && item.enabled !== false && item.status !== "verkauft");
+  }
+
   function typeLabel(item) {
     return item.type === "miete" ? "Miete" : "Kauf";
   }
@@ -35,7 +39,9 @@
     media.className = "listing-media";
 
     if (!images.length) {
-      media.innerHTML = '<div class="listing-ph"></div>';
+      var ph = document.createElement("div");
+      ph.className = "listing-ph";
+      media.appendChild(ph);
     } else {
       var img = document.createElement("img");
       img.src = images[0];
@@ -54,13 +60,13 @@
         prev.type = "button";
         prev.className = "listing-nav prev";
         prev.setAttribute("aria-label", "Vorheriges Bild");
-        prev.innerHTML = "‹";
+        prev.textContent = "‹";
 
         var next = document.createElement("button");
         next.type = "button";
         next.className = "listing-nav next";
         next.setAttribute("aria-label", "Nächstes Bild");
-        next.innerHTML = "›";
+        next.textContent = "›";
 
         var dots = document.createElement("div");
         dots.className = "listing-dots";
@@ -149,16 +155,14 @@
   }
 
   function liveOnly(list) {
-    return (list || []).filter(function (x) {
-      return x.enabled !== false && x.status !== "verkauft";
-    });
+    return (list || []).filter(isPublicListing);
   }
 
   function featuredHome(list) {
     var live = liveOnly(list);
     var featured = live.filter(function (x) { return x.featured === true; });
     if (featured.length) return featured.slice(0, HOME_MAX);
-    return live.slice(0, Math.min(3, HOME_MAX));
+    return live.slice(0, HOME_MAX);
   }
 
   function paint(root, list, opts) {
@@ -208,14 +212,19 @@
       var label = document.createElement("label");
       label.className = "object-pick-item";
       var meta = [typeLabel(item), item.place, item.price].filter(Boolean).join(" · ");
-      label.innerHTML =
-        '<input type="checkbox" name="object_id" value="' + esc(item.id || "") +
-          '" data-title="' + esc(item.title || "") +
-          '" data-ref="' + esc(item.ref || "") +
-          '" data-type="' + esc(item.type || "kauf") + '">' +
-        "<span><strong>" + esc(item.title || "Ohne Titel") + "</strong>" +
-        (meta ? "<small>" + esc(meta) + "</small>" : "") +
-        "</span>";
+      var input = document.createElement("input");
+      input.type = "checkbox";
+      input.name = "object_id";
+      input.value = item.id || "";
+      input.setAttribute("data-title", item.title || "");
+      input.setAttribute("data-ref", item.ref || "");
+      input.setAttribute("data-type", item.type || "kauf");
+      var span = document.createElement("span");
+      span.innerHTML =
+        "<strong>" + esc(item.title || "Ohne Titel") + "</strong>" +
+        (meta ? "<small>" + esc(meta) + "</small>" : "");
+      label.appendChild(input);
+      label.appendChild(span);
       root.appendChild(label);
     });
 
@@ -276,13 +285,6 @@
       .then(function (r) {
         if (!r.ok) throw new Error("api");
         return r.json();
-      })
-      .catch(function () {
-        return fetch("/listings.json", { cache: "no-store" })
-          .then(function (r) {
-            if (!r.ok) throw new Error("json");
-            return r.json();
-          });
       })
       .then(function (list) {
         apply(Array.isArray(list) ? list : []);

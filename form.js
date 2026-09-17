@@ -3,6 +3,8 @@
   var form = document.getElementById("f") || document.getElementById("anfrage");
   if (!form) return;
 
+  var endpoint = window.RAIS_INQUIRIES_URL || "/api/inquiries";
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var ok = document.getElementById("ok");
@@ -15,15 +17,6 @@
         ok.style.display = "block";
       }
       privacy.focus();
-      return;
-    }
-
-    var key = cfg.accessKey || "";
-    if (!key || key.indexOf("REPLACE_") === 0) {
-      if (ok) {
-        ok.textContent = "Key fehlt. REPLACE_WEB3FORMS_ACCESS_KEY setzen.";
-        ok.style.display = "block";
-      }
       return;
     }
 
@@ -72,44 +65,53 @@
       subject = fd.get("subject").toString();
     }
 
-    fd.append("access_key", key);
-    fd.set("subject", subject);
-    fd.append("from_name", cfg.fromName || "Website");
-    fd.set("privacy", "accepted");
-    fd.set("consent_at", new Date().toISOString());
-
-    if (objectIds.length) {
-      fd.set("object_ids", objectIds.join(", "));
-      fd.set("object_id", objectIds[0]);
-    }
-    if (objectTitles.length) {
-      fd.set("object_titles", objectTitles.join(" · "));
-      fd.set("object_title", objectTitles.join(" · "));
-    }
-    if (objectRefs.length) {
-      fd.set("object_refs", objectRefs.join(", "));
-      fd.set("object_ref", objectRefs[0]);
-    }
-    if (objectTypes.length) {
-      fd.set("object_types", objectTypes.join(", "));
-      fd.set("object_type", objectTypes[0]);
-    }
+    var payload = {
+      name: (fd.get("name") || "").toString(),
+      email: (fd.get("email") || "").toString(),
+      phone: (fd.get("phone") || fd.get("tel") || "").toString(),
+      message: (fd.get("message") || fd.get("msg") || "").toString(),
+      intent: intent,
+      subject: subject,
+      privacy: true,
+      place: (fd.get("place") || "").toString(),
+      object_ref: objectRefs[0] || (fd.get("object_ref") || "").toString(),
+      object_type: objectTypes[0] || (fd.get("object_type") || "").toString(),
+      object_id: objectIds,
+      object_ids: objectIds,
+      page_path: location.pathname + location.search
+    };
 
     if (btn) btn.disabled = true;
 
-    fetch("https://api.web3forms.com/submit", { method: "POST", body: fd })
-      .then(function (r) { return r.json(); })
-      .then(function (j) {
+    fetch(endpoint, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) {
+        return r.json().then(function (j) {
+          return { ok: r.ok, status: r.status, body: j };
+        });
+      })
+      .then(function (res) {
+        var j = res.body || {};
+        var titles = j.objectTitles || objectTitles;
         if (ok) {
-          ok.textContent = j.success
-            ? (objectTitles.length
-              ? "Anfrage zu „" + objectTitles.join("“, „") + "“ gesendet. Sie liegt objektbezogen in der Mail."
-              : "Anfrage gesendet. Sie liegt in der Mail.")
-            : (j.message || "Senden fehlgeschlagen.");
+          if (res.ok && j.success) {
+            ok.textContent = titles.length
+              ? "Anfrage zu „" + titles.join("“, „") + "“ gesendet. Sie liegt objektbezogen in der Mail."
+              : "Anfrage gesendet. Sie liegt in der Mail.";
+          } else if (res.status === 503) {
+            ok.textContent = "Formular derzeit nicht konfiguriert. Bitte später erneut versuchen.";
+          } else if (res.status === 429) {
+            ok.textContent = "Zu viele Anfragen. Bitte kurz warten.";
+          } else {
+            ok.textContent = j.message || j.error || "Senden fehlgeschlagen.";
+          }
           ok.style.display = "block";
         }
-        if (j.success) {
-          objectIds.forEach(bumpInquiry);
+        if (res.ok && j.success) {
           var keepId = objectIds[0] || "";
           var keepTitle = objectTitles[0] || "";
           form.reset();
@@ -133,14 +135,4 @@
         if (btn) btn.disabled = false;
       });
   });
-
-  function bumpInquiry(objectId) {
-    if (!objectId) return;
-    try {
-      var k = (window.RAIS_STORE_KEY || "rais-listings-demo") + "-inquiries";
-      var map = JSON.parse(localStorage.getItem(k) || "{}");
-      map[objectId] = (Number(map[objectId]) || 0) + 1;
-      localStorage.setItem(k, JSON.stringify(map));
-    } catch (err) {}
-  }
 })();

@@ -162,15 +162,8 @@
       });
       return persist(list);
     },
-    replaceAll: function (list) {
-      return persist(cloneList(list));
-    },
     exportJson: function () {
       return JSON.stringify(this.all(), null, 2);
-    },
-    /** Kept for admin bootstrap: load from API (or empty). */
-    seedFromPublic: function () {
-      return this.ready();
     }
   };
 })(window);

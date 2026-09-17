@@ -1,58 +1,36 @@
 const ALLOWED_ACTIONS = { accept: true, decline: true, change: true };
-const RATE_WINDOW_MS = 60 * 1000;
-const RATE_MAX = 12;
-const hits = new Map();
-
-function cors(res, origin) {
-  const allowed = [
-    "https://haller-haven-demo.vercel.app",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-  ];
-  if (origin && (allowed.indexOf(origin) !== -1 || /\.vercel\.app$/.test(origin))) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-    res.setHeader("Vary", "Origin");
-  }
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-}
-
-function rateLimited(key) {
-  const now = Date.now();
-  const row = hits.get(key) || { n: 0, t: now };
-  if (now - row.t > RATE_WINDOW_MS) {
-    row.n = 0;
-    row.t = now;
-  }
-  row.n += 1;
-  hits.set(key, row);
-  if (hits.size > 5000) {
-    hits.clear();
-  }
-  return row.n > RATE_MAX;
-}
-
-function parseBody(req) {
-  if (typeof req.body === "string") {
-    try {
-      return JSON.parse(req.body || "{}");
-    } catch (e) {
-      return null;
-    }
-  }
-  return req.body || {};
-}
+const { parseBody } = require("../lib/parse-body");
+const { applyCors } = require("../lib/cors");
+const { clientIp } = require("../lib/auth");
+const { checkRateLimit } = require("../lib/rate-limit");
+const { config } = require("../lib/supabase");
 
 function clip(s, max) {
   if (s == null) return null;
-  const t = String(s).trim();
+  var t = String(s).trim();
   if (!t) return null;
   return t.length > max ? t.slice(0, max) : t;
 }
 
+function sanitizeServices(raw) {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
+    return { necessary: true };
+  }
+  var out = {};
+  var keys = Object.keys(raw).slice(0, 20);
+  keys.forEach(function (k) {
+    var key = String(k).slice(0, 40);
+    out[key] = !!raw[k];
+  });
+  if (!Object.prototype.hasOwnProperty.call(out, "necessary")) {
+    out.necessary = true;
+  }
+  return out;
+}
+
 module.exports = async function handler(req, res) {
-  const origin = req.headers.origin || "";
-  cors(res, origin);
+  var origin = req.headers.origin || "";
+  applyCors(res, origin, "POST, OPTIONS");
 
   if (req.method === "OPTIONS") {
     res.status(204).end();
@@ -63,44 +41,45 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) {
+  var cfg = config();
+  if (!cfg) {
     res.status(503).json({ ok: false, error: "consent_store_unconfigured" });
     return;
   }
 
-  const body = parseBody(req);
-  if (!body) {
+  var parsed = parseBody(req, {});
+  if (!parsed.ok) {
     res.status(400).json({ ok: false, error: "invalid_json" });
     return;
   }
+  var body = parsed.value || {};
 
-  const action = String(body.action || "").toLowerCase();
+  var action = String(body.action || "").toLowerCase();
   if (!ALLOWED_ACTIONS[action]) {
     res.status(400).json({ ok: false, error: "invalid_action" });
     return;
   }
 
-  const services =
-    body.services && typeof body.services === "object" && !Array.isArray(body.services)
-      ? body.services
-      : { necessary: true };
-
-  const visitorKey = clip(body.visitor_key, 64);
-  const rateKey = visitorKey || req.headers["x-forwarded-for"] || req.socket?.remoteAddress || "anon";
-  if (rateLimited(String(rateKey))) {
+  var services = sanitizeServices(body.services);
+  var visitorKey = clip(body.visitor_key, 64);
+  var rateKey = visitorKey || clientIp(req);
+  var rate = await checkRateLimit("consent", rateKey, 12, 60);
+  if (rate.unavailable) {
+    res.status(503).json({ ok: false, error: "rate_limit_unavailable" });
+    return;
+  }
+  if (rate.limited) {
     res.status(429).json({ ok: false, error: "rate_limited" });
     return;
   }
 
-  let consentAt = new Date().toISOString();
+  var consentAt = new Date().toISOString();
   if (body.consent_at) {
-    const d = new Date(body.consent_at);
+    var d = new Date(body.consent_at);
     if (!Number.isNaN(d.getTime())) consentAt = d.toISOString();
   }
 
-  const row = {
+  var row = {
     client_id: "haller",
     consent_at: consentAt,
     action: action,
@@ -108,22 +87,22 @@ module.exports = async function handler(req, res) {
     visitor_key: visitorKey,
     page_path: clip(body.page_path, 300),
     site_host: clip(body.site_host, 120),
-    user_agent: clip(body.user_agent || req.headers["user-agent"], 200),
+    user_agent: clip(body.user_agent || req.headers["user-agent"], 200)
   };
 
   try {
-    const r = await fetch(url.replace(/\/$/, "") + "/rest/v1/website_consent_log", {
+    var r = await fetch(cfg.url + "/rest/v1/website_consent_log", {
       method: "POST",
       headers: {
-        apikey: key,
-        Authorization: "Bearer " + key,
+        apikey: cfg.key,
+        Authorization: "Bearer " + cfg.key,
         "Content-Type": "application/json",
-        Prefer: "return=minimal",
+        Prefer: "return=minimal"
       },
-      body: JSON.stringify(row),
+      body: JSON.stringify(row)
     });
     if (!r.ok) {
-      const text = await r.text();
+      var text = await r.text();
       console.error("consent-log supabase", r.status, text.slice(0, 300));
       res.status(502).json({ ok: false, error: "store_failed" });
       return;

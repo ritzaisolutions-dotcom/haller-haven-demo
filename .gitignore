@@ -2,3 +2,8 @@
 node_modules/
 Waldemanr_Haller_signatur.html
 Waldemanr_Haller_signatur_files/
+tmp-seed.json
+tmp-seed.sql
+tmp-seed-dollar.sql
+.21st/
+.env*
