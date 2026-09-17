@@ -1,6 +1,8 @@
 (function () {
   var cfg = window.RAIS_ADMIN || {};
   var dragId = null;
+  var thumbDragIndex = null;
+  var dropDepth = 0;
   var HOME_MAX = Number(window.RAIS_HOME_MAX) || 6;
 
   function $(id) { return document.getElementById(id); }
@@ -20,30 +22,49 @@
     return d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" });
   }
 
-  function localBumps() {
-    try {
-      var k = (window.RAIS_STORE_KEY || "rais-listings-demo") + "-inquiries";
-      return JSON.parse(localStorage.getItem(k) || "{}");
-    } catch (e) {
-      return {};
-    }
-  }
-
-  function inquiryParts(item) {
-    var bumps = localBumps();
-    var base = Number(item.inquiryCount) || 0;
-    var local = Number(bumps[item.id]) || 0;
-    return { base: base, local: local, total: base + local };
-  }
-
   function inquiryTotal(item) {
-    return inquiryParts(item).total;
+    return Number(item.inquiryCount) || 0;
   }
 
   function msg(text, isErr) {
     var el = $("form-msg");
     el.textContent = text || "";
     el.classList.toggle("is-err", !!isErr);
+  }
+
+  function listMsg(text, isErr) {
+    var el = $("list-msg");
+    if (!el) return;
+    if (!text) {
+      el.hidden = true;
+      el.textContent = "";
+      el.classList.remove("is-err");
+      return;
+    }
+    el.hidden = false;
+    el.textContent = text;
+    el.classList.toggle("is-err", !!isErr);
+  }
+
+  function flash(text, isErr) {
+    if ($("editor") && !$("editor").hidden) {
+      msg(text, isErr);
+      listMsg("");
+    } else {
+      listMsg(text, isErr);
+      msg("");
+    }
+  }
+
+  function hasFilePayload(dt) {
+    if (!dt || !dt.types) return false;
+    return Array.prototype.indexOf.call(dt.types, "Files") !== -1;
+  }
+
+  function setDropzoneBusy(busy) {
+    var zone = $("dropzone");
+    if (!zone) return;
+    zone.classList.toggle("is-busy", !!busy);
   }
 
   function handleAuthError(err) {
@@ -60,20 +81,19 @@
   function afterSave(promise, okText) {
     return promise
       .then(function () {
-        msg(okText || "Gespeichert — sofort live.");
+        flash(okText || "Gespeichert — sofort live.");
         renderStats();
         renderList();
       })
       .catch(function (err) {
         if (handleAuthError(err)) return;
-        msg(err.message || "Fehler beim Speichern", true);
+        flash(err.message || "Fehler beim Speichern", true);
         renderStats();
         renderList();
       });
   }
 
   function statsRow(item) {
-    var parts = inquiryParts(item);
     return {
       id: item.id || "",
       title: item.title || "Ohne Titel",
@@ -86,9 +106,7 @@
       featured: item.featured === true ? "ja" : "nein",
       createdAt: item.createdAt || "",
       createdAtDe: fmtDate(item.createdAt),
-      inquiryBase: parts.base,
-      inquiryLocal: parts.local,
-      inquiryTotal: parts.total,
+      inquiryTotal: inquiryTotal(item),
       images: (item.images && item.images.length) || 0
     };
   }
@@ -102,7 +120,7 @@
   function toCsv(rows) {
     var headers = [
       "id", "title", "place", "price", "area", "rooms", "status", "enabled", "featured",
-      "createdAt", "inquiryBase", "inquiryLocal", "inquiryTotal", "images"
+      "createdAt", "inquiryTotal", "images"
     ];
     var lines = [headers.join(",")];
     rows.forEach(function (r) {
@@ -148,8 +166,12 @@
         $("login-msg").textContent = "ADMIN_PASSWORD fehlt auf Vercel. Env setzen, neu deployen.";
         return;
       }
+      if (r.status === 429) {
+        $("login-msg").textContent = "Zu viele Versuche. Bitte kurz warten.";
+        return;
+      }
       if (!r.ok) {
-        $("login-msg").textContent = "Falsch.";
+        $("login-msg").textContent = "Anmeldung fehlgeschlagen.";
         return;
       }
       $("pw").value = "";
@@ -164,7 +186,8 @@
     $("app").hidden = false;
     $("out").hidden = false;
     $("who").textContent = cfg.tenant || "demo";
-    window.RAIS_STORE.seedFromPublic()
+    closeEditor();
+    window.RAIS_STORE.ready()
       .then(function () {
         renderStats();
         renderList();
@@ -173,6 +196,29 @@
         if (handleAuthError(err)) return;
         msg(err.message || "Laden fehlgeschlagen", true);
       });
+  }
+
+  function openEditor(item) {
+    fill(item || null);
+    $("editor").hidden = false;
+    $("layout").classList.add("is-editing");
+    msg("");
+    listMsg("");
+    setTimeout(function () {
+      $("title").focus();
+    }, 0);
+    $("editor").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function closeEditor() {
+    fill(null);
+    $("editor").hidden = true;
+    $("layout").classList.remove("is-editing");
+    msg("");
+    setDropzoneBusy(false);
+    dropDepth = 0;
+    var zone = $("dropzone");
+    if (zone) zone.classList.remove("is-dragover");
   }
 
   function compress(file) {
@@ -224,6 +270,45 @@
         return j.url;
       });
     });
+  }
+
+  function uploadFiles(fileList) {
+    var files = Array.prototype.slice.call(fileList || []).filter(function (f) {
+      return f && f.type && f.type.indexOf("image") === 0;
+    });
+    if (!files.length) return;
+    var have = JSON.parse($("images").value || "[]");
+    var room = 12 - have.length;
+    if (room <= 0) {
+      msg("Maximal 12 Bilder.", true);
+      return;
+    }
+    var listingId = $("fid").value || ("new-" + Date.now());
+    msg("Bilder werden hochgeladen …");
+    setDropzoneBusy(true);
+    Promise.all(files.slice(0, room).map(compress))
+      .then(function (dataUrls) {
+        return dataUrls.reduce(function (chain, dataUrl) {
+          return chain.then(function (urls) {
+            return uploadDataUrl(dataUrl, listingId).then(function (url) {
+              urls.push(url);
+              return urls;
+            });
+          });
+        }, Promise.resolve([]));
+      })
+      .then(function (urls) {
+        $("images").value = JSON.stringify(have.concat(urls));
+        paintThumbs();
+        msg(urls.length + " Bild(er) hochgeladen.");
+      })
+      .catch(function (err) {
+        if (handleAuthError(err)) return;
+        msg(err.message || "Upload fehlgeschlagen", true);
+      })
+      .then(function () {
+        setDropzoneBusy(false);
+      });
   }
 
   function formItem() {
@@ -281,7 +366,25 @@
     imgs.forEach(function (src, i) {
       var d = document.createElement("div");
       d.className = "thumb-edit";
-      d.innerHTML = "<img src=\"" + src + "\" alt=\"\"><button type=\"button\" data-i=\"" + i + "\" aria-label=\"Bild entfernen\">×</button>";
+      d.draggable = true;
+      d.setAttribute("data-i", String(i));
+      d.title = "Ziehen zum Umsortieren";
+      var img = document.createElement("img");
+      img.src = src;
+      img.alt = "";
+      d.appendChild(img);
+      if (i === 0) {
+        var badge = document.createElement("span");
+        badge.className = "cover-badge";
+        badge.textContent = "Titelbild";
+        d.appendChild(badge);
+      }
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.setAttribute("data-i", String(i));
+      btn.setAttribute("aria-label", "Bild entfernen");
+      btn.textContent = "×";
+      d.appendChild(btn);
       box.appendChild(d);
     });
     $("imgcount").textContent = imgs.length + " / 12";
@@ -319,8 +422,7 @@
           "<td>" + esc(row.status) + "</td>" +
           "<td>" + esc(row.enabled) + "</td>" +
           "<td>" + esc(row.featured) + "</td>" +
-          '<td class="num"><strong>' + row.inquiryTotal + "</strong>" +
-            '<br><span class="mut">' + row.inquiryBase + " + " + row.inquiryLocal + "</span></td>" +
+          '<td class="num"><strong>' + row.inquiryTotal + "</strong></td>" +
           "<td>" + esc(row.createdAtDe) + "</td>" +
           '<td><button type="button" class="ghost sm" data-csv="' + esc(item.id) + '">CSV</button></td>';
         tbody.appendChild(tr);
@@ -335,41 +437,61 @@
       return x.featured === true && x.enabled !== false && x.status !== "verkauft";
     }).length;
     if (!list.length) {
-      box.innerHTML = '<p class="empty">Noch keine Objekte. Rechts ein neues anlegen.</p>';
+      box.innerHTML = '<p class="empty">Noch keine Objekte.<br>Mit <strong>Objekt anlegen</strong> starten.</p>';
       return;
     }
     list.forEach(function (item) {
       var img = (item.images && item.images[0]) || "";
       var on = item.enabled !== false;
       var feat = item.featured === true;
-      var parts = inquiryParts(item);
+      var total = inquiryTotal(item);
       var featDisabled = !feat && (featuredCount >= HOME_MAX || !on);
       var row = document.createElement("div");
       row.className = "listing";
       row.draggable = true;
       row.dataset.id = item.id;
-      row.innerHTML =
-        '<div class="handle" title="Ziehen">⋮⋮</div>' +
-        '<div class="thumb">' + (img ? '<img src="' + img + '" alt="">' : "") + "</div>" +
-        '<div class="meta">' +
-          "<strong>" + esc(item.title || "Ohne Titel") + "</strong>" +
-          "<p>" + esc([item.type === "miete" ? "Miete" : "Kauf", item.place, item.area ? item.area + " m²" : "", item.rooms ? item.rooms + " Zi." : "", item.price].filter(Boolean).join(" · ")) + "</p>" +
-          (item.note ? "<p>" + esc(item.note.slice(0, 110)) + (item.note.length > 110 ? "…" : "") + "</p>" : "") +
-          '<div class="chips">' +
-            '<span class="chip ' + (on ? "on" : "off") + '">' + (on ? "Sichtbar" : "Verborgen") + "</span>" +
-            (feat ? '<span class="chip feat">Startseite</span>' : "") +
-            '<span class="chip">' + esc(item.status === "verkauft" ? "verkauft" : "verfügbar") + "</span>" +
-            '<span class="chip">' + parts.total + " Anfragen</span>" +
-          "</div>" +
-        "</div>" +
-        '<div class="actions">' +
-          '<label class="switch"><input type="checkbox" data-toggle="' + esc(item.id) + '"' + (on ? " checked" : "") + "> Auf Website zeigen</label>" +
-          '<label class="switch"><input type="checkbox" data-featured="' + esc(item.id) + '"' +
-            (feat ? " checked" : "") + (featDisabled ? " disabled" : "") + "> Auf Startseite</label>" +
-          '<button type="button" class="ghost sm" data-edit="' + esc(item.id) + '">Bearbeiten</button>' +
-          '<button type="button" class="ghost sm" data-csv="' + esc(item.id) + '">CSV</button>' +
-          '<button type="button" class="danger sm" data-del="' + esc(item.id) + '">Löschen</button>' +
+
+      var handle = document.createElement("div");
+      handle.className = "handle";
+      handle.title = "Ziehen";
+      handle.textContent = "⋮⋮";
+
+      var thumb = document.createElement("div");
+      thumb.className = "thumb";
+      if (img) {
+        var thumbImg = document.createElement("img");
+        thumbImg.src = img;
+        thumbImg.alt = "";
+        thumb.appendChild(thumbImg);
+      }
+
+      var meta = document.createElement("div");
+      meta.className = "meta";
+      meta.innerHTML =
+        "<strong>" + esc(item.title || "Ohne Titel") + "</strong>" +
+        "<p>" + esc([item.type === "miete" ? "Miete" : "Kauf", item.place, item.area ? item.area + " m²" : "", item.rooms ? item.rooms + " Zi." : "", item.price].filter(Boolean).join(" · ")) + "</p>" +
+        (item.note ? "<p>" + esc(item.note.slice(0, 110)) + (item.note.length > 110 ? "…" : "") + "</p>" : "") +
+        '<div class="chips">' +
+          '<span class="chip ' + (on ? "on" : "off") + '">' + (on ? "Sichtbar" : "Verborgen") + "</span>" +
+          (feat ? '<span class="chip feat">Startseite</span>' : "") +
+          '<span class="chip">' + esc(item.status === "verkauft" ? "verkauft" : "verfügbar") + "</span>" +
+          '<span class="chip">' + total + " Anfragen</span>" +
         "</div>";
+
+      var actions = document.createElement("div");
+      actions.className = "actions";
+      actions.innerHTML =
+        '<label class="switch"><input type="checkbox" data-toggle="' + esc(item.id) + '"' + (on ? " checked" : "") + "> Auf Website zeigen</label>" +
+        '<label class="switch"><input type="checkbox" data-featured="' + esc(item.id) + '"' +
+          (feat ? " checked" : "") + (featDisabled ? " disabled" : "") + "> Auf Startseite</label>" +
+        '<button type="button" class="ghost sm" data-edit="' + esc(item.id) + '">Bearbeiten</button>' +
+        '<button type="button" class="ghost sm" data-csv="' + esc(item.id) + '">CSV</button>' +
+        '<button type="button" class="danger sm" data-del="' + esc(item.id) + '">Löschen</button>';
+
+      row.appendChild(handle);
+      row.appendChild(thumb);
+      row.appendChild(meta);
+      row.appendChild(actions);
       box.appendChild(row);
     });
   }
@@ -413,49 +535,124 @@
     });
   }
 
+  function bindThumbDnD() {
+    var box = $("thumbs");
+    box.addEventListener("dragstart", function (e) {
+      if (e.target.closest("button")) {
+        e.preventDefault();
+        return;
+      }
+      var thumb = e.target.closest(".thumb-edit");
+      if (!thumb) return;
+      thumbDragIndex = Number(thumb.getAttribute("data-i"));
+      thumb.classList.add("dragging");
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("text/plain", String(thumbDragIndex));
+    });
+    box.addEventListener("dragend", function () {
+      Array.prototype.forEach.call(box.querySelectorAll(".thumb-edit"), function (el) {
+        el.classList.remove("dragging", "drag-over");
+      });
+      thumbDragIndex = null;
+    });
+    box.addEventListener("dragover", function (e) {
+      if (thumbDragIndex == null) return;
+      e.preventDefault();
+      var thumb = e.target.closest(".thumb-edit");
+      Array.prototype.forEach.call(box.querySelectorAll(".thumb-edit"), function (el) {
+        el.classList.toggle(
+          "drag-over",
+          !!(thumb && el === thumb && Number(el.getAttribute("data-i")) !== thumbDragIndex)
+        );
+      });
+    });
+    box.addEventListener("drop", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var target = e.target.closest(".thumb-edit");
+      if (thumbDragIndex == null || !target) return;
+      var to = Number(target.getAttribute("data-i"));
+      if (to === thumbDragIndex) return;
+      var imgs = JSON.parse($("images").value || "[]");
+      var moved = imgs.splice(thumbDragIndex, 1)[0];
+      imgs.splice(to, 0, moved);
+      $("images").value = JSON.stringify(imgs);
+      paintThumbs();
+      thumbDragIndex = null;
+    });
+  }
+
+  function bindDropzone() {
+    var zone = $("dropzone");
+    var input = $("files");
+
+    function openPicker() {
+      if (zone.classList.contains("is-busy")) return;
+      input.click();
+    }
+
+    zone.addEventListener("click", function (e) {
+      if (e.target === input) return;
+      openPicker();
+    });
+    zone.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openPicker();
+      }
+    });
+
+    zone.addEventListener("dragenter", function (e) {
+      if (!hasFilePayload(e.dataTransfer)) return;
+      e.preventDefault();
+      dropDepth += 1;
+      zone.classList.add("is-dragover");
+    });
+    zone.addEventListener("dragover", function (e) {
+      if (!hasFilePayload(e.dataTransfer)) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "copy";
+      zone.classList.add("is-dragover");
+    });
+    zone.addEventListener("dragleave", function (e) {
+      if (!hasFilePayload(e.dataTransfer)) return;
+      dropDepth = Math.max(0, dropDepth - 1);
+      if (dropDepth === 0) zone.classList.remove("is-dragover");
+    });
+    zone.addEventListener("drop", function (e) {
+      if (!hasFilePayload(e.dataTransfer)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      dropDepth = 0;
+      zone.classList.remove("is-dragover");
+      uploadFiles(e.dataTransfer.files);
+    });
+
+    input.addEventListener("change", function (e) {
+      uploadFiles(e.target.files);
+      e.target.value = "";
+    });
+  }
+
   $("go").addEventListener("click", gate);
   $("pw").addEventListener("keydown", function (e) { if (e.key === "Enter") gate(); });
   $("out").addEventListener("click", function () {
     fetch("/api/admin-logout", { method: "POST", credentials: "same-origin" }).finally(function () {
+      closeEditor();
       $("app").hidden = true;
       $("gate").hidden = false;
       $("out").hidden = true;
     });
   });
 
-  $("files").addEventListener("change", function (e) {
-    var files = Array.prototype.slice.call(e.target.files || []);
-    var have = JSON.parse($("images").value || "[]");
-    var room = 12 - have.length;
-    if (room <= 0) return;
-    var listingId = $("fid").value || ("new-" + Date.now());
-    msg("Bilder werden hochgeladen …");
-    Promise.all(files.slice(0, room).map(compress))
-      .then(function (dataUrls) {
-        return dataUrls.reduce(function (chain, dataUrl) {
-          return chain.then(function (urls) {
-            return uploadDataUrl(dataUrl, listingId).then(function (url) {
-              urls.push(url);
-              return urls;
-            });
-          });
-        }, Promise.resolve([]));
-      })
-      .then(function (urls) {
-        $("images").value = JSON.stringify(have.concat(urls));
-        paintThumbs();
-        msg(urls.length + " Bild(er) hochgeladen.");
-      })
-      .catch(function (err) {
-        if (handleAuthError(err)) return;
-        msg(err.message || "Upload fehlgeschlagen", true);
-      });
-    e.target.value = "";
+  $("add-listing").addEventListener("click", function () {
+    openEditor(null);
   });
 
   $("thumbs").addEventListener("click", function (e) {
     var btn = e.target.closest("button");
     if (!btn) return;
+    e.stopPropagation();
     var imgs = JSON.parse($("images").value || "[]");
     imgs.splice(Number(btn.getAttribute("data-i")), 1);
     $("images").value = JSON.stringify(imgs);
@@ -478,15 +675,14 @@
     }
     afterSave(
       window.RAIS_STORE.upsert(item).then(function () {
-        fill(null);
+        closeEditor();
       }),
       "Gespeichert — sofort live."
     );
   });
 
   $("reset").addEventListener("click", function () {
-    fill(null);
-    msg("");
+    closeEditor();
   });
 
   function onCsvClick(e) {
@@ -505,13 +701,12 @@
       return;
     }
     if (ed) {
-      fill(window.RAIS_STORE.get(ed));
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      openEditor(window.RAIS_STORE.get(ed));
     }
     if (del && confirm("Objekt löschen?")) {
       afterSave(
         window.RAIS_STORE.remove(del).then(function () {
-          if ($("fid").value === del) fill(null);
+          if ($("fid").value === del) closeEditor();
         }),
         "Gelöscht — sofort live."
       );
@@ -545,14 +740,14 @@
   $("sync").addEventListener("click", function () {
     window.RAIS_STORE.reload()
       .then(function (list) {
-        fill(null);
+        closeEditor();
         renderStats();
         renderList();
-        msg(list.length + " Objekte neu geladen.");
+        flash(list.length + " Objekte neu geladen.");
       })
       .catch(function (err) {
         if (handleAuthError(err)) return;
-        msg(err.message || "Neu laden fehlgeschlagen", true);
+        flash(err.message || "Neu laden fehlgeschlagen", true);
       });
   });
 
@@ -565,6 +760,8 @@
   });
 
   bindDnD();
+  bindThumbDnD();
+  bindDropzone();
 
   fetch("/api/admin-check", { credentials: "same-origin" })
     .then(function (r) { if (r.ok) showApp(); })
