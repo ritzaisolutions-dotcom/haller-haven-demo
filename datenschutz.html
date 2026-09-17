@@ -27,6 +27,7 @@
 <link rel="icon" href="https://haller-immobilien.de/wp-content/uploads/2020/06/favicon32.png" type="image/png"/>
 <link rel="stylesheet" href="site.css"/>
 <link rel="stylesheet" href="listings.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/klaro@0.7.18/dist/klaro.min.css"/>
 </head>
 <body class="haven">
 <header class="top">
@@ -254,12 +255,16 @@
 
   <h2 id="erfassung">5. Datenerfassung im Detail</h2>
 
-  <h3>Cookies und vergleichbare Techniken</h3>
-  <p>Auf den öffentlichen Seiten setzen wir <strong>kein</strong> Consent-Banner und <strong>kein</strong> Analyse-Cookie. Bewusst eingesetzte Speicherungen:</p>
+  <h3>Cookies und Consent Management (Klaro!)</h3>
+  <p>Wir nutzen auf unserer Website den Open-Source Consent-Manager <strong>Klaro!</strong> zur Verwaltung Ihrer Privatsphäre-Einstellungen und Einwilligungen. Klaro! verarbeitet Ihre Auswahl (Einwilligung oder Ablehnung optionaler Skripte) ausschließlich <strong>lokal auf Ihrem Endgerät</strong> im <code>localStorage</code> (Schlüssel <code>klaro</code>) bzw. über ein technisches Cookie.</p>
+  <p><strong>Rechtsgrundlage:</strong> § 25 Abs. 2 Nr. 2 TDDDG, Art. 6 Abs. 1 lit. f DSGVO. Die Speicherung der Einwilligungs-Entscheidung ist erforderlich, um Ihren Wünschen nachzukommen und den Nachweis der getroffenen Einwilligung DSGVO-konform vorzuhalten.</p>
+  <p>Sie können Ihre Cookie- und Einwilligungseinstellungen jederzeit über den Link <a href="#" onclick="if(window.klaro){klaro.show();} return false;">Cookie-Einstellungen</a> in der Fußzeile unserer Website einsehen und anpassen.</p>
+
+  <h3>Weitere lokale Speicherungen:</h3>
   <ul>
-    <li><strong><code>rais_admin</code></strong> (First-Party-Cookie, HttpOnly, Secure, SameSite=Strict, Path=/, Max-Age 28800 Sekunden = 8 Stunden). Wird nur nach erfolgreichem Admin-Login gesetzt und beim Logout auf Max-Age 0 gelöscht. Inhalt: Ablaufzeitpunkt plus HMAC über <code>ADMIN_PASSWORD</code>. Zweck: Sitzung des Backends. Rechtsgrundlage: §&nbsp;25 Abs.&nbsp;2 Nr.&nbsp;2 TDDDG, Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO. Ohne dieses Cookie kann der ausdrücklich angeforderte Admin-Zugang nicht aufrechterhalten werden.</li>
-    <li><strong>localStorage-Schlüssel <code>rais-listings-haller-haven</code></strong> (<code>config.js</code> / <code>store.js</code>): Objektliste, die der Admin lokal pflegt. Beim ersten Besuch ohne lokale Daten wird öffentlich <code>/listings.json</code> geladen und danach lokal gehalten. Keine Übermittlung an uns.</li>
-    <li><strong>localStorage-Schlüssel <code>rais-listings-haller-haven-inquiries</code></strong> (<code>form.js</code>): Zähler erfolgreicher Objektanfragen je <code>object_id</code> im selben Browser. Enthält keine Namen oder E-Mail-Adressen. Dient der Admin-Statistik auf demselben Gerät und dem CSV-Export. Keine Übermittlung an uns.</li>
+    <li><strong><code>rais_admin</code></strong> (First-Party-Cookie, HttpOnly, Secure, SameSite=Strict, Path=/, Max-Age 28800 Sekunden = 8 Stunden). Wird nur nach erfolgreichem Admin-Login gesetzt. Sitzung des Backends.</li>
+    <li><strong>localStorage-Schlüssel <code>rais-listings-haller-haven</code></strong>: Lokale Objektliste. Keine Übermittlung an Dritte.</li>
+    <li><strong>localStorage-Schlüssel <code>rais-listings-haller-haven-inquiries</code></strong>: Lokale Zählung erfolgreicher Anfragen für das Admin-Dashboard. Keine personenbezogenen Daten.</li>
   </ul>
   <p>Sie können Cookies und lokalen Speicher in Ihrem Browser löschen. Dann entfallen Admin-Sitzung, lokal gecachte Objekte und lokale Anfragezähler.</p>
 
@@ -350,10 +355,13 @@
 </section>
 
 <footer>
-  <div>Haller Immobilienberatung GmbH · Andernach · Demo, kein Live-Mandat</div>
-  <div><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></div>
+  <div>Haller Immobilienberatung GmbH · Andernach</div>
+  <div><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="agb.html">AGB</a> · <a href="#" onclick="if(window.klaro){klaro.show();} return false;">Cookie-Einstellungen</a></div>
 </footer>
+<script defer type="text/javascript" src="klaro-config.js"></script>
+<script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/klaro@0.7.18/dist/klaro.min.js"></script>
 <script src="nav.js"></script>
+<script src="motion.js"></script>
 <script src="seo.js"></script>
 </body>
 </html>
