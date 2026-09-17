@@ -124,40 +124,51 @@ module.exports = async function handler(req, res) {
     subject = clip(prefix + " · " + titles.join(" · ") + " · Haller", 200);
   }
 
-  var fd = new FormData();
-  fd.append("access_key", key);
-  fd.append("subject", subject);
-  fd.append("from_name", "Haller Haven Website");
-  fd.append("name", name);
-  fd.append("email", email);
-  if (phone) fd.append("phone", phone);
-  if (message) fd.append("message", message);
-  if (intent) fd.append("intent", intent);
-  fd.append("privacy", "accepted");
-  fd.append("consent_at", new Date().toISOString());
+  var payload = {
+    access_key: key,
+    subject: subject,
+    from_name: "Haller Haven Website",
+    name: name,
+    email: email,
+    privacy: "accepted",
+    consent_at: new Date().toISOString()
+  };
+  if (phone) payload.phone = phone;
+  if (message) payload.message = message;
+  if (intent) payload.intent = intent;
   if (listingIds.length) {
-    fd.append("object_ids", listingIds.join(", "));
-    fd.append("object_id", listingIds[0]);
+    payload.object_ids = listingIds.join(", ");
+    payload.object_id = listingIds[0];
   }
   if (titles.length) {
-    fd.append("object_titles", titles.join(" · "));
-    fd.append("object_title", titles.join(" · "));
+    payload.object_titles = titles.join(" · ");
+    payload.object_title = titles.join(" · ");
   }
-
-  var extraKeys = ["place", "object_ref", "object_type"];
-  extraKeys.forEach(function (k) {
+  ["place", "object_ref", "object_type"].forEach(function (k) {
     var v = clip(body[k], 200);
-    if (v) fd.append(k, v);
+    if (v) payload[k] = v;
   });
 
   var w3;
   try {
     var r = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      body: fd
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify(payload)
     });
-    w3 = await r.json();
+    var raw = await r.text();
+    try {
+      w3 = JSON.parse(raw);
+    } catch (parseErr) {
+      console.error("web3forms non-json", r.status, raw.slice(0, 200));
+      res.status(502).json({ ok: false, error: "mail_failed" });
+      return;
+    }
     if (!r.ok || !w3 || !w3.success) {
+      console.error("web3forms reject", r.status, w3 && w3.message);
       res.status(502).json({
         ok: false,
         error: "mail_failed",
