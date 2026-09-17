@@ -290,19 +290,15 @@
   function renderStats() {
     var list = window.RAIS_STORE.all();
     var on = list.filter(function (x) { return x.enabled !== false && x.status !== "verkauft"; }).length;
-    var sold = list.filter(function (x) { return x.status === "verkauft"; }).length;
     var featured = list.filter(function (x) {
       return x.featured === true && x.enabled !== false && x.status !== "verkauft";
     }).length;
-    var inquiries = list.reduce(function (n, x) { return n + inquiryTotal(x); }, 0);
     $("stats").innerHTML =
-      '<div class="stat"><span>Inserate</span><b>' + list.length + "</b></div>" +
-      '<div class="stat"><span>Online</span><b>' + on + "</b></div>" +
-      '<div class="stat"><span>Startseite</span><b>' + featured + "/" + HOME_MAX + "</b></div>" +
-      '<div class="stat"><span>Anfragen gesamt</span><b>' + inquiries + "</b></div>" +
-      '<div class="stat"><span>Verkauft</span><b>' + sold + "</b></div>";
+      '<div class="stat"><span>Objekte gesamt</span><b>' + list.length + "</b></div>" +
+      '<div class="stat"><span>Online sichtbar</span><b>' + on + "</b></div>" +
+      '<div class="stat"><span>Auf der Startseite</span><b>' + featured + " / " + HOME_MAX + "</b></div>";
 
-    $("feat-counter").innerHTML = "Startseite <b>" + featured + "</b> / " + HOME_MAX;
+    $("feat-counter").innerHTML = "Auf der Startseite: <b>" + featured + "</b> von " + HOME_MAX;
 
     var tbody = $("stats-rows");
     if (!tbody) return;
@@ -339,7 +335,7 @@
       return x.featured === true && x.enabled !== false && x.status !== "verkauft";
     }).length;
     if (!list.length) {
-      box.innerHTML = '<p class="empty">Noch keine Objekte. Rechts anlegen oder Neu laden.</p>';
+      box.innerHTML = '<p class="empty">Noch keine Objekte. Rechts ein neues anlegen.</p>';
       return;
     }
     list.forEach(function (item) {
@@ -360,18 +356,17 @@
           "<p>" + esc([item.type === "miete" ? "Miete" : "Kauf", item.place, item.area ? item.area + " m²" : "", item.rooms ? item.rooms + " Zi." : "", item.price].filter(Boolean).join(" · ")) + "</p>" +
           (item.note ? "<p>" + esc(item.note.slice(0, 110)) + (item.note.length > 110 ? "…" : "") + "</p>" : "") +
           '<div class="chips">' +
-            '<span class="chip ' + (on ? "on" : "off") + '">' + (on ? "online" : "offline") + "</span>" +
+            '<span class="chip ' + (on ? "on" : "off") + '">' + (on ? "Sichtbar" : "Verborgen") + "</span>" +
             (feat ? '<span class="chip feat">Startseite</span>' : "") +
-            '<span class="chip">' + esc(item.status || "aktiv") + "</span>" +
+            '<span class="chip">' + esc(item.status === "verkauft" ? "verkauft" : "verfügbar") + "</span>" +
             '<span class="chip">' + parts.total + " Anfragen</span>" +
-            '<span class="chip">seit ' + fmtDate(item.createdAt) + "</span>" +
           "</div>" +
         "</div>" +
         '<div class="actions">' +
-          '<label class="switch"><input type="checkbox" data-toggle="' + esc(item.id) + '"' + (on ? " checked" : "") + "> Online</label>" +
+          '<label class="switch"><input type="checkbox" data-toggle="' + esc(item.id) + '"' + (on ? " checked" : "") + "> Auf Website zeigen</label>" +
           '<label class="switch"><input type="checkbox" data-featured="' + esc(item.id) + '"' +
-            (feat ? " checked" : "") + (featDisabled ? " disabled" : "") + "> Startseite</label>" +
-          '<button type="button" class="ghost sm" data-edit="' + esc(item.id) + '">Details</button>' +
+            (feat ? " checked" : "") + (featDisabled ? " disabled" : "") + "> Auf Startseite</label>" +
+          '<button type="button" class="ghost sm" data-edit="' + esc(item.id) + '">Bearbeiten</button>' +
           '<button type="button" class="ghost sm" data-csv="' + esc(item.id) + '">CSV</button>' +
           '<button type="button" class="danger sm" data-del="' + esc(item.id) + '">Löschen</button>' +
         "</div>";
@@ -533,16 +528,16 @@
     var idToggle = e.target.getAttribute("data-toggle");
     var idFeat = e.target.getAttribute("data-featured");
     if (idToggle) {
-      afterSave(
-        window.RAIS_STORE.setEnabled(idToggle, e.target.checked),
-        e.target.checked ? "Online — live." : "Offline — live."
-      );
+    afterSave(
+      window.RAIS_STORE.setEnabled(idToggle, e.target.checked),
+      e.target.checked ? "Jetzt auf der Website sichtbar." : "Von der Website genommen."
+    );
       return;
     }
     if (idFeat) {
       afterSave(
         window.RAIS_STORE.setFeatured(idFeat, e.target.checked),
-        e.target.checked ? "Auf Startseite — live." : "Von Startseite entfernt — live."
+        e.target.checked ? "Erscheint auf der Startseite." : "Von der Startseite entfernt."
       );
     }
   });

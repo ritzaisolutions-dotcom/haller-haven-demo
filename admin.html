@@ -4,278 +4,365 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,nofollow" />
-  <title>Admin · Objekte · Haller</title>
+  <title>Objekte verwalten · Haller</title>
   <link rel="icon" href="https://haller-immobilien.de/wp-content/uploads/2020/06/favicon32.png" type="image/png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #F8F8F8;
+      --bg: #F4F6F8;
       --card: #FFFFFF;
-      --line: #E2E2E2;
-      --txt: #222222;
-      --mut: #6B6B6B;
+      --line: #D8DEE6;
+      --txt: #1A1A1A;
+      --mut: #5A6570;
       --acc: #0073E1;
-      --acc-deep: #5472D2;
-      --ok: #1a7f4b;
-      --warn-bg: #eef5fc;
+      --acc-deep: #005BB5;
+      --ok: #1B7A45;
+      --ok-bg: #E8F6EE;
+      --off: #B42318;
+      --off-bg: #FDECEC;
+      --soft: #E8F1FB;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: Inter, system-ui, sans-serif;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
       background: var(--bg);
       color: var(--txt);
       min-height: 100vh;
-      line-height: 1.45;
-      font-size: 14px;
+      line-height: 1.5;
+      font-size: 17px;
     }
-    :focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
-    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 20px 72px; }
+    :focus-visible { outline: 3px solid var(--acc); outline-offset: 2px; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 28px 20px 80px; }
     h1 {
-      font-family: Fraunces, serif;
-      font-size: clamp(24px, 3.5vw, 32px);
-      font-weight: 500;
+      font-size: clamp(28px, 4vw, 36px);
+      font-weight: 650;
       letter-spacing: -0.02em;
+      line-height: 1.15;
     }
-    h2 { font-size: 15px; font-weight: 600; letter-spacing: 0.02em; }
-    .mut { color: var(--mut); font-size: 13px; }
+    h2 {
+      font-size: 20px;
+      font-weight: 650;
+    }
+    .mut { color: var(--mut); font-size: 15px; }
     .bar {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       gap: 16px;
       flex-wrap: wrap;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
-    .brand-line { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-    .brand-line img { height: 28px; display: block; }
+    .brand-line { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .brand-line img { height: 32px; display: block; }
     .card {
       background: var(--card);
       border: 1px solid var(--line);
-      padding: 20px;
-      margin-top: 14px;
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
     }
     .stats {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
       margin-top: 8px;
     }
     .stat {
       background: var(--card);
       border: 1px solid var(--line);
-      padding: 14px 16px;
+      border-radius: 12px;
+      padding: 18px 20px;
     }
     .stat b {
       display: block;
-      font-family: Fraunces, serif;
-      font-size: 28px;
-      font-weight: 500;
+      font-size: 34px;
+      font-weight: 700;
       line-height: 1.1;
-      margin-top: 4px;
+      margin-top: 6px;
+      letter-spacing: -0.02em;
     }
-    .stat span { color: var(--mut); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
-    .stats-panel {
-      background: var(--card);
-      border: 1px solid var(--line);
-      margin-top: 14px;
-      padding: 16px 18px;
-    }
-    .stats-panel .bar { margin-bottom: 10px; }
-    .stats-table-wrap { overflow-x: auto; }
-    .stats-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-    .stats-table th,
-    .stats-table td {
-      text-align: left;
-      padding: 8px 10px;
-      border-bottom: 1px solid var(--line);
-      white-space: nowrap;
-    }
-    .stats-table th {
+    .stat span {
       color: var(--mut);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-weight: 500;
+      font-size: 14px;
+      font-weight: 600;
     }
-    .stats-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
-    .stats-table tr:last-child td { border-bottom: none; }
-    .stats-table .title-cell { white-space: normal; min-width: 160px; }
+    .stats-panel { display: none; }
     label {
       display: block;
-      font-size: 11px;
+      font-size: 14px;
+      font-weight: 600;
       color: var(--mut);
-      margin-top: 12px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+      margin-top: 16px;
     }
     input, select, textarea {
       width: 100%;
-      margin-top: 6px;
-      padding: 11px 12px;
-      background: var(--bg);
-      border: 1px solid var(--line);
+      margin-top: 8px;
+      padding: 14px 14px;
+      background: #fff;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
       color: var(--txt);
       font: inherit;
+      font-size: 17px;
     }
-    input:focus, select:focus, textarea:focus { border-color: var(--acc); outline: none; }
-    textarea { min-height: 84px; resize: vertical; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--acc);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 115, 225, 0.15);
+    }
+    textarea { min-height: 100px; resize: vertical; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     button, .btn {
-      margin-top: 12px;
+      margin-top: 14px;
       background: var(--acc);
       color: #fff;
-      border: 1px solid var(--acc);
-      padding: 10px 14px;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 20px;
       font: inherit;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      font-size: 16px;
+      font-weight: 650;
       cursor: pointer;
     }
-    button:hover { background: var(--acc-deep); border-color: var(--acc-deep); }
+    button:hover { background: var(--acc-deep); }
     button.ghost, .btn.ghost {
-      background: transparent;
-      border-color: #959898;
+      background: #fff;
+      border: 1.5px solid var(--line);
       color: var(--txt);
     }
-    button.ghost:hover { border-color: var(--acc); color: var(--acc); background: transparent; }
+    button.ghost:hover { border-color: var(--acc); color: var(--acc); background: #fff; }
     button.danger {
-      background: transparent;
-      color: #b42318;
-      border-color: #f2c4c0;
+      background: #fff;
+      color: var(--off);
+      border: 1.5px solid #f2c4c0;
     }
-    button.danger:hover { background: #fef3f2; }
-    button.sm { margin-top: 0; padding: 7px 10px; font-size: 11px; letter-spacing: 0.04em; }
-    button:disabled, .switch input:disabled { opacity: 0.45; cursor: not-allowed; }
-    .warn {
-      background: var(--warn-bg);
-      border: 1px solid #c5daf5;
-      padding: 12px 14px;
-      font-size: 13px;
-      margin-top: 12px;
+    button.danger:hover { background: var(--off-bg); }
+    button.sm {
+      margin-top: 0;
+      padding: 10px 14px;
+      font-size: 14px;
+      border-radius: 8px;
     }
+    button:disabled, .switch input:disabled { opacity: 0.4; cursor: not-allowed; }
     .ok-banner {
-      background: #f0faf4;
+      background: var(--ok-bg);
       border: 1px solid #b7e0c8;
       color: var(--ok);
-      padding: 12px 14px;
-      font-size: 13px;
-      margin-top: 12px;
+      padding: 14px 16px;
+      font-size: 15px;
+      border-radius: 10px;
+      margin-top: 14px;
+      font-weight: 600;
+    }
+    .warn {
+      background: var(--soft);
+      border: 1px solid #c5daf5;
+      padding: 14px 16px;
+      font-size: 15px;
+      border-radius: 10px;
+      margin-top: 14px;
     }
     .layout {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 14px;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
       align-items: start;
     }
     .listing {
-      display: flex;
+      display: grid;
+      grid-template-columns: 22px 104px 1fr;
       gap: 14px;
-      padding: 14px;
-      border: 1px solid var(--line);
+      padding: 16px;
+      border: 1.5px solid var(--line);
       background: var(--card);
-      margin-top: 10px;
+      border-radius: 12px;
+      margin-top: 12px;
       cursor: grab;
-      align-items: stretch;
-      transition: border-color 0.15s, box-shadow 0.15s;
+      align-items: start;
     }
     .listing:active { cursor: grabbing; }
     .listing.dragging { opacity: 0.45; }
-    .listing.drag-over { border-color: var(--acc); box-shadow: 0 0 0 2px rgba(0, 115, 225, 0.15); }
+    .listing.drag-over {
+      border-color: var(--acc);
+      box-shadow: 0 0 0 3px rgba(0, 115, 225, 0.15);
+    }
     .listing .handle {
-      color: var(--mut);
-      font-size: 16px;
+      color: #9AA3AD;
+      font-size: 18px;
       line-height: 1;
-      padding-top: 28px;
+      padding-top: 36px;
       user-select: none;
-      width: 18px;
       text-align: center;
     }
     .listing .thumb {
-      width: 96px;
-      height: 72px;
-      flex-shrink: 0;
+      width: 104px;
+      height: 78px;
+      border-radius: 8px;
       background: var(--bg);
       border: 1px solid var(--line);
       overflow: hidden;
     }
     .listing .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .listing .meta { flex: 1; min-width: 0; }
-    .listing .meta strong { display: block; font-size: 14px; margin-bottom: 2px; }
-    .listing .meta p { color: var(--mut); font-size: 12px; margin-top: 2px; }
-    .listing .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .listing .meta { min-width: 0; }
+    .listing .meta strong {
+      display: block;
+      font-size: 17px;
+      font-weight: 650;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .listing .meta p { color: var(--mut); font-size: 14px; margin-top: 2px; }
+    .listing .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
     .chip {
-      font-size: 11px;
-      padding: 3px 8px;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 999px;
       border: 1px solid var(--line);
       background: var(--bg);
       color: var(--mut);
     }
-    .chip.on { color: var(--ok); border-color: #b7e0c8; background: #f0faf4; }
-    .chip.off { color: #b42318; border-color: #f2c4c0; background: #fef3f2; }
-    .chip.feat { color: var(--acc); border-color: #c5daf5; background: #eef5fc; }
+    .chip.on { color: var(--ok); border-color: #b7e0c8; background: var(--ok-bg); }
+    .chip.off { color: var(--off); border-color: #f2c4c0; background: var(--off-bg); }
+    .chip.feat { color: var(--acc); border-color: #c5daf5; background: var(--soft); }
     .listing .actions {
+      grid-column: 1 / -1;
       display: flex;
-      flex-direction: column;
-      gap: 6px;
-      align-items: stretch;
-      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      padding-top: 4px;
+      border-top: 1px solid var(--line);
+      margin-top: 4px;
+      padding-top: 12px;
     }
     .switch {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      color: var(--mut);
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 650;
+      color: var(--txt);
       cursor: pointer;
       user-select: none;
-      margin-top: 0;
-      text-transform: none;
-      letter-spacing: 0;
+      margin: 0;
+      background: var(--bg);
+      border: 1.5px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
     }
-    .switch input { width: auto; margin: 0; accent-color: var(--acc); }
+    .switch input {
+      width: 22px;
+      height: 22px;
+      margin: 0;
+      accent-color: var(--acc);
+      flex: 0 0 auto;
+    }
     .thumbs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
     .thumb-edit {
       position: relative;
-      width: 72px;
-      height: 72px;
+      width: 80px;
+      height: 80px;
       border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
     }
     .thumb-edit img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .thumb-edit button {
       position: absolute;
-      top: 0; right: 0;
+      top: 4px; right: 4px;
       margin: 0;
-      padding: 2px 6px;
+      padding: 2px 8px;
       background: rgba(34, 34, 34, 0.85);
-      border-color: transparent;
-      font-size: 11px;
-      letter-spacing: 0;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #fff;
     }
-    #login-msg:not(:empty) { color: #b42318; }
-    #form-msg:not(:empty) { color: var(--acc); margin-top: 8px; }
-    #form-msg.is-err { color: #b42318; }
-    .empty { padding: 28px 12px; text-align: center; color: var(--mut); }
+    #login-msg:not(:empty) { color: var(--off); font-weight: 600; margin-top: 12px; }
+    #form-msg:not(:empty) { color: var(--acc); margin-top: 12px; font-weight: 600; }
+    #form-msg.is-err { color: var(--off); }
+    .empty { padding: 36px 12px; text-align: center; color: var(--mut); font-size: 16px; }
     .feat-counter {
-      font-size: 12px;
+      font-size: 15px;
       color: var(--mut);
       margin-top: 8px;
+      font-weight: 600;
     }
-    .feat-counter b { color: var(--txt); }
+    .feat-counter b { color: var(--txt); font-size: 18px; }
+    .login-card {
+      max-width: 420px;
+      margin: 48px auto 0;
+      text-align: left;
+    }
+    .login-card h1 { margin-bottom: 8px; }
+    .login-card button { width: 100%; margin-top: 20px; padding: 16px; font-size: 18px; }
+    .login-card input { font-size: 18px; padding: 16px; }
+    .helper {
+      margin-top: 10px;
+      color: var(--mut);
+      font-size: 15px;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    details.advanced {
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--card);
+      padding: 8px 16px 16px;
+    }
+    details.advanced > summary {
+      cursor: pointer;
+      font-weight: 650;
+      font-size: 16px;
+      padding: 12px 0;
+      list-style: none;
+      color: var(--txt);
+    }
+    details.advanced > summary::-webkit-details-marker { display: none; }
+    details.advanced > summary::after {
+      content: " ▼";
+      color: var(--mut);
+      font-size: 12px;
+    }
+    details.advanced[open] > summary::after { content: " ▲"; }
+    .stats-table-wrap { overflow-x: auto; margin-top: 8px; }
+    .stats-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .stats-table th,
+    .stats-table td {
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+    }
+    .stats-table th {
+      color: var(--mut);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-weight: 650;
+    }
+    .stats-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .stats-table .title-cell { white-space: normal; min-width: 160px; }
+    #who-wrap { display: none; }
     @media (max-width: 900px) {
       .layout { grid-template-columns: 1fr; }
-      .stats { grid-template-columns: 1fr 1fr; }
+      .stats { grid-template-columns: 1fr; }
     }
     @media (max-width: 560px) {
-      .listing { flex-wrap: wrap; }
-      .listing .actions { flex-direction: row; width: 100%; flex-wrap: wrap; }
-      .listing .handle { padding-top: 8px; }
+      .grid { grid-template-columns: 1fr; }
+      .listing { grid-template-columns: 18px 80px 1fr; }
+      .listing .thumb { width: 80px; height: 60px; }
+      .switch { width: 100%; justify-content: flex-start; }
     }
   </style>
 </head>
@@ -286,29 +373,30 @@
         <div class="brand-line">
           <img src="https://haller-immobilien.de/wp-content/uploads/2024/06/logo_240.png" alt="Haller" />
         </div>
-        <h1>Objekt-Dashboard</h1>
-        <p class="mut">Live-Inserate · Reihenfolge = Website · noindex</p>
+        <h1>Objekte verwalten</h1>
+        <p class="mut">An- und ausschalten · Reihenfolge ändern · Sofort auf der Website</p>
       </div>
       <button type="button" class="ghost" id="out" hidden>Abmelden</button>
     </div>
 
-    <section id="gate" class="card">
+    <section id="gate" class="card login-card">
+      <h1 style="font-size:28px">Anmeldung</h1>
+      <p class="helper">Bitte Passwort eingeben, um Ihre Inserate zu bearbeiten.</p>
       <label>Passwort <input id="pw" type="password" autocomplete="current-password" /></label>
-      <button type="button" id="go">Anmelden</button>
-      <p class="mut" id="login-msg" style="margin-top:10px"></p>
-      <p class="warn">Login über Vercel Env <strong>ADMIN_PASSWORD</strong>. Ohne Env → 503.</p>
+      <button type="button" id="go">Öffnen</button>
+      <p id="login-msg"></p>
+      <p class="warn">Nur für das Büro. Passwort nicht weitergeben.</p>
     </section>
 
     <section id="app" hidden>
-      <p class="mut" style="margin-bottom:8px">Mandant: <span id="who"></span></p>
+      <p class="mut" id="who-wrap">Mandant: <span id="who"></span></p>
       <div class="stats" id="stats"></div>
-      <div class="stats-panel">
-        <div class="bar">
-          <div>
-            <h2>Statistik pro Objekt</h2>
-            <p class="mut">Anfragen = Basiswert + lokale Demo-Zähler dieses Browsers</p>
-          </div>
-          <button type="button" class="ghost sm" id="csv-all">CSV gesamt</button>
+
+      <details class="advanced">
+        <summary>Anfragen &amp; Auswertung</summary>
+        <div class="bar" style="margin-bottom:8px">
+          <p class="mut">Übersicht pro Objekt · optional CSV speichern</p>
+          <button type="button" class="ghost sm" id="csv-all">Alles als CSV</button>
         </div>
         <div class="stats-table-wrap">
           <table class="stats-table">
@@ -327,82 +415,84 @@
             <tbody id="stats-rows"></tbody>
           </table>
         </div>
-      </div>
+      </details>
 
       <div class="layout">
         <div>
-          <div class="card" style="margin-top:14px">
+          <div class="card" style="margin-top:16px">
             <div class="bar" style="margin-bottom:0">
               <div>
-                <h2>Inserate</h2>
-                <p class="mut">Ziehen zum Sortieren · Reihenfolge = öffentliche Liste</p>
-                <p class="feat-counter" id="feat-counter">Startseite <b>0</b> / 6</p>
+                <h2>Ihre Inserate</h2>
+                <p class="helper">Ziehen zum Sortieren. Oben = zuerst auf der Website.</p>
+                <p class="feat-counter" id="feat-counter">Auf der Startseite: <b>0</b> von 6</p>
               </div>
-              <div>
-                <button type="button" class="ghost sm" id="sync">Neu laden</button>
-                <button type="button" class="ghost sm" id="dl">Backup herunterladen</button>
+              <div class="toolbar">
+                <button type="button" class="ghost sm" id="sync">Aktualisieren</button>
+                <button type="button" class="ghost sm" id="dl">Sicherung speichern</button>
               </div>
             </div>
-            <p class="ok-banner">Änderungen (Online / Startseite / Speichern) sind sofort live für alle Besucher.</p>
+            <p class="ok-banner">Änderungen erscheinen sofort für alle Besucher.</p>
             <div id="rows"></div>
           </div>
         </div>
 
         <div>
-          <div class="card" style="margin-top:14px">
+          <div class="card" style="margin-top:16px">
             <h2 id="form-title">Neues Objekt</h2>
+            <p class="helper">Titel und Ort reichen zum Start. Bilder und Details können Sie jederzeit ergänzen.</p>
             <input type="hidden" id="fid" />
             <input type="hidden" id="images" value="[]" />
             <input type="hidden" id="createdAt" value="" />
             <input type="hidden" id="inquiryCount" value="0" />
-            <label>Titel <input id="title" required /></label>
+            <label>Titel <input id="title" required placeholder="z. B. Eigentumswohnung Andernach" /></label>
             <div class="grid">
               <label>Preis <input id="price" placeholder="349.000 €" /></label>
-              <label>Wohnfläche m² <input id="area" /></label>
+              <label>Wohnfläche (m²) <input id="area" /></label>
               <label>Zimmer <input id="rooms" /></label>
-              <label>Ort <input id="place" /></label>
+              <label>Ort <input id="place" placeholder="Andernach" /></label>
             </div>
             <div class="grid">
-              <label>Art
+              <label>Kauf oder Miete
                 <select id="type">
                   <option value="kauf">Kauf</option>
                   <option value="miete">Miete</option>
                 </select>
               </label>
-              <label>Kategorie <input id="category" placeholder="Wohnung, Haus …" /></label>
-              <label>Objekt-Nr. <input id="ref" placeholder="RN270" /></label>
+              <label>Art der Immobilie <input id="category" placeholder="Wohnung, Haus …" /></label>
+              <label>Ihre Objekt-Nr. <input id="ref" placeholder="z. B. RN270" /></label>
               <label>Status
                 <select id="status">
-                  <option value="aktiv">aktiv</option>
-                  <option value="verkauft">verkauft</option>
+                  <option value="aktiv">verfügbar</option>
+                  <option value="verkauft">verkauft / vermietet</option>
                 </select>
               </label>
-              <label>Freigeschaltet
+              <label>Auf der Website zeigen?
                 <select id="enabled">
-                  <option value="true">an</option>
-                  <option value="false">aus</option>
+                  <option value="true">Ja — online</option>
+                  <option value="false">Nein — verborgen</option>
                 </select>
               </label>
-              <label>Startseite
+              <label>Auch auf der Startseite?
                 <select id="featured">
-                  <option value="false">nein</option>
-                  <option value="true">ja (max. 6)</option>
+                  <option value="false">Nein</option>
+                  <option value="true">Ja (höchstens 6)</option>
                 </select>
               </label>
             </div>
-            <div class="grid">
-              <label>ImmoScout24-Link <input id="link-is24" placeholder="https://www.immobilienscout24.de/expose/…" /></label>
-              <label>Immowelt-Link <input id="link-immowelt" placeholder="https://www.immowelt.de/expose/…" /></label>
-            </div>
-            <label>Beschreibung <textarea id="note"></textarea></label>
-            <label>Bilder max. 12
+            <details class="advanced" style="margin-top:16px;padding:4px 12px 12px">
+              <summary>Links zu den Portalen</summary>
+              <label>ImmoScout24 <input id="link-is24" placeholder="https://www.immobilienscout24.de/expose/…" /></label>
+              <label>Immowelt <input id="link-immowelt" placeholder="https://www.immowelt.de/expose/…" /></label>
+            </details>
+            <label>Kurzbeschreibung <textarea id="note" placeholder="Was sollen Interessenten wissen?"></textarea></label>
+            <label>Bilder (höchstens 12)
               <input id="files" type="file" accept="image/*" multiple />
             </label>
             <p class="mut" id="imgcount">0 / 12</p>
             <div class="thumbs" id="thumbs"></div>
             <button type="button" id="save">Speichern</button>
-            <button type="button" class="ghost" id="reset">Neu</button>
-            <p class="mut" id="form-msg"></p>
+            <button type="button" class="ghost" id="reset">Leeres Formular</button>
+            <p id="form-msg"></p>
           </div>
         </div>
       </div>

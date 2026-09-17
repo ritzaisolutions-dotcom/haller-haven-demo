@@ -33,8 +33,8 @@
 <header class="top">
   <a class="brand" href="index.html"><img src="https://haller-immobilien.de/wp-content/uploads/2024/06/logo_240.png" alt="Haller"></a>
   <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menü</button>
-  <nav id="site-nav"><a href="index.html">Start</a><a href="ueber-uns.html">Über uns</a><a href="leistungen.html">Leistungen</a><a href="verkaufen.html">Verkaufen</a><a href="hausverwaltung.html">Hausverwaltung</a><a href="objekte.html">Objekte</a><a href="projekte.html">Projekte</a><a href="kontakt.html">Kontakt</a></nav>
-  <a class="btn" href="kontakt.html">Anfrage</a>
+  <nav id="site-nav"><a href="objekte.html">Objekte</a><a href="verkaufen.html">Verkaufen</a><a href="hausverwaltung.html">Hausverwaltung</a></nav>
+  <a class="btn" href="kontakt.html">Kontakt</a>
 </header>
 
 <section class="hero overlay page-hero">
@@ -289,7 +289,7 @@
   <p><code>listings.json</code> enthält Demo-Inserate (Titel, Preis, Fläche, Ort, Status, Beschreibung, Bild-URLs, Anlegezeit, Zähler). Das sind redaktionelle Inhalte, keine Daten von Websitebesuchern. Bild-URLs zeigen derzeit auf Unsplash (siehe unten).</p>
 
   <h3>Admin-Bereich</h3>
-  <p><code>admin.html</code> ist nicht in der öffentlichen Navigation. Login sendet das Passwort an <code>/api/admin-login</code>. Es gibt keine Nutzerkonten Dritter. Listen, Reihenfolge, Sichtbarkeit und CSV-Export liegen im localStorage des jeweiligen Geräts. CSV-Dateien enthalten Objektmetadaten und Zähler, keine Formular-Klardaten von Interessenten (die liegen in der Mail/bei Web3Forms).</p>
+  <p><code>/admin</code> ist nicht in der öffentlichen Navigation. Login sendet das Passwort an <code>/api/admin-login</code>. Es gibt keine Nutzerkonten Dritter. Listen, Reihenfolge und Sichtbarkeit werden über die Admin-API in Vercel Blob gespeichert. CSV-Dateien enthalten Objektmetadaten und Zähler, keine Formular-Klardaten von Interessenten (die liegen in der Mail/bei Web3Forms).</p>
 
   <h3>JSON-LD / SEO</h3>
   <p><code>seo.js</code> schreibt strukturierte Daten (RealEstateAgent, RealEstateListing) in die Seite. Dafür werden keine zusätzlichen Drittserver aufgerufen. Canonical, Open Graph und <code>llms.txt</code> sind statische Angaben.</p>
@@ -325,7 +325,7 @@
   <p>Die Datei <code>hero_video.mp4</code> liegt auf diesem Host und wird von Vercel ausgeliefert. Kein YouTube, kein Vimeo, kein zusätzlicher Player-Tracker.</p>
 
   <h3>Google Fonts nur im Admin</h3>
-  <p>Die öffentlichen Seiten nutzen lokale CSS-Schriften, nicht Google Fonts. Nur <code>admin.html</code> lädt Fraunces und Inter von <code>fonts.googleapis.com</code> / <code>fonts.gstatic.com</code>. Dadurch erhält Google die IP der Person, die das Backend öffnet. Öffentliche Besucher sind nicht betroffen. Quelle: <a href="https://policies.google.com/privacy?hl=de" rel="noopener">Google Privacy</a>.</p>
+  <p>Die öffentlichen Seiten nutzen lokale CSS-Schriften, nicht Google Fonts. Das Admin unter <code>/admin</code> nutzt Systemschriften (Segoe UI / system-ui). Öffentliche Besucher sind nicht betroffen.</p>
 
   <h3>Externe Links (Trust-Strip und Partner)</h3>
   <p>Verlinkt sind unter anderem MPLUS Architekten, Rahmig, Sprung &amp; Risos, VDIV und ein Immowelt-Profil. Beim bloßen Anzeigen der lokal gespeicherten Logos entsteht keine Verbindung zu diesen Seiten. Erst ein Klick führt Sie zum jeweiligen Anbieter; dann gilt dessen Datenschutzerklärung. Anne Ehl Stiftung ist ohne Link hinterlegt.</p>
@@ -354,9 +354,20 @@
   <p class="muted-note">Arbeitsgrundlage, ausgerichtet an Art.&nbsp;13 DSGVO und am tatsächlichen Stack dieser Demo. Keine Rechtsberatung. Vor einem öffentlichen Go-Live: AVV mit Vercel prüfen, Web3Forms-Key und DPA dokumentieren, Unsplash-Hotlinking ersetzen oder consent-fähig machen, n8n nur beschreiben, wenn es wirklich sendet.</p>
 </section>
 
-<footer>
-  <div>Haller Immobilienberatung GmbH · Andernach</div>
-  <div><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="agb.html">AGB</a> · <a href="#" onclick="if(window.klaro){klaro.show();} return false;">Cookie-Einstellungen</a></div>
+<footer class="site-footer">
+  <div class="footer-brand">Haller Immobilienberatung GmbH · Andernach</div>
+  <div class="footer-nav">
+    <a href="ueber-uns.html">Über uns</a>
+    <a href="leistungen.html">Leistungen</a>
+    <a href="projekte.html">Projekte</a>
+    <a href="kontakt.html">Kontakt</a>
+  </div>
+  <div class="footer-legal">
+    <a href="impressum.html">Impressum</a>
+    <a href="datenschutz.html">Datenschutz</a>
+    <a href="agb.html">AGB</a>
+    <a href="#" onclick="if(window.klaro){klaro.show();} return false;">Cookie-Einstellungen</a>
+  </div>
 </footer>
 <script defer type="text/javascript" src="klaro-config.js"></script>
 <script defer type="text/javascript" src="vendor/klaro/klaro.min.js"></script>

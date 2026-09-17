@@ -263,30 +263,34 @@ a.listing-card:hover {
 /* Hero brand: quote + HALLER acrostic */
 .hero-brand {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: clamp(28px, 5vw, 64px);
+  grid-template-columns: minmax(0, 1.35fr) auto;
+  gap: clamp(32px, 5vw, 72px);
   align-items: end;
   margin-top: 12px;
-  max-width: 920px;
+  max-width: 1100px;
 }
 
 .hero-quote {
   margin: 0;
-  max-width: 28ch;
+  max-width: min(100%, 38rem);
   color: rgba(255, 255, 255, 0.92);
 }
 
 .hero-quote p {
   margin: 0;
   font-family: Fraunces, serif;
-  font-size: clamp(22px, 3.2vw, 34px);
+  font-size: clamp(28px, 3.8vw, 44px);
   font-weight: 500;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+}
+
+.hero-quote p br {
+  display: block;
 }
 
 .hero-quote footer {
-  margin-top: 14px;
+  margin-top: 16px;
   font-size: 13px;
   letter-spacing: 0.04em;
   color: rgba(255, 255, 255, 0.62);
@@ -357,7 +361,11 @@ a.listing-card:hover {
   }
 
   .hero-quote {
-    max-width: 34ch;
+    max-width: 100%;
+  }
+
+  .hero-quote p {
+    font-size: clamp(24px, 6.5vw, 32px);
   }
 }
 
@@ -566,13 +574,114 @@ footer {
   color: var(--mut);
   font-size: 13px;
   display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 14px;
   border-top: 1px solid var(--line);
   margin-top: 40px;
 }
+footer.site-footer .footer-brand {
+  color: var(--mut);
+}
+footer.site-footer .footer-nav,
+footer.site-footer .footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+footer.site-footer .footer-nav a {
+  color: var(--acc);
+}
+footer.site-footer .footer-legal a {
+  color: var(--mut);
+}
+footer.site-footer .footer-legal a:hover {
+  color: var(--acc);
+}
 footer a { color: var(--acc); }
+
+.about-intro {
+  max-width: 55ch;
+  margin-bottom: 48px;
+}
+.about-intro p {
+  color: var(--mut);
+  font-size: 16px;
+  margin-bottom: 1em;
+}
+.about-intro p:last-child { margin-bottom: 0; }
+
+.principles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin: 8px 0 48px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.principle {
+  padding: 28px 24px 28px 0;
+  border-right: 1px solid var(--line);
+}
+.principle:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+.principle:not(:first-child) {
+  padding-left: 24px;
+}
+.principle-num {
+  display: block;
+  color: var(--acc);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.principle h3 {
+  font-family: Fraunces, serif;
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0 0 10px;
+  color: var(--txt);
+}
+.principle p {
+  margin: 0;
+  color: var(--mut);
+  font-size: 15px;
+  max-width: 32ch;
+}
+
+.sign-band {
+  margin: 8px 0 56px;
+  padding: 28px 0;
+}
+.sign-band strong {
+  display: block;
+  letter-spacing: 0.08em;
+  font-size: 14px;
+  margin-bottom: 16px;
+  color: var(--txt);
+}
+.sign-band .sign-label {
+  color: var(--mut);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 800px) {
+  .principles {
+    grid-template-columns: 1fr;
+  }
+  .principle,
+  .principle:not(:first-child),
+  .principle:last-child {
+    border-right: none;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .principle:last-child { border-bottom: none; }
+}
+
 
 /* Inner pages without overlay hero */
 body:not(:has(.hero.overlay)) .top {
@@ -1209,7 +1318,7 @@ body:not(:has(.hero.overlay)) #site-nav a:hover { color: var(--txt); }
   border-top: 1px solid var(--line);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   font-size: 12px;
 }
 
@@ -1325,40 +1434,80 @@ form.box .muted-note { margin: 4px 0 8px; }
   }
 }
 
-/* Klaro Consent Manager Theme */
+/* Klaro Consent Manager — Haven light theme */
 .klaro .cookie-notice,
-.klaro .cookie-modal .cm-modal {
-  background: var(--bg-card, #12161f) !important;
-  color: var(--txt, #f0f3f8) !important;
-  border: 1px solid var(--line, rgba(255,255,255,0.12)) !important;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6) !important;
-  backdrop-filter: blur(12px) !important;
-  border-radius: 4px !important;
+.klaro .cookie-modal .cm-modal,
+.klaro .cookie-modal-notice {
+  background: var(--card) !important;
+  color: var(--txt) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12) !important;
+  border-radius: 0 !important;
+  backdrop-filter: none !important;
+}
+.klaro .cookie-notice p,
+.klaro .cookie-notice strong,
+.klaro .cookie-notice h1,
+.klaro .cookie-notice h2,
+.klaro .cookie-modal .cm-modal p,
+.klaro .cookie-modal .cm-modal strong,
+.klaro .cookie-modal .cm-modal h1,
+.klaro .cookie-modal .cm-modal h2,
+.klaro .cookie-modal .cm-modal li,
+.klaro .cookie-modal-notice p {
+  color: var(--txt) !important;
+}
+.klaro .cookie-modal .cm-modal .cm-header,
+.klaro .cookie-modal .cm-modal .cm-footer {
+  border-color: var(--line) !important;
+}
+.klaro .cookie-modal .cm-modal .hide svg {
+  stroke: var(--txt) !important;
 }
 .klaro .cookie-notice .cn-buttons button.cm-btn,
 .klaro .cookie-modal .cm-modal .cm-footer button.cm-btn {
-  border-radius: 2px !important;
+  border-radius: 0 !important;
   font-family: inherit !important;
   font-weight: 500 !important;
   letter-spacing: 0.03em !important;
   padding: 10px 20px !important;
 }
 .klaro .cm-btn.cm-btn-accept-all,
-.klaro .cm-btn.cm-btn-accept {
-  background: var(--gold, #d4af37) !important;
-  color: #0b0e14 !important;
+.klaro .cm-btn.cm-btn-accept,
+.klaro .cm-btn.cm-btn-success {
+  background: var(--acc) !important;
+  color: #fff !important;
   border: none !important;
 }
 .klaro .cm-btn.cm-btn-accept-all:hover,
-.klaro .cm-btn.cm-btn-accept:hover {
-  filter: brightness(1.1);
+.klaro .cm-btn.cm-btn-accept:hover,
+.klaro .cm-btn.cm-btn-success:hover {
+  background: var(--acc-deep) !important;
+  filter: none;
 }
-.klaro .cm-btn.cm-btn-decline {
+.klaro .cm-btn.cm-btn-decline,
+.klaro .cm-btn.cm-btn-info {
   background: transparent !important;
-  color: var(--txt, #f0f3f8) !important;
-  border: 1px solid var(--line, rgba(255,255,255,0.2)) !important;
+  color: var(--txt) !important;
+  border: 1px solid var(--line) !important;
 }
-.klaro a {
-  color: var(--gold, #d4af37) !important;
+.klaro a,
+.klaro .cookie-notice a,
+.klaro .cookie-modal a {
+  color: var(--acc) !important;
+}
+.klaro .cookie-modal .cm-list-input:checked + .cm-list-label .slider,
+.klaro .cookie-notice .cm-list-input:checked + .cm-list-label .slider,
+.klaro .cookie-modal .cm-list-input.required:checked + .cm-list-label .slider {
+  background-color: var(--acc) !important;
+  opacity: 1 !important;
+}
+.klaro .cookie-modal .cm-list-description,
+.klaro .cookie-notice .cm-list-description {
+  color: var(--mut) !important;
+}
+.klaro .cookie-modal .cm-footer .cm-powered-by,
+.klaro .cookie-modal .cm-footer .cm-powered-by a {
+  display: none !important;
 }
 

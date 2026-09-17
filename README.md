@@ -4,7 +4,7 @@ Static Haven-Demo für Haller Immobilienberatung GmbH (Andernach).
 
 - **Preview:** https://haller-haven-demo.vercel.app/
 - **Formulare:** `REPLACE_WEB3FORMS_ACCESS_KEY` in `kontakt.html` / `objekt.html` ersetzen
-- **Admin:** Vercel Env `ADMIN_PASSWORD` + Blob-Store (`BLOB_READ_WRITE_TOKEN`); Objekte live über `/admin.html` (Online / Startseite max. 6)
+- **Admin:** Vercel Env `ADMIN_PASSWORD` + Blob-Store (`BLOB_READ_WRITE_TOKEN`); Objekte live über **`/admin`** (Website / Startseite max. 6)
 - **Canonical:** `window.RAIS_SITE_BASE` in `config.js` (Go-Live: Domain + sitemap/robots/llms/HTML-Canonicals)
 
 ## Go-Live-Checkliste
