@@ -1,8 +1,6 @@
-# Haller Immobilienberatung GmbH (Demo Haven)
+# Haller Immobilienberatung GmbH
 
 > Inhabergeführte Immobilienberatung in Andernach: Verkauf, Kaufbegleitung und Hausverwaltung für Andernach, Koblenz, Neuwied und Mayen-Koblenz.
-
-Diese Seite ist eine **Demo** (kein Live-Mandat). Primäre Firmenadresse und Kontaktdaten entsprechen Haller Immobilienberatung GmbH.
 
 ## NAP / Local
 
@@ -13,8 +11,7 @@ Diese Seite ist eine **Demo** (kein Live-Mandat). Primäre Firmenadresse und Kon
 - Telefon: +49 2632 9458-0
 - E-Mail: info@haller-immobilien.de
 - Geo: 50.4392, 7.4016
-- Offizielle Site: https://haller-immobilien.de/
-- Demo: https://haller-haven-demo.vercel.app/
+- Website: https://haller-immobilien.de/
 
 ## Leistungen
 
@@ -25,27 +22,36 @@ Diese Seite ist eine **Demo** (kein Live-Mandat). Primäre Firmenadresse und Kon
 
 ## Seiten
 
-- [Start](https://haller-haven-demo.vercel.app/): Überblick und Einstieg
-- [Über uns](https://haller-haven-demo.vercel.app/ueber-uns.html): Team und Büro
-- [Leistungen](https://haller-haven-demo.vercel.app/leistungen.html): Verkauf, Kauf, Verwaltung
-- [Verkaufen](https://haller-haven-demo.vercel.app/verkaufen.html): Verkaufsprozess Wertermittlung bis Notar
-- [Hausverwaltung](https://haller-haven-demo.vercel.app/hausverwaltung.html): WEG- und Mietverwaltung
-- [Objekte](https://haller-haven-demo.vercel.app/objekte.html): Aktuelle Inserate mit Termin-Anfrage
-- [Projekte](https://haller-haven-demo.vercel.app/projekte.html): Referenzprojekte
-- [Kontakt](https://haller-haven-demo.vercel.app/kontakt.html): Anfrage und Bürozeiten
-- [Impressum](https://haller-haven-demo.vercel.app/impressum.html)
-- [Datenschutz](https://haller-haven-demo.vercel.app/datenschutz.html)
-- [AGB](https://haller-haven-demo.vercel.app/agb.html)
+- [Start](https://haller-immobilien.de/): Überblick und Einstieg
+- [Über uns](https://haller-immobilien.de/ueber-uns.html): Team und Büro
+- [Leistungen](https://haller-immobilien.de/leistungen.html): Verkauf, Kauf, Verwaltung
+- [Verkaufen](https://haller-immobilien.de/verkaufen.html): Verkaufsprozess Wertermittlung bis Notar
+- [Hausverwaltung](https://haller-immobilien.de/hausverwaltung.html): WEG- und Mietverwaltung
+- [Objekte](https://haller-immobilien.de/objekte.html): Aktuelle Inserate mit Termin-Anfrage
+- [Projekte](https://haller-immobilien.de/projekte.html): Referenzprojekte
+- [Kontakt](https://haller-immobilien.de/kontakt.html): Anfrage und Bürozeiten
+- [Impressum](https://haller-immobilien.de/impressum.html)
+- [Datenschutz](https://haller-immobilien.de/datenschutz.html)
+- [AGB](https://haller-immobilien.de/agb.html)
 
-## Objekte (Demo)
+## Objekte
 
 Besichtigungstermine werden objektbezogen angefragt (Mail-Betreff mit Objektname).
 
-- Eigentumswohnung Andernach Altstadt
-- Einfamilienhaus Namedy
-- Maisonette Koblenz-Metternich
+- Zukunftsgerecht wohnen: 2-ZKB Neubauwohnung mit überdachter Loggia – barrierefrei und komfortabel (Neuwied)
+- Freiheit statt Miete: Komplett modernisierte 4-Zimmer-ETW mit BALKON und EINBAUKÜCHE – 84 m² (Andernach)
+- Charmantes Zuhause mit Geschichte – Fairer Kaufpreis, vielseitige Möglichkeiten – ca. 84 m² (Weißenthurm)
+- KAPITALANLAGE – bezahlbarer Start ins EIGENTUM: Gemütliche und funktionale ETW mit BALKON, 70 m² (Andernach)
+- Raum für Familie, Generationen oder Kapitalanlage – vielseitige Immobilie mit Ausbaupotenzial (Nickenich)
+- Wohnglück auf dem KIRCHBERG – Modernisiertes EFH mit Einliegerwohnung, Garten und Garage (Andernach)
+- Zukunftssichere Doppelhaushälfte BJ 2012: Energieeffizient mit 2 TERRASSEN, GARTEN, Garage/Carport (Nickenich)
+- Panoramablick auf Andernach: EFH mit 230 m² Wohnfläche, Einliegerwohnung 52 m², 1.469 m² Grundst. (Andernach)
+- Für SINGLES oder PAARE: Mietwohnung mit guter Raumaufteilung, 62 m² 2 ZKB mit BALKON, Option GARAGE (Neuwied)
+- Begehrte Lage – großzügige 90 m² mit Sonnenterrasse, Garten und stilvollem Parkett (Andernach)
+- Großzügige 3-Zimmer-Dachgeschosswohnung mit 120 m², 2 Balkonen & neuer Wärmepumpe (Andernach)
+- Einfamilienhaus mit Charakter zur Miete mit Wintergarten, Freisitz, Garten und Garage (Mendig)
 
 ## Optional
 
-- Sitemap: https://haller-haven-demo.vercel.app/sitemap.xml
-- Robots: https://haller-haven-demo.vercel.app/robots.txt
+- Sitemap: https://haller-immobilien.de/sitemap.xml
+- Robots: https://haller-immobilien.de/robots.txt

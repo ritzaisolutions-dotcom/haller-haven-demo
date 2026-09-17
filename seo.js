@@ -1,7 +1,7 @@
 (function () {
-  var BASE = (window.RAIS_SITE_BASE || "https://haller-haven-demo.vercel.app").replace(/\/$/, "");
-  var LOGO = "https://haller-immobilien.de/wp-content/uploads/2024/06/logo_240.png";
-  var OG_DEFAULT = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80";
+  var BASE = (window.RAIS_SITE_BASE || "https://haller-immobilien.de").replace(/\/$/, "");
+  var LOGO = "https://haller-immobilien.de/assets/brand/logo_240.png";
+  var OG_DEFAULT = "https://haller-immobilien.de/assets/stock/interior.jpg";
 
   function schemaLocal() {
     return {
@@ -38,9 +38,15 @@
       openingHoursSpecification: [
         {
           "@type": "OpeningHoursSpecification",
-          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          dayOfWeek: ["Monday", "Tuesday", "Thursday"],
           opens: "09:00",
           closes: "17:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Friday"],
+          opens: "09:00",
+          closes: "12:00"
         }
       ],
       sameAs: ["https://haller-immobilien.de/"]

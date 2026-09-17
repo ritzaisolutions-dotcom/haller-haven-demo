@@ -4,9 +4,6 @@ Allow: /llms.txt
 Allow: /sitemap.xml
 Disallow: /admin
 Disallow: /admin.html
-Disallow: /admin.js
-Disallow: /store.js
-Disallow: /config.js
 Disallow: /api/
 
 User-agent: GPTBot
@@ -33,4 +30,4 @@ User-agent: PerplexityBot
 Allow: /
 Allow: /llms.txt
 
-Sitemap: https://haller-haven-demo.vercel.app/sitemap.xml
+Sitemap: https://haller-immobilien.de/sitemap.xml
