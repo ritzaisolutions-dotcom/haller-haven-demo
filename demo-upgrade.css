@@ -21,14 +21,14 @@
   --line: #C5CFD4;
   --txt: #2A2C2B;
   --mut: #5C6360;
-  --acc: #B0894A;
-  --acc-deep: #8B6A35;
+  --acc: #0073E1;
+  --acc-deep: #5472D2;
   --ghost: #8A9290;
   --basalt: #2A2C2B;
   --paper: #F3EFE6;
   --mist: #C5CFD4;
-  --brass: #B0894A;
-  --sell: #8B2E1F;
+  --brass: #0073E1;
+  --sell: #0073E1;
 }
 
 body.haven {
@@ -86,7 +86,7 @@ h1 {
 }
 .btn-sell:hover,
 .hero.overlay .btn.btn-sell:hover {
-  background: #6f2418;
+  background: var(--acc-deep);
   color: #fff;
 }
 
@@ -224,6 +224,105 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid var(--brass);
+  outline: 2px solid var(--acc);
   outline-offset: 3px;
 }
+
+.proof-grid,
+.seal-grid,
+.faq-group,
+.region-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  margin: 16px 0 40px;
+}
+.proof-card,
+.seal-card,
+.faq-item,
+.region-block {
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 16px 18px;
+}
+.proof-card .role,
+.seal-card .role {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mut);
+  margin: 0 0 8px;
+}
+.proof-card .score {
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--acc);
+  margin: 0 0 8px;
+}
+.proof-card p,
+.seal-card p,
+.region-block p {
+  margin: 0 0 10px;
+  color: var(--txt);
+}
+.proof-card a.source,
+.seal-card a.source {
+  font-size: 13px;
+}
+.hours-board {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 28px;
+}
+.hours-board article {
+  border: 1px solid var(--line);
+  padding: 12px 14px;
+  background: #fff;
+}
+.hours-board h3 { font-size: 16px; margin: 0 0 8px; }
+.hours-board .warn-slot { font-weight: 500; }
+.map-block { margin: 20px 0 32px; }
+.map-block iframe {
+  width: 100%;
+  height: 280px;
+  border: 1px solid var(--line);
+}
+.sell-steps {
+  counter-reset: sellstep;
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 24px;
+}
+.sell-steps li {
+  counter-increment: sellstep;
+  position: relative;
+  padding: 12px 0 12px 48px;
+  border-bottom: 1px solid var(--line);
+}
+.sell-steps li::before {
+  content: counter(sellstep);
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--acc);
+  color: var(--acc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+.courtage-box {
+  border: 1px solid var(--line);
+  padding: 14px 16px;
+  margin: 0 0 28px;
+  background: #fff;
+}
+.faq-item h3 { font-size: 16px; margin: 0 0 8px; }
+.faq-group-title { margin: 28px 0 8px; }
+.region-block { margin: 0 0 28px; }
+.region-block h2 { font-size: 22px; margin: 0 0 10px; }
+.hours-board .warn-slot { color: var(--acc-deep); }
+.map-block iframe { display: block; }
+

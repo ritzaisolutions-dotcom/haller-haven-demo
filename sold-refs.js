@@ -10,10 +10,10 @@
       root.innerHTML = "";
       if (!list || !list.length) {
         root.innerHTML =
-          '<p class="muted-note">Verkaufte Referenzen (Ort, Art, Vermarktungsdauer) erscheinen hier, sobald Objekte im Admin auf „verkauft“ stehen. Keine erfundenen Deals.</p>';
+          '<p class="muted-note">Verkaufte Referenzen (Ort, Art, Vermarktungsdauer) erscheinen hier, sobald ein Objekt im Admin auf „verkauft“ steht. Keine erfundenen Preise, keine Portal-Kopien als Scheindeals.</p>';
         return;
       }
-      list.slice(0, 4).forEach(function (item) {
+      list.slice(0, 12).forEach(function (item) {
         var art = document.createElement("article");
         art.className = "sold-card";
         var h = document.createElement("h3");
