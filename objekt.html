@@ -4,36 +4,23 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>Objekt · Haller Andernach</title>
-<meta name="description" content="Immobiliendetails und Besichtigungstermin bei Haller Immobilien Andernach anfragen."/>
-<meta name="robots" content="index,follow,max-image-preview:large"/>
-<meta name="author" content="Haller Immobilienberatung GmbH"/>
-<meta name="geo.region" content="DE-RP"/>
-<meta name="geo.placename" content="Andernach"/>
-<meta name="geo.position" content="50.4392;7.4016"/>
-<meta name="ICBM" content="50.4392, 7.4016"/>
-<link rel="canonical" href="https://haller-immobilien.de/objekt.html"/>
-<link rel="alternate" type="text/plain" title="LLMs" href="https://haller-immobilien.de/llms.txt"/>
+<meta name="description" content="Immobiliendetails und qualifizierte Besichtigungsanfrage bei Haller Immobilien Andernach."/>
+<link rel="canonical" href="https://haller-haven-demo.vercel.app/objekt.html"/>
 <meta property="og:type" content="website"/>
-<meta property="og:locale" content="de_DE"/>
-<meta property="og:site_name" content="Haller Immobilien Andernach"/>
 <meta property="og:title" content="Objekt · Haller Andernach"/>
-<meta property="og:description" content="Immobiliendetails und Besichtigungstermin bei Haller Immobilien Andernach anfragen."/>
-<meta property="og:url" content="https://haller-immobilien.de/objekt.html"/>
-<meta property="og:image" content="https://haller-immobilien.de/assets/stock/interior.jpg"/>
+<meta property="og:url" content="https://haller-haven-demo.vercel.app/objekt.html"/>
+<meta property="og:image" content="https://haller-haven-demo.vercel.app/assets/stock/interior.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Objekt · Haller Andernach"/>
-<meta name="twitter:description" content="Immobiliendetails und Besichtigungstermin bei Haller Immobilien Andernach anfragen."/>
-<meta name="twitter:image" content="https://haller-immobilien.de/assets/stock/interior.jpg"/>
 <link rel="icon" href="assets/brand/favicon32.png" type="image/png"/>
 <link rel="stylesheet" href="site.css"/>
 <link rel="stylesheet" href="listings.css"/>
-<link rel="stylesheet" href="vendor/klaro/klaro.min.css"/>
+<link rel="stylesheet" href="demo-upgrade.css"/>
 </head>
 <body class="haven">
 <header class="top">
   <a class="brand" href="index.html"><img src="assets/brand/logo_240.png" alt="Haller"></a>
   <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menü</button>
-  <nav id="site-nav"><a href="index.html#objekte-home">Objekte</a><a href="verkaufen.html">Verkaufen</a><a href="hausverwaltung.html">Hausverwaltung</a></nav>
+  <nav id="site-nav" aria-label="Hauptnavigation"><a href="objekte.html">Objekte</a><a href="verkaufen.html">Verkaufen</a><a href="suchprofil.html">Suchprofil</a><a href="hausverwaltung.html">Verwaltung</a><a href="ueber-uns.html">Über uns</a></nav>
   <a class="btn" href="kontakt.html">Kontakt</a>
 </header>
 
@@ -45,18 +32,22 @@
   </div>
 </section>
 
+<div class="objekt-sticky">
+  <a class="btn btn-sell" href="#anfrage">Besichtigung anfragen</a>
+</div>
 <section class="page" id="expose">
   <div id="xg"></div>
   <p><a href="objekte.html">Zurück zur Liste</a></p>
-  
+
   <form class="box" id="anfrage" novalidate>
-    <div class="ok" id="ok">Anfrage gesendet. Sie liegt in der Mail.</div>
+    <div class="ok" id="ok">Gesendet. Wir antworten am selben Werktag — Verarbeitung in der EU.</div>
+    <input type="hidden" name="kind" value="objekt">
     <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
     <input type="hidden" name="object_id" value="">
     <input type="hidden" name="object_title" value="">
     <input type="hidden" name="object_ref" value="">
     <input type="hidden" name="object_type" value="">
-    <p class="muted-note" style="margin-bottom:12px">Diese Anfrage gilt nur für dieses Objekt. Betreff und Mail gehen objektbezogen ins Büro-Postfach.</p>
+    <p class="promise-row"><span>Antwort am selben Werktag</span><span>Verarbeitet in der EU</span></p>
     <label>Anliegen
       <select name="intent" required>
         <option value="besichtigung">Besichtigungstermin</option>
@@ -68,12 +59,41 @@
     <label>E-Mail <input type="email" name="email" autocomplete="email" required></label>
     <label>Telefon <input type="tel" name="phone" autocomplete="tel" inputmode="tel" required></label>
     <label>Objekt <input name="place" readonly></label>
-    <label>Wunschtermin / Notiz <textarea name="note" placeholder="z. B. Samstag Vormittag, ab 15 Uhr …"></textarea></label>
+    <label>Finanzierung geklärt?
+      <select name="financing" required>
+        <option value="">Bitte wählen</option>
+        <option value="ja">Ja</option>
+        <option value="in_klaerung">In Klärung</option>
+        <option value="nein">Noch nicht</option>
+      </select>
+    </label>
+    <label>Eigenkapital (ungefähr)
+      <input name="equity" required placeholder="z. B. 80.000 € oder 20 %">
+    </label>
+    <label>Nutzung
+      <select name="use" required>
+        <option value="">Bitte wählen</option>
+        <option value="selbst">Selbst nutzen</option>
+        <option value="vermietung">Vermieten</option>
+        <option value="beides">Offen / beides denkbar</option>
+      </select>
+    </label>
+    <label>Einzugszeitraum
+      <select name="move_in" required>
+        <option value="">Bitte wählen</option>
+        <option value="sofort">Sofort / 3 Monate</option>
+        <option value="6m">In etwa 6 Monaten</option>
+        <option value="12m">In 12 Monaten</option>
+        <option value="spaeter">Später / flexibel</option>
+      </select>
+    </label>
+    <label>Wunschtermin / Notiz <textarea name="note" placeholder="z. B. Samstag Vormittag …"></textarea></label>
     <label class="consent">
       <input type="checkbox" name="privacy" value="accepted" required>
-      <span>Ich willige ein, dass meine Angaben zur Bearbeitung der Anfrage, Terminvereinbarung und Kontaktaufnahme gespeichert und verarbeitet werden. Details in der <a href="datenschutz.html">Datenschutzerklärung</a>.</span>
+      <span>Ich willige ein, dass meine Angaben zur Bearbeitung der Anfrage, Terminvereinbarung und Kontaktaufnahme in der EU verarbeitet werden. Details in der <a href="datenschutz.html">Datenschutzerklärung</a>.</span>
     </label>
-    <button class="btn" type="submit">Termin anfragen</button>
+    <button class="btn" type="submit">Qualifizierte Anfrage senden</button>
+    <div id="cal-slot" class="cal-slot" hidden></div>
   </form>
 </section>
 
@@ -81,6 +101,7 @@
   <div class="footer-brand">Haller Immobilienberatung GmbH · Andernach</div>
   <div class="footer-nav">
     <a href="ueber-uns.html">Über uns</a>
+    <a href="suchprofil.html">Suchprofil</a>
     <a href="leistungen.html">Leistungen</a>
     <a href="projekte.html">Projekte</a>
     <a href="kontakt.html">Kontakt</a>
@@ -89,16 +110,16 @@
     <a href="impressum.html">Impressum</a>
     <a href="datenschutz.html">Datenschutz</a>
     <a href="agb.html">AGB</a>
-    <button type="button" class="cookie-settings" onclick="if(window.klaro){klaro.show();}">Cookie-Einstellungen</button>
-  </div>
+    </div>
 </footer>
-<script defer type="text/javascript" src="klaro-config.js"></script>
-<script defer type="text/javascript" src="vendor/klaro/klaro.min.js"></script>
-<script>window.RAIS_FORM={fromName:"Haller Haven",subject:"Anfrage Haller"};</script>
+<script>window.RAIS_FORM={fromName:"Haller",subject:"Objektanfrage Haller",kind:"objekt"};</script>
 <script src="config.js"></script>
 <script src="nav.js"></script>
 <script src="motion.js"></script>
+<script src="cal.js"></script>
 <script src="form.js"></script>
 <script src="seo.js"></script>
 <script src="objekt.js"></script>
-</body></html>
+<script src="kirchberg.js"></script>
+</body>
+</html>

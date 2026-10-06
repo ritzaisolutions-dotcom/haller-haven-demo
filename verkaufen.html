@@ -3,103 +3,86 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>Immobilienverkauf · Kompetent · Komfortabel · Erfolgreich · Haller Andernach</title>
-<meta name="description" content="Immobilie verkaufen in Andernach, Koblenz und Neuwied: Wertermittlung, Vermarktung und Begleitung bis zum Notar — über 30 Jahre Erfahrung."/>
-<meta name="robots" content="index,follow,max-image-preview:large"/>
-<meta name="author" content="Haller Immobilienberatung GmbH"/>
-<meta name="geo.region" content="DE-RP"/>
-<meta name="geo.placename" content="Andernach"/>
-<meta name="geo.position" content="50.4392;7.4016"/>
-<meta name="ICBM" content="50.4392, 7.4016"/>
-<link rel="canonical" href="https://haller-immobilien.de/verkaufen.html"/>
-<link rel="alternate" type="text/plain" title="LLMs" href="https://haller-immobilien.de/llms.txt"/>
+<title>Immobilie bewerten · Haller Andernach</title>
+<meta name="description" content="Vor-Ort-Bewertung und Preisspanne für Ihre Immobilie in Andernach, Koblenz und Neuwied. Seit 1995. Verarbeitung in der EU."/>
+<link rel="canonical" href="https://haller-haven-demo.vercel.app/verkaufen.html"/>
 <meta property="og:type" content="website"/>
-<meta property="og:locale" content="de_DE"/>
-<meta property="og:site_name" content="Haller Immobilien Andernach"/>
-<meta property="og:title" content="Immobilienverkauf · Kompetent · Komfortabel · Erfolgreich · Haller Andernach"/>
-<meta property="og:description" content="Immobilie verkaufen in Andernach, Koblenz und Neuwied: Wertermittlung, Vermarktung und Begleitung bis zum Notar — über 30 Jahre Erfahrung."/>
-<meta property="og:url" content="https://haller-immobilien.de/verkaufen.html"/>
-<meta property="og:image" content="https://haller-immobilien.de/assets/stock/facade.jpg"/>
+<meta property="og:title" content="Immobilie bewerten · Haller Andernach"/>
+<meta property="og:url" content="https://haller-haven-demo.vercel.app/verkaufen.html"/>
+<meta property="og:image" content="https://haller-haven-demo.vercel.app/assets/stock/facade.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Immobilienverkauf · Kompetent · Komfortabel · Erfolgreich · Haller Andernach"/>
-<meta name="twitter:description" content="Immobilie verkaufen in Andernach, Koblenz und Neuwied: Wertermittlung, Vermarktung und Begleitung bis zum Notar — über 30 Jahre Erfahrung."/>
-<meta name="twitter:image" content="https://haller-immobilien.de/assets/stock/facade.jpg"/>
 <link rel="icon" href="assets/brand/favicon32.png" type="image/png"/>
 <link rel="stylesheet" href="site.css"/>
-<link rel="stylesheet" href="vendor/klaro/klaro.min.css"/>
+<link rel="stylesheet" href="demo-upgrade.css"/>
 </head>
 <body class="haven">
 <header class="top">
   <a class="brand" href="index.html"><img src="assets/brand/logo_240.png" alt="Haller"></a>
   <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menü</button>
-  <nav id="site-nav"><a href="index.html#objekte-home">Objekte</a><a href="verkaufen.html" aria-current="page">Verkaufen</a><a href="hausverwaltung.html">Hausverwaltung</a></nav>
+  <nav id="site-nav" aria-label="Hauptnavigation"><a href="objekte.html">Objekte</a><a href="verkaufen.html" aria-current="page">Verkaufen</a><a href="suchprofil.html">Suchprofil</a><a href="hausverwaltung.html">Verwaltung</a><a href="ueber-uns.html">Über uns</a></nav>
   <a class="btn" href="kontakt.html">Kontakt</a>
 </header>
 
 <section class="hero overlay page-hero">
   <img class="hero-media" src="assets/stock/facade.jpg" alt="Wohnimmobilie">
   <div class="hero-copy">
-    <p class="kicker">Immobilienverkauf</p>
-    <h1>Immobilienverkauf mit uns</h1>
-    <p class="lead">KOMPETENT – KOMFORTABEL – ERFOLGREICH</p>
+    <p class="kicker">Verkauf</p>
+    <h1>Bewertung mit Preisspanne — und Termin vor Ort.</h1>
+    <p class="lead">Seit 1995. Waldemar Haller ist Ihr Ansprechpartner für den Verkauf.</p>
   </div>
 </section>
 
 <section class="page">
-  <p class="page-lead">Ihre Immobilienwerte verdienen einen kompetenten Partner. Wir wissen Ihre Immobilie zu schätzen — jede Immobilie hat eine individuelle Geschichte. Der richtige Preis entscheidet: Eine präzise Wertermittlung ist essenziell für einen erfolgreichen, schnellen Verkauf. Über 30 Jahre Erfahrung begleiten Sie sicher von der Verkehrswertermittlung über die Vermarktung bis zur notariell beglaubigten Unterschrift — und darüber hinaus.</p>
+  <p class="page-lead">Ihre Immobilie verdient eine ehrliche Lage- und Preiseinschätzung. Sie erhalten eine Spanne und können direkt einen Vor-Ort-Termin anfragen.</p>
+  <p class="promise-row"><span>Antwort am selben Werktag</span><span>Verarbeitet in der EU</span></p>
 
-  <article class="service-block">
+  <form class="box" id="f" novalidate>
+    <div class="ok" id="ok">Gesendet. Wir antworten am selben Werktag — Verarbeitung in der EU.</div>
+    <input type="hidden" name="kind" value="bewertung">
+    <input type="hidden" name="intent" value="verkaufen">
+    <label>Name <input name="name" autocomplete="name" required></label>
+    <label>E-Mail <input type="email" name="email" autocomplete="email" required></label>
+    <label>Telefon <input type="tel" name="phone" autocomplete="tel" required></label>
+    <label>Lage / Ort <input name="place" required placeholder="Andernach, Namedy, …"></label>
+    <label>Art der Immobilie
+      <select name="property_type" required>
+        <option value="">Bitte wählen</option>
+        <option value="wohnung">Wohnung</option>
+        <option value="haus">Haus</option>
+        <option value="mehrfamilienhaus">Mehrfamilienhaus</option>
+        <option value="grundstueck">Grundstück</option>
+        <option value="sonstiges">Sonstiges</option>
+      </select>
+    </label>
+    <label>Wohnfläche (m²) <input name="area" required inputmode="numeric"></label>
+    <label>Ihre Preiserwartung (grob) <input name="price_expect" placeholder="z. B. 350.000 €"></label>
+    <label>Notiz <textarea name="note" placeholder="Baujahr, Zustand, Besonderheiten …"></textarea></label>
+    <label class="consent">
+      <input type="checkbox" name="privacy" value="accepted" required>
+      <span>Ich willige ein, dass meine Angaben zur Bewertung und Terminvereinbarung in der EU verarbeitet werden. <a href="datenschutz.html">Datenschutz</a>.</span>
+    </label>
+    <button class="btn" type="submit">Bewertung anfragen</button>
+    <div id="cal-slot" class="cal-slot" hidden></div>
+  </form>
+
+  <article class="service-block" style="margin-top:48px">
     <div class="service-copy">
-      <p class="kicker">01 · Vorbereitung</p>
-      <h2>Professionelle Wertermittlung und Vermarktung</h2>
+      <p class="kicker">Ablauf</p>
+      <h2>Von der Spanne zum Notar</h2>
       <ul class="checklist">
-        <li>Persönliche Erstberatung zum Kennenlernen aller Facetten Ihrer Immobilie</li>
-        <li>Begutachtung der Immobilie zur transparenten Wertermittlung</li>
-        <li>Überprüfung und Organisation aller Objektunterlagen</li>
-        <li>Entwicklung einer individuellen Vermarktungsstrategie und Zielgruppenanalyse</li>
-        <li>Fotografie der Immobilie und Erstellen eines aussagekräftigen Exposés</li>
-        <li>Auf Wunsch diskrete Direktvermittlung ohne Öffentlichkeit</li>
-        <li>Veröffentlichung des Angebotes in den gängigen Internetportalen</li>
-        <li>Versand des Immobilienexposés an Interessenten aus dem Bestand</li>
+        <li>Kurzdaten hier, Rückmeldung am selben Werktag</li>
+        <li>Vor-Ort-Termin zur Bewertung</li>
+        <li>Vermarktung, Besichtigungen, Notar</li>
       </ul>
     </div>
-    <img src="assets/stock/facade.jpg" alt="Wohnimmobilie">
   </article>
-
-  <article class="service-block reverse">
-    <div class="service-copy">
-      <p class="kicker">02 · Abschluss</p>
-      <h2>Immobilienverkauf zum Bestpreis</h2>
-      <ul class="checklist">
-        <li>Organisation und Durchführung von Besichtigungen</li>
-        <li>Bonitätsprüfung der Interessenten</li>
-        <li>Hilfestellung für die richtige Finanzierung bei Interessenten und Finanzierungsvermittlung</li>
-        <li>Führen von Verhandlungsgesprächen und Vorbereitung des notariellen Kaufvertrages</li>
-        <li>Begleitung zum Notartermin</li>
-        <li>Überprüfung der Kaufpreiszahlung</li>
-        <li>Übergabe des Objektes an den Käufer</li>
-        <li>Nachgelagertes Kundenmanagement</li>
-      </ul>
-    </div>
-    <img src="assets/stock/interior.jpg" alt="Wohnraum">
-  </article>
-
-  <div class="cta-band" style="margin-top:72px;border:1px solid var(--line)">
-    <div class="cta-inner">
-      <p class="kicker">Nächster Schritt</p>
-      <h2>Gemeinsam Ihr bestes Verkaufsergebnis.</h2>
-      <p>Wir prüfen mit Ihnen Ihre individuelle Situation und erarbeiten maßgeschneiderte Lösungen — persönlich, bis Sie rundum zufrieden sind.</p>
-      <div class="actions">
-        <a class="btn" href="kontakt.html">Verkaufspreis prüfen</a>
-      </div>
-    </div>
-  </div>
 </section>
 
 <footer class="site-footer">
   <div class="footer-brand">Haller Immobilienberatung GmbH · Andernach</div>
   <div class="footer-nav">
     <a href="ueber-uns.html">Über uns</a>
+    <a href="suchprofil.html">Suchprofil</a>
     <a href="leistungen.html">Leistungen</a>
     <a href="projekte.html">Projekte</a>
     <a href="kontakt.html">Kontakt</a>
@@ -108,14 +91,15 @@
     <a href="impressum.html">Impressum</a>
     <a href="datenschutz.html">Datenschutz</a>
     <a href="agb.html">AGB</a>
-    <button type="button" class="cookie-settings" onclick="if(window.klaro){klaro.show();}">Cookie-Einstellungen</button>
-  </div>
+    </div>
 </footer>
-<script defer type="text/javascript" src="klaro-config.js"></script>
-<script defer type="text/javascript" src="vendor/klaro/klaro.min.js"></script>
+<script>window.RAIS_FORM={kind:"bewertung",subject:"Bewertung Haller"};</script>
+<script src="config.js"></script>
+<script src="cal.js"></script>
+<script src="form.js"></script>
 <script src="nav.js"></script>
 <script src="motion.js"></script>
-<script src="config.js"></script>
 <script src="seo.js"></script>
+<script src="kirchberg.js"></script>
 </body>
 </html>

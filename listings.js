@@ -4,7 +4,7 @@
   var pickRoot = document.getElementById("object-pick");
   if (!fullRoot && !homeRoot && !pickRoot) return;
 
-  var HOME_MAX = Number(window.RAIS_HOME_MAX) || 6;
+  var HOME_MAX = Number(window.RAIS_HOME_MAX) || 4;
   var API = window.RAIS_LISTINGS_URL || "/api/listings";
   var filterState = "all";
 
@@ -24,14 +24,18 @@
     return item.type === "miete" ? "Miete" : "Kauf";
   }
 
+  function shownTitle(item) {
+    return item.display_title || item.title || "Ohne Titel";
+  }
+
   function card(item, opts) {
     opts = opts || {};
     var images = (item.images || []).filter(Boolean);
     var sold = item.status === "verkauft";
     var id = encodeURIComponent(item.id || "");
     var detailHref = "objekt.html?id=" + id;
-    var askHref = detailHref + "#anfrage";
-    var askOnly = opts.askOnly === true;
+    var askHref = "kontakt.html?intent=objekt&listing=" + id;
+    var label = shownTitle(item);
 
     var el = document.createElement("article");
     el.className = "listing-card";
@@ -47,7 +51,7 @@
     } else {
       var img = document.createElement("img");
       img.src = images[0];
-      img.alt = item.title || "";
+      img.alt = label;
       img.draggable = false;
       img.loading = "lazy";
       media.appendChild(img);
@@ -88,7 +92,7 @@
         function show(i) {
           idx = (i + images.length) % images.length;
           img.src = images[idx];
-          counter.textContent = (idx + 1) + " / " + images.length;
+          counter.textContent = idx + 1 + " / " + images.length;
           Array.prototype.forEach.call(dots.children, function (d, di) {
             d.classList.toggle("is-on", di === idx);
           });
@@ -116,9 +120,13 @@
         });
 
         var startX = 0;
-        media.addEventListener("touchstart", function (e) {
-          if (e.touches && e.touches[0]) startX = e.touches[0].clientX;
-        }, { passive: true });
+        media.addEventListener(
+          "touchstart",
+          function (e) {
+            if (e.touches && e.touches[0]) startX = e.touches[0].clientX;
+          },
+          { passive: true }
+        );
         media.addEventListener("touchend", function (e) {
           if (!e.changedTouches || !e.changedTouches[0]) return;
           var dx = e.changedTouches[0].clientX - startX;
@@ -142,19 +150,22 @@
 
     var body = document.createElement("div");
     body.className = "listing-body";
-    var actions = askOnly
-      ? '<div class="listing-actions">' +
-          '<a class="btn" href="' + askHref + '">Anfrage</a>' +
-        "</div>"
-      : '<div class="listing-actions">' +
-          '<a class="btn ghost" href="' + detailHref + '">Details</a>' +
-          '<a class="btn" href="' + askHref + '">Anfrage</a>' +
-        "</div>";
     body.innerHTML =
       (sold ? "<small>Verkauft</small>" : "<small>Termin möglich</small>") +
-      "<h3>" + esc(item.title || "Ohne Titel") + "</h3>" +
-      "<p>" + esc([item.place, item.area ? item.area + " m²" : "", item.price].filter(Boolean).join(" · ")) + "</p>" +
-      actions;
+      "<h3>" +
+      esc(label) +
+      "</h3>" +
+      "<p>" +
+      esc([item.place, item.area ? item.area + " m²" : "", item.price].filter(Boolean).join(" · ")) +
+      "</p>" +
+      '<div class="listing-actions">' +
+      '<a class="btn" href="' +
+      askHref +
+      '">Besichtigung anfragen</a>' +
+      '<a class="btn ghost" href="' +
+      detailHref +
+      '">Details</a>' +
+      "</div>";
 
     el.appendChild(media);
     el.appendChild(body);
@@ -167,7 +178,9 @@
 
   function featuredHome(list) {
     var live = liveOnly(list);
-    var featured = live.filter(function (x) { return x.featured === true; });
+    var featured = live.filter(function (x) {
+      return x.featured === true;
+    });
     if (featured.length) return featured.slice(0, HOME_MAX);
     return live.slice(0, HOME_MAX);
   }
@@ -189,7 +202,7 @@
       return;
     }
     live.forEach(function (item) {
-      root.appendChild(card(item, { askOnly: !opts.home && root === fullRoot }));
+      root.appendChild(card(item));
     });
   }
 
@@ -217,9 +230,10 @@
         '<p class="muted-note">Derzeit keine freigeschalteten Objekte zur Auswahl. Sie können die Anfrage trotzdem absenden.</p>';
       return;
     }
+    var listingQ = new URLSearchParams(location.search).get("listing");
     live.forEach(function (item) {
-      var label = document.createElement("label");
-      label.className = "object-pick-item";
+      var labelEl = document.createElement("label");
+      labelEl.className = "object-pick-item";
       var shortLabel = [item.place, item.rooms ? item.rooms + " Zi." : "", typeLabel(item)]
         .filter(Boolean)
         .join(" · ");
@@ -228,15 +242,16 @@
       input.type = "checkbox";
       input.name = "object_id";
       input.value = item.id || "";
-      input.setAttribute("data-title", item.title || shortLabel);
+      input.setAttribute("data-title", shownTitle(item));
       input.setAttribute("data-ref", item.ref || "");
       input.setAttribute("data-type", item.type || "kauf");
+      if (listingQ && item.id === listingQ) input.checked = true;
       var span = document.createElement("span");
       span.textContent = shortLabel;
-      if (item.title) label.title = item.title;
-      label.appendChild(input);
-      label.appendChild(span);
-      root.appendChild(label);
+      if (item.title) labelEl.title = item.title;
+      labelEl.appendChild(input);
+      labelEl.appendChild(span);
+      root.appendChild(labelEl);
     });
 
     root.addEventListener("change", function (e) {

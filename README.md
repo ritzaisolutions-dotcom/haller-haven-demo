@@ -1,38 +1,28 @@
 # Haller Immobilien
 
-Website der Haller Immobilienberatung GmbH (Andernach). Canonical: **https://haller-immobilien.de/**
+Website der Haller Immobilienberatung GmbH (Andernach). Demo: **https://haller-haven-demo.vercel.app/**
 
-- **Preview (bis DNS):** https://haller-haven-demo.vercel.app/
-- **Formulare:** Browser → Web3Forms (public access key in `form.js`); metrics via `/api/inquiries`
-- **Admin:** Vercel Env `ADMIN_PASSWORD` + `ADMIN_SESSION_SECRET`; Objekte live über **`/admin`** (Startseite max. 6)
-- **Listings:** Supabase-Tabellen `website_listings` / `website_inquiries` (Env: `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY`)
-- **Bilder (Upload):** Supabase Storage bucket `listing-images` (öffentlich lesbar)
-- **Canonical:** `window.RAIS_SITE_BASE` / `SITE_BASE` = `https://haller-immobilien.de`
-- **Consent-Log:** dieselbe Supabase-Instanz → `website_consent_log`
-- **AVV/DPA:** Vercel, Supabase und Web3Forms sind abgeschlossen
+- **Formulare:** Browser → `POST /api/inquiries` → SMTP an EU-Postfach (kein Web3Forms)
+- **Admin:** `/admin` — inkl. Beschreibung, Energieausweis, Vermarktungstage
+- **Listings:** Supabase `website_listings` (Migration `20261006_listing_energy.sql` ausführen)
+- **Cal.com:** Env `CAL_COM_EVENT_URL` (optional; sonst Fallback-Button)
+- **Cookies:** Kein Analyse-Tracking, kein Consent-Banner. Nur technisch notwendig (`rais_admin` nach Admin-Login). Formular-Checkbox bleibt.
 
 ## Env (Vercel)
 
 | Variable | Zweck |
 |---|---|
-| `ADMIN_PASSWORD` | Shared admin password (plain or `sha256:<hex>`) |
-| `ADMIN_SESSION_SECRET` | HMAC secret for the admin cookie (separate from password) |
-| `WEB3FORMS_ACCESS_KEY` | Optional / legacy; live forms use the public key in `form.js` |
-| `SUPABASE_URL` | Haller Supabase project URL |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server-only service role (listings, consent, uploads) |
+| `ADMIN_PASSWORD` | Admin-Login |
+| `ADMIN_SESSION_SECRET` | HMAC für Cookie |
+| `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` | Listings, Uploads |
+| `SMTP_HOST` `SMTP_PORT` `SMTP_USER` `SMTP_PASS` | EU-Mailversand (Port 465 / implicit TLS) |
+| `SMTP_FROM` / `INQUIRY_TO` | Absender / Empfänger (Demo: marco@-Postfach) |
+| `CAL_COM_EVENT_URL` | Öffentliche Buchungs-URL |
 
-## Scripts
+Web Analytics / Speed Insights in Vercel müssen aus bleiben — sonst wäre wieder ein Banner nötig.
 
-```bash
-npm test          # unit tests (node:test)
-npm run seed      # push listings.json → Supabase (needs env)
-npm run seo       # regenerate sitemap.xml + llms.txt from listings.json
-```
+## Go-Live
 
-## Go-Live-Checkliste
-
-Canonicals, Sitemap, robots, `llms.txt` und Datenschutzerklärung stehen bereits auf **haller-immobilien.de**. AVV/DPA mit Vercel, Supabase und Web3Forms sind abgeschlossen.
-
-1. Domain-DNS auf Vercel zeigen lassen (Rest ist vorbereitet)
-2. Formular-Testanfrage + Admin-Login unter der echten Domain prüfen
-3. AGB/Datenschutz bei Bedarf juristisch gegenlesen lassen
+1. SMTP-Env setzen, sonst liefern Formulare 503.
+2. Energie-Migration in Supabase anwenden.
+3. DNS später auf haller-immobilien.de; OG-Tags der Demo zeigen auf vercel.app.

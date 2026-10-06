@@ -18,6 +18,7 @@ module.exports = async function handler(req, res) {
     ok: true,
     homeMax: HOME_MAX,
     siteBase: SITE_BASE,
-    listingsUrl: "/api/listings"
+    listingsUrl: "/api/listings",
+    calUrl: process.env.CAL_COM_EVENT_URL || ""
   });
 };

@@ -2,7 +2,7 @@ const { isAdmin } = require("../lib/auth");
 const { parseBody } = require("../lib/parse-body");
 const { applyCors } = require("../lib/cors");
 const { HOME_MAX } = require("../lib/constants");
-const { publicize } = require("../lib/listings");
+const { publicize, soldRefs } = require("../lib/listings");
 const { validateList } = require("../lib/validate-list");
 const { listAll, replaceAll } = require("../lib/listings-repo");
 const { config } = require("../lib/supabase");
@@ -17,6 +17,7 @@ module.exports = async function handler(req, res) {
 
   if (req.method === "GET") {
     var wantAll = String(req.query && req.query.all) === "1";
+    var wantSold = String(req.query && (req.query.sold || req.query.refs)) === "1";
     var admin = isAdmin(req);
 
     if (wantAll && !admin) {
@@ -30,6 +31,10 @@ module.exports = async function handler(req, res) {
         res.status(200).json(list);
         return;
       }
+      if (wantSold) {
+        res.status(200).json(soldRefs(list));
+        return;
+      }
       res.status(200).json(publicize(list));
     } catch (e) {
       console.error("listings GET", e && e.message, e && e.body);
@@ -37,7 +42,6 @@ module.exports = async function handler(req, res) {
         res.status(503).json({ ok: false, error: "listings_store_unconfigured" });
         return;
       }
-      // Fail closed — never substitute seed data for live reads.
       res.status(502).json({ ok: false, error: "listings_unavailable" });
     }
     return;

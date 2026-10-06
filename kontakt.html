@@ -4,36 +4,24 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>Kontakt · Haller Immobilien Andernach</title>
-<meta name="description" content="Kontakt und Beratungstermin: Kirchberg 42, 56626 Andernach · 02632 9458-0 · info@haller-immobilien.de"/>
-<meta name="robots" content="index,follow,max-image-preview:large"/>
-<meta name="author" content="Haller Immobilienberatung GmbH"/>
-<meta name="geo.region" content="DE-RP"/>
-<meta name="geo.placename" content="Andernach"/>
-<meta name="geo.position" content="50.4392;7.4016"/>
-<meta name="ICBM" content="50.4392, 7.4016"/>
-<link rel="canonical" href="https://haller-immobilien.de/kontakt.html"/>
-<link rel="alternate" type="text/plain" title="LLMs" href="https://haller-immobilien.de/llms.txt"/>
+<meta name="description" content="Kontakt Haller Andernach: Kirchberg 42 · 02632 9458-0. Antwort am selben Werktag. Verarbeitung in der EU."/>
+<link rel="canonical" href="https://haller-haven-demo.vercel.app/kontakt.html"/>
 <meta property="og:type" content="website"/>
-<meta property="og:locale" content="de_DE"/>
-<meta property="og:site_name" content="Haller Immobilien Andernach"/>
 <meta property="og:title" content="Kontakt · Haller Immobilien Andernach"/>
-<meta property="og:description" content="Kontakt und Beratungstermin: Kirchberg 42, 56626 Andernach · 02632 9458-0 · info@haller-immobilien.de"/>
-<meta property="og:url" content="https://haller-immobilien.de/kontakt.html"/>
-<meta property="og:image" content="https://haller-immobilien.de/assets/stock/interior.jpg"/>
+<meta property="og:description" content="Antwort am selben Werktag. Verarbeitung in der EU."/>
+<meta property="og:url" content="https://haller-haven-demo.vercel.app/kontakt.html"/>
+<meta property="og:image" content="https://haller-haven-demo.vercel.app/assets/stock/interior.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Kontakt · Haller Immobilien Andernach"/>
-<meta name="twitter:description" content="Kontakt und Beratungstermin: Kirchberg 42, 56626 Andernach · 02632 9458-0 · info@haller-immobilien.de"/>
-<meta name="twitter:image" content="https://haller-immobilien.de/assets/stock/interior.jpg"/>
 <link rel="icon" href="assets/brand/favicon32.png" type="image/png"/>
 <link rel="stylesheet" href="site.css"/>
 <link rel="stylesheet" href="listings.css"/>
-<link rel="stylesheet" href="vendor/klaro/klaro.min.css"/>
+<link rel="stylesheet" href="demo-upgrade.css"/>
 </head>
 <body class="haven">
 <header class="top">
   <a class="brand" href="index.html"><img src="assets/brand/logo_240.png" alt="Haller"></a>
   <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menü</button>
-  <nav id="site-nav"><a href="index.html#objekte-home">Objekte</a><a href="verkaufen.html">Verkaufen</a><a href="hausverwaltung.html">Hausverwaltung</a></nav>
+  <nav id="site-nav" aria-label="Hauptnavigation"><a href="objekte.html">Objekte</a><a href="verkaufen.html">Verkaufen</a><a href="suchprofil.html">Suchprofil</a><a href="hausverwaltung.html">Verwaltung</a><a href="ueber-uns.html">Über uns</a></nav>
   <a class="btn" href="kontakt.html">Kontakt</a>
 </header>
 
@@ -41,16 +29,16 @@
   <img class="hero-media" src="assets/stock/house.jpg" alt="Gebäude">
   <div class="hero-copy">
     <p class="kicker">Kontakt</p>
-    <h1>Wir freuen uns über Ihre Anfrage.</h1>
-    <p class="lead">Kirchberg 42 · Andernach · Eine Antwort, kein Ticket.</p>
+    <h1>Schreiben Sie uns — Antwort am selben Werktag.</h1>
+    <p class="lead">Kirchberg 42 · Andernach · Verarbeitung in der EU.</p>
   </div>
 </section>
 
 <section class="page">
   <div class="split contact-split">
     <div>
-      <p class="page-lead">Seit nahezu 30 Jahren auf dem Immobilienmarkt. Beratung zu Verkauf, Kauf, Vermietung und Hausverwaltung.</p>
-
+      <p class="page-lead">Seit 1995 auf dem Immobilienmarkt. Beratung zu Verkauf, Kauf, Vermietung und Hausverwaltung.</p>
+      <p class="promise-row"><span>Antwort am selben Werktag</span><span>Verarbeitet in der EU</span></p>
       <div class="contact-card">
         <strong>Haller Immobilienberatung GmbH</strong>
         <p>Kirchberg 42<br>56626 Andernach</p>
@@ -61,7 +49,6 @@
         </p>
         <p class="muted-note">Zertifizierter WEG-Verwalter IHK</p>
       </div>
-
       <div class="hours">
         <h3>Termine nach Vereinbarung</h3>
         <dl>
@@ -79,10 +66,12 @@
     </div>
 
     <form class="box" id="f" novalidate>
-      <div class="ok" id="ok">Anfrage gesendet. Sie liegt in der Mail.</div>
+      <div class="ok" id="ok">Gesendet. Wir antworten am selben Werktag — Verarbeitung in der EU.</div>
+      <input type="hidden" name="kind" value="anfrage">
       <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
       <label>Anliegen
         <select name="intent" required>
+          <option value="">Bitte Anliegen wählen</option>
           <option value="objekt">Interesse an Objekt(en) / Besichtigung</option>
           <option value="verkaufen">Immobilie verkaufen</option>
           <option value="kaufen">Immobilie kaufen</option>
@@ -93,19 +82,20 @@
       </label>
       <fieldset class="object-pick-wrap">
         <legend class="object-pick-legend">Interessierte Objekte</legend>
-        <p class="object-pick-hint">Optional: Ort und Art ankreuzen (z.&nbsp;B. Andernach · Kauf). Die ausführlichen Inserattexte stehen auf der Objektseite.</p>
+        <p class="object-pick-hint">Optional: Ort und Art ankreuzen (z.&nbsp;B. Andernach · Kauf).</p>
         <div id="object-pick" class="object-pick" aria-label="Objekte auswählen"></div>
       </fieldset>
       <label>Name <input name="name" autocomplete="name" required></label>
       <label>E-Mail <input type="email" name="email" autocomplete="email" required></label>
       <label>Telefon <input type="tel" name="phone" autocomplete="tel" inputmode="tel" required></label>
-      <label>Ort / freier Hinweis <input name="place" placeholder="z. B. Namedy, Wunschlage …"></label>
+      <label>Ort / freier Hinweis <input name="place" placeholder="z. B. Namedy …"></label>
       <label>Notiz <textarea name="note"></textarea></label>
       <label class="consent">
         <input type="checkbox" name="privacy" value="accepted" required>
-        <span>Ich willige ein, dass meine Angaben zur Bearbeitung der Anfrage und zur Kontaktaufnahme gespeichert und verarbeitet werden. Details in der <a href="datenschutz.html">Datenschutzerklärung</a>.</span>
+        <span>Ich willige ein, dass meine Angaben zur Bearbeitung der Anfrage in der EU per E-Mail an das Büro übermittelt und gespeichert werden. Details in der <a href="datenschutz.html">Datenschutzerklärung</a>.</span>
       </label>
       <button class="btn" type="submit">Anfrage absenden</button>
+      <div id="cal-slot" class="cal-slot" hidden></div>
     </form>
   </div>
 </section>
@@ -114,6 +104,7 @@
   <div class="footer-brand">Haller Immobilienberatung GmbH · Andernach</div>
   <div class="footer-nav">
     <a href="ueber-uns.html">Über uns</a>
+    <a href="suchprofil.html">Suchprofil</a>
     <a href="leistungen.html">Leistungen</a>
     <a href="projekte.html">Projekte</a>
     <a href="kontakt.html">Kontakt</a>
@@ -122,17 +113,16 @@
     <a href="impressum.html">Impressum</a>
     <a href="datenschutz.html">Datenschutz</a>
     <a href="agb.html">AGB</a>
-    <button type="button" class="cookie-settings" onclick="if(window.klaro){klaro.show();}">Cookie-Einstellungen</button>
-  </div>
+    </div>
 </footer>
-<script defer type="text/javascript" src="klaro-config.js"></script>
-<script defer type="text/javascript" src="vendor/klaro/klaro.min.js"></script>
-<script>window.RAIS_FORM={fromName:"Haller Haven",subject:"Anfrage Haller"};</script>
+<script>window.RAIS_FORM={fromName:"Haller",subject:"Anfrage Haller",kind:"anfrage"};</script>
 <script src="config.js"></script>
+<script src="cal.js"></script>
 <script src="form.js"></script>
 <script src="listings.js"></script>
 <script src="nav.js"></script>
 <script src="motion.js"></script>
 <script src="seo.js"></script>
+<script src="kirchberg.js"></script>
 </body>
 </html>
