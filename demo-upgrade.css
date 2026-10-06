@@ -43,19 +43,17 @@ h1 {
   letter-spacing: -0.02em;
 }
 
-.top {
+.grain { z-index: 1 !important; }
+.top,
+.top.is-solid,
+.top.is-scrolled {
   position: sticky !important;
   top: 0;
   z-index: 50;
-  background: var(--basalt);
-  color: #fff;
-}
-.top.is-solid,
-.top.is-scrolled {
-  background: var(--basalt);
-  color: #fff;
+  background: var(--basalt) !important;
+  background-image: none !important;
+  color: #fff !important;
   border-bottom: 0;
-  background-image: none;
 }
 @media (min-width: 901px) {
   #site-nav {
