@@ -14,9 +14,21 @@
   </url>
   <url>
     <loc>https://haller-immobilien.de/leistungen.html</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://haller-immobilien.de/faq.html</loc>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://haller-immobilien.de/region.html</loc>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://haller-immobilien.de/verkaufen.html</loc>
