@@ -83,7 +83,7 @@
         <div id="editor" hidden>
           <div class="card" style="margin-top:16px">
             <h2 id="form-title">Neues Objekt</h2>
-            <p class="helper">Titel und Ort reichen zum Start. Bilder und Details können Sie jederzeit ergänzen.</p>
+            <p class="helper">Titel und Ort reichen zum Start. Energieausweis und Beschreibung ergänzen Sie hier.</p>
             <input type="hidden" id="fid" />
             <input type="hidden" id="images" value="[]" />
             <input type="hidden" id="createdAt" value="" />
@@ -123,12 +123,26 @@
                 </select>
               </label>
             </div>
+            <label>Beschreibung (Exposé) <textarea id="description" placeholder="Lage, Schnitt, Ausstattung …"></textarea></label>
+            <div class="grid">
+              <label>Baujahr <input id="yearBuilt" placeholder="1992" /></label>
+              <label>Energieausweis
+                <select id="energyType">
+                  <option value="">offen</option>
+                  <option value="Bedarf">Bedarfsausweis</option>
+                  <option value="Verbrauch">Verbrauchsausweis</option>
+                </select>
+              </label>
+              <label>Kennwert <input id="energyValue" placeholder="z. B. 112 kWh/(m²·a)" /></label>
+              <label>Energieträger <input id="heating" placeholder="Gas, Wärmepumpe …" /></label>
+              <label>Vermarktungstage (wenn verkauft) <input id="marketedDays" inputmode="numeric" /></label>
+            </div>
             <details class="advanced" style="margin-top:16px;padding:4px 12px 12px">
-              <summary>Links zu den Portalen</summary>
+              <summary>Links zu den Portalen (nur „auch auf …“)</summary>
               <label>ImmoScout24 <input id="link-is24" placeholder="https://www.immobilienscout24.de/expose/…" /></label>
               <label>Immowelt <input id="link-immowelt" placeholder="https://www.immowelt.de/expose/…" /></label>
             </details>
-            <label>Kurzbeschreibung <textarea id="note" placeholder="Was sollen Interessenten wissen?"></textarea></label>
+            <label>Kurzbeschreibung <textarea id="note" placeholder="Kurz für Karten"></textarea></label>
             <div class="images-block">
               <p class="images-label">Bilder <span class="mut" id="imgcount">0 / 12</span></p>
               <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="Bilder hierher ziehen oder auswählen">
@@ -149,5 +163,6 @@
   <script src="/config.js"></script>
   <script src="/store.js"></script>
   <script src="/admin.js"></script>
+  <script src="/admin-energy.js"></script>
 </body>
 </html>

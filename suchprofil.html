@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Suchprofil · Haller Immobilien Andernach</title>
+<meta name="description" content="Suchprofil für Käufer in Andernach, Koblenz und Neuwied. Abgleich, sobald ein passendes Objekt reinkommt."/>
+<link rel="canonical" href="https://haller-haven-demo.vercel.app/suchprofil.html"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Suchprofil · Haller Immobilien Andernach"/>
+<meta property="og:url" content="https://haller-haven-demo.vercel.app/suchprofil.html"/>
+<meta property="og:image" content="https://haller-haven-demo.vercel.app/assets/stock/interior.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="icon" href="assets/brand/favicon32.png" type="image/png"/>
+<link rel="stylesheet" href="site.css"/>
+<link rel="stylesheet" href="demo-upgrade.css"/>
+</head>
+<body class="haven">
+<header class="top">
+  <a class="brand" href="index.html"><img src="assets/brand/logo_240.png" alt="Haller"></a>
+  <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menü</button>
+  <nav id="site-nav" aria-label="Hauptnavigation"><a href="objekte.html">Objekte</a><a href="verkaufen.html">Verkaufen</a><a href="suchprofil.html" aria-current="page">Suchprofil</a><a href="hausverwaltung.html">Verwaltung</a><a href="ueber-uns.html">Über uns</a></nav>
+  <a class="btn" href="kontakt.html">Kontakt</a>
+</header>
+
+<section class="hero overlay page-hero">
+  <img class="hero-media" src="assets/stock/interior.jpg" alt="">
+  <div class="hero-copy">
+    <p class="kicker">Suche</p>
+    <h1>Suchprofil anlegen.</h1>
+    <p class="lead">Ort, Kauf oder Miete, Budget, Zimmer. Wir gleichen ab, sobald ein Objekt passt.</p>
+  </div>
+</section>
+
+<section class="page">
+  <p class="promise-row"><span>Antwort am selben Werktag</span><span>Verarbeitet in der EU</span></p>
+  <form class="box" id="f" novalidate>
+    <div class="ok" id="ok">Gesendet. Wir antworten am selben Werktag — Verarbeitung in der EU.</div>
+    <input type="hidden" name="kind" value="suchprofil">
+    <input type="hidden" name="intent" value="kaufen">
+    <label>Name <input name="name" required autocomplete="name"></label>
+    <label>E-Mail <input type="email" name="email" required autocomplete="email"></label>
+    <label>Telefon <input type="tel" name="phone" required autocomplete="tel"></label>
+    <label>Wunschort / Lage <input name="place" required placeholder="Andernach, Koblenz, Neuwied …"></label>
+    <label>Kauf oder Miete
+      <select name="deal" required>
+        <option value="kauf">Kauf</option>
+        <option value="miete">Miete</option>
+      </select>
+    </label>
+    <label>Budget <input name="budget" required placeholder="z. B. bis 420.000 €"></label>
+    <label>Zimmer (mindestens) <input name="rooms" required placeholder="z. B. 4"></label>
+    <label>Notiz <textarea name="note" placeholder="Garten, Schule, EG …"></textarea></label>
+    <label class="consent">
+      <input type="checkbox" name="privacy" value="accepted" required>
+      <span>Ich willige ein, dass mein Suchprofil zur Kontaktaufnahme in der EU gespeichert wird. <a href="datenschutz.html">Datenschutz</a>.</span>
+    </label>
+    <button class="btn" type="submit">Suchprofil speichern</button>
+  </form>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-brand">Haller Immobilienberatung GmbH · Andernach</div>
+  <div class="footer-nav">
+    <a href="ueber-uns.html">Über uns</a>
+    <a href="suchprofil.html">Suchprofil</a>
+    <a href="leistungen.html">Leistungen</a>
+    <a href="projekte.html">Projekte</a>
+    <a href="kontakt.html">Kontakt</a>
+  </div>
+  <div class="footer-legal">
+    <a href="impressum.html">Impressum</a>
+    <a href="datenschutz.html">Datenschutz</a>
+    <a href="agb.html">AGB</a>
+    </div>
+</footer>
+<script>window.RAIS_FORM={kind:"suchprofil",subject:"Suchprofil Haller"};</script>
+<script src="config.js"></script>
+<script src="form.js"></script>
+<script src="nav.js"></script>
+<script src="motion.js"></script>
+<script src="seo.js"></script>
+<script src="kirchberg.js"></script>
+</body>
+</html>

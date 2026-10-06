@@ -4,65 +4,53 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>Haller Immobilien Andernach · Verkauf, Kauf, Verwaltung</title>
-<meta name="description" content="Inhabergeführte Immobilienberatung in Andernach: Verkauf, Kaufbegleitung und Hausverwaltung für Andernach, Koblenz, Neuwied und Mayen-Koblenz."/>
+<meta name="description" content="Ihr Immobilienpartner für Andernach, Koblenz und Neuwied. Verkauf mit Waldemar Haller, Kauf mit Suchprofil, Verwaltung mit IHK-WEG. Antwort am selben Werktag."/>
 <meta name="robots" content="index,follow,max-image-preview:large"/>
 <meta name="author" content="Haller Immobilienberatung GmbH"/>
-<meta name="geo.region" content="DE-RP"/>
-<meta name="geo.placename" content="Andernach"/>
-<meta name="geo.position" content="50.4392;7.4016"/>
-<meta name="ICBM" content="50.4392, 7.4016"/>
-<link rel="canonical" href="https://haller-immobilien.de/"/>
-<link rel="alternate" type="text/plain" title="LLMs" href="https://haller-immobilien.de/llms.txt"/>
+<link rel="canonical" href="https://haller-haven-demo.vercel.app/"/>
 <meta property="og:type" content="website"/>
 <meta property="og:locale" content="de_DE"/>
 <meta property="og:site_name" content="Haller Immobilien Andernach"/>
-<meta property="og:title" content="Haller Immobilien Andernach · Verkauf, Kauf, Verwaltung"/>
-<meta property="og:description" content="Inhabergeführte Immobilienberatung in Andernach: Verkauf, Kaufbegleitung und Hausverwaltung für Andernach, Koblenz, Neuwied und Mayen-Koblenz."/>
-<meta property="og:url" content="https://haller-immobilien.de/"/>
-<meta property="og:image" content="https://haller-immobilien.de/assets/stock/interior.jpg"/>
+<meta property="og:title" content="Haller Immobilien Andernach · Ihr Partner vor Ort"/>
+<meta property="og:description" content="Verkauf, Kauf und Verwaltung aus einem Haus in Andernach. Antwort am selben Werktag."/>
+<meta property="og:url" content="https://haller-haven-demo.vercel.app/"/>
+<meta property="og:image" content="https://haller-haven-demo.vercel.app/assets/stock/interior.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Haller Immobilien Andernach · Verkauf, Kauf, Verwaltung"/>
-<meta name="twitter:description" content="Inhabergeführte Immobilienberatung in Andernach: Verkauf, Kaufbegleitung und Hausverwaltung für Andernach, Koblenz, Neuwied und Mayen-Koblenz."/>
-<meta name="twitter:image" content="https://haller-immobilien.de/assets/stock/interior.jpg"/>
+<meta name="twitter:title" content="Haller Immobilien Andernach · Ihr Partner vor Ort"/>
+<meta name="twitter:description" content="Verkauf, Kauf und Verwaltung aus einem Haus in Andernach."/>
+<meta name="twitter:image" content="https://haller-haven-demo.vercel.app/assets/stock/interior.jpg"/>
 <link rel="icon" href="assets/brand/favicon32.png" type="image/png"/>
 <link rel="stylesheet" href="site.css"/>
 <link rel="stylesheet" href="listings.css"/>
-<link rel="stylesheet" href="vendor/klaro/klaro.min.css"/>
+<link rel="stylesheet" href="demo-upgrade.css"/>
 </head>
 <body class="haven">
 <div class="grain" aria-hidden="true"></div>
 <header class="top">
   <a class="brand" href="index.html"><img src="assets/brand/logo_240.png" alt="Haller"></a>
   <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menü</button>
-  <nav id="site-nav" aria-label="Hauptnavigation"><a href="#objekte-home">Objekte</a><a href="verkaufen.html">Verkaufen</a><a href="hausverwaltung.html">Hausverwaltung</a></nav>
+  <nav id="site-nav" aria-label="Hauptnavigation"><a href="objekte.html">Objekte</a><a href="verkaufen.html">Verkaufen</a><a href="suchprofil.html">Suchprofil</a><a href="hausverwaltung.html">Verwaltung</a><a href="ueber-uns.html">Über uns</a></nav>
   <a class="btn" href="kontakt.html">Kontakt</a>
 </header>
 
 <section class="hero overlay">
-  <video class="hero-media" autoplay muted loop playsinline poster="assets/stock/hero-poster.jpg" aria-hidden="true">
+  <video class="hero-media" id="hero-video" muted loop playsinline preload="none" poster="assets/stock/hero-poster.jpg" aria-hidden="true">
     <source src="hero_video.mp4" type="video/mp4">
   </video>
+  <button type="button" class="hero-play" id="hero-play">Film abspielen</button>
   <div class="hero-copy">
-    <p class="kicker">Andernach · Koblenz · Neuwied</p>
-    <div class="hero-brand">
-      <blockquote class="hero-quote">
-        <p>„Ein Haus wird gebaut,<br>aber ein Zuhause wird geformt.“</p>
-        <footer>Hazrat Inayat Khan</footer>
-      </blockquote>
-      <div class="haller-acro" aria-label="HALLER: Heim Als Langfristigen Lebensmittelpunkt Erfolgreich Realisieren">
-        <div class="haller-acro-line"><span class="haller-acro-letter">H</span><span class="haller-acro-rest">eim</span></div>
-        <div class="haller-acro-line"><span class="haller-acro-letter">A</span><span class="haller-acro-rest">ls</span></div>
-        <div class="haller-acro-line"><span class="haller-acro-letter">L</span><span class="haller-acro-rest">angfristigen</span></div>
-        <div class="haller-acro-line"><span class="haller-acro-letter">L</span><span class="haller-acro-rest">ebensmittelpunkt</span></div>
-        <div class="haller-acro-line"><span class="haller-acro-letter">E</span><span class="haller-acro-rest">rfolgreich</span></div>
-        <div class="haller-acro-line"><span class="haller-acro-letter">R</span><span class="haller-acro-rest">ealisieren</span></div>
-      </div>
+    <p class="kicker">Kirchberg 42 · Andernach</p>
+    <h1>Ihr Immobilienpartner für Andernach, Koblenz und Neuwied.</h1>
+    <p class="lead">Verkauf mit Waldemar Haller. Kauf mit Suchprofil. Verwaltung mit IHK-WEG.</p>
+    <div class="owner-chip">
+      <img src="assets/team/waldemar-haller-welcome.jpg" alt="" width="48" height="48">
+      <span>Waldemar Haller · Verkauf</span>
     </div>
-    <div class="actions">
-      <a class="btn" href="#objekte-home">Objekte ansehen</a>
-      <a class="btn ghost" href="tel:+49263294580">02632 9458-0</a>
-      <a class="btn ghost" href="#rechner">Preis kalkulieren</a>
+    <div class="actions doorway">
+      <a class="btn btn-sell" href="verkaufen.html">Immobilie bewerten</a>
+      <a class="btn ghost" href="#objekte-home">Objekte ansehen</a>
     </div>
+    <p class="hero-phone-wrap"><a class="hero-phone" href="tel:+49263294580">02632 9458-0</a></p>
   </div>
 </section>
 
@@ -79,19 +67,80 @@
   <div id="home-listings" class="listing-grid" data-reveal="up"></div>
 </section>
 
+<section class="section" id="referenzen">
+  <div class="section-head" data-reveal="up">
+    <p class="kicker">Referenzen</p>
+    <h2>Verkaufte Objekte aus der Region</h2>
+    <p class="section-note">Ort, Art und Vermarktungsdauer — sobald im Admin auf verkauft gestellt.</p>
+  </div>
+  <div id="sold-refs" class="sold-grid" data-reveal="up"></div>
+</section>
+
+<section class="section">
+  <div class="section-head" data-reveal="up">
+    <p class="kicker">Leistungen</p>
+    <h2>Drei Wege ins Büro</h2>
+  </div>
+  <div class="grid3">
+    <a class="card" href="verkaufen.html" data-reveal="up">
+      <div class="card-media"><img src="assets/stock/facade.jpg" alt="Hausfassade" loading="lazy"></div>
+      <div class="card-body"><h3>Verkaufen</h3><p>Wertermittlung, Vermarktung und Notarabschluss — mit Vor-Ort-Bewertung.</p></div>
+    </a>
+    <a class="card" href="suchprofil.html" data-reveal="up">
+      <div class="card-media"><img src="assets/stock/interior.jpg" alt="Wohnraum" loading="lazy"></div>
+      <div class="card-body"><h3>Suchprofil</h3><p>Suchprofil anlegen. Wir gleichen nach, sobald ein Objekt passt.</p></div>
+    </a>
+    <a class="card" href="hausverwaltung.html" data-reveal="up">
+      <div class="card-media"><img src="assets/stock/keys.jpg" alt="Schlüssel" loading="lazy"></div>
+      <div class="card-body"><h3>Hausverwaltung</h3><p>WEG- und Mietverwaltung aus Andernach.</p></div>
+    </a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="welcome" data-reveal="up">
+    <div class="welcome-copy">
+      <p class="kicker">Büro</p>
+      <h2>Haller Immobilienberatung GmbH</h2>
+      <div class="prose welcome-prose">
+        <p>Seit 1995 begleiten wir Kauf, Verkauf und Verwaltung in Andernach, Koblenz und Neuwied — inhabergeführt, mit klarem Ansprechpartner.</p>
+        <p>Waldemar Haller ist Ihr Ansprechpartner für den Verkauf. Eine Antwort am selben Werktag.</p>
+        <p>Herzlichst, Ihr</p>
+        <img class="sig" src="assets/haller-unterschrift.png" alt="Unterschrift Waldemar Haller" width="300" height="39" loading="lazy">
+      </div>
+      <div class="actions" style="margin-top:28px">
+        <a class="btn ghost" href="ueber-uns.html">Mehr über uns</a>
+      </div>
+    </div>
+    <img class="wide welcome-photo" data-reveal="scale" src="assets/team/waldemar-haller-welcome.jpg" alt="Waldemar Haller" loading="lazy">
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="cta-inner" data-reveal="up">
+    <p class="kicker">Kontakt</p>
+    <h2>Nächster Schritt.</h2>
+    <p>Kirchberg 42, 56626 Andernach<br>02632 9458-0 · info@haller-immobilien.de</p>
+    <div class="actions">
+      <a class="btn btn-sell" href="verkaufen.html">Immobilie bewerten</a>
+      <a class="btn ghost" href="kontakt.html">Schreiben Sie uns</a>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="rechner">
   <div class="section-head" data-reveal="up">
     <p class="kicker">Kalkulation</p>
-    <h2>Erste Preis- und Ratenübersicht</h2>
-    <p style="color:var(--mut);margin-top:10px;max-width:48ch">Unverbindliche Schätzung — wie bei gängigen Finanzierungsrechnern: Kaufpreis, Eigenkapital, Zins/Tilgung und optionale Nebenkosten für Rheinland-Pfalz.</p>
+    <h2>Finanzierung grob rechnen</h2>
+    <p class="section-note">Unverbindliche Schätzung — Kaufpreis, Eigenkapital, Zins/Tilgung und optionale Nebenkosten für Rheinland-Pfalz.</p>
     <div class="actions" style="margin-top:18px">
-      <button type="button" class="btn" id="calc-toggle" aria-expanded="false" aria-controls="calc-panel">Rechner öffnen</button>
+      <button type="button" class="btn ghost" id="calc-toggle" aria-expanded="false" aria-controls="calc-panel">Rechner öffnen</button>
     </div>
   </div>
   <div class="calc" id="calc-panel" hidden data-reveal="up">
     <div class="calc-modules">
       <div class="calc-module">
-        <h3>01 · Kaufpreis</h3>
+        <h3>Kaufpreis</h3>
         <div class="calc-fields">
           <label>Kaufpreis €
             <input id="calc-price" type="number" min="0" step="1000" value="350000">
@@ -99,7 +148,7 @@
         </div>
       </div>
       <div class="calc-module">
-        <h3>02 · Eigenkapital</h3>
+        <h3>Eigenkapital</h3>
         <div class="calc-fields">
           <label>Eigenkapital €
             <input id="calc-equity" type="number" min="0" step="1000" value="70000">
@@ -107,7 +156,7 @@
         </div>
       </div>
       <div class="calc-module">
-        <h3>03 · Zins &amp; Tilgung</h3>
+        <h3>Zins &amp; Tilgung</h3>
         <div class="calc-fields">
           <label>Sollzins % p.a.
             <input id="calc-rate" type="number" min="0" max="20" step="0.05" value="3.5">
@@ -118,7 +167,7 @@
         </div>
       </div>
       <div class="calc-module">
-        <h3>04 · Nebenkosten RLP</h3>
+        <h3>Nebenkosten RLP</h3>
         <label class="calc-toggle">
           <input id="calc-nk" type="checkbox" checked>
           <span>Nebenkosten einrechnen (Grunderwerbsteuer 5&nbsp;% + Notar/Grundbuch ca. 2&nbsp;%)</span>
@@ -132,147 +181,14 @@
     </div>
     <div class="calc-result">
       <dl>
-        <div>
-          <dt>Gesamtkosten</dt>
-          <dd id="calc-out-total">—</dd>
-        </div>
-        <div>
-          <dt>Nebenkosten</dt>
-          <dd id="calc-out-nk">—</dd>
-        </div>
-        <div>
-          <dt>Benötigtes Darlehen</dt>
-          <dd id="calc-out-loan">—</dd>
-        </div>
-        <div>
-          <dt>Monatliche Rate</dt>
-          <dd class="accent" id="calc-out-month">—</dd>
-        </div>
+        <div><dt>Gesamtkosten</dt><dd id="calc-out-total">—</dd></div>
+        <div><dt>Nebenkosten</dt><dd id="calc-out-nk">—</dd></div>
+        <div><dt>Benötigtes Darlehen</dt><dd id="calc-out-loan">—</dd></div>
+        <div><dt>Monatliche Rate</dt><dd class="accent" id="calc-out-month">—</dd></div>
       </dl>
       <p class="calc-note" id="calc-out-hint"></p>
       <a class="btn" href="kontakt.html">Beratung anfragen</a>
-      <p class="calc-disclaimer">Keine Finanzierungszusage und keine Beratung. Werte sind gerundet; tatsächliche Konditionen hängen von Bank, Bonität und Objekt ab.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section-head" data-reveal="up">
-    <p class="kicker">Leistungen</p>
-    <h2>Was wir übernehmen</h2>
-  </div>
-  <div class="grid3">
-    <a class="card" href="verkaufen.html" data-reveal="up" data-reveal-delay="0">
-      <div class="card-media"><img src="assets/stock/facade.jpg" alt="Hausfassade bei Abendlicht" loading="lazy"></div>
-      <div class="card-body"><em>01</em><h3>Verkaufen &amp; Immobilienmakler</h3><p>Professionalisierte Wertermittlung, Vermarktung und Notarabschluss für Verkäufer.</p></div>
-    </a>
-    <a class="card" href="objekte.html" data-reveal="up" data-reveal-delay="80">
-      <div class="card-media"><img src="assets/stock/interior.jpg" alt="Heller Wohnraum" loading="lazy"></div>
-      <div class="card-body"><em>02</em><h3>Kaufen &amp; Suche</h3><p>Gezielte Objektsuche in Andernach, Koblenz, Neuwied und Umgebung.</p></div>
-    </a>
-    <a class="card" href="hausverwaltung.html" data-reveal="up" data-reveal-delay="160">
-      <div class="card-media"><img src="assets/stock/keys.jpg" alt="Schlüsselübergabe" loading="lazy"></div>
-      <div class="card-body"><em>03</em><h3>Hausverwaltung &amp; WEG</h3><p>Technisch, kaufmännisch und juristisch — Ihre Immobilie bestens betreut.</p></div>
-    </a>
-  </div>
-</section>
-
-<section class="section">
-  <div class="welcome" data-reveal="up">
-    <div class="welcome-copy">
-      <p class="kicker">Herzlich willkommen</p>
-      <h2>bei der Haller Immobilienberatung GmbH</h2>
-      <div class="prose welcome-prose">
-        <p>Der eigene Wohnraum ist für alle Menschen existenziell. Entscheidungen rund um Immobilien haben sowohl emotional, als auch finanziell eine große Bedeutung. Im Eigenheim täglich eine Wohlfühlatmosphäre, eine Schutzfunktion und gleichzeitig einen Rückzugsort vom Alltag für die ganze Familie vorzufinden verbindet unsere Leidenschaft für Immobilien, auch im Hinblick zur Erreichung eines langfristigen Kapitals für eine finanziell sorgenfreie Zukunft unserer Kunden. Denn schließlich geht es beim Kauf oder Verkauf einer Immobilie oft um die größte finanzielle Transaktion im Leben.</p>
-        <p>Immobilien sind seit über 30 Jahren unsere Leidenschaft. Als inhabergeführtes Maklerunternehmen unterstützen und begleiten wir unsere Kunden mit ehrlicher Freundlichkeit, persönlich und individuell auf dem Weg zu ihrem Immobilienziel. Wohnraum ist der Raum zum Leben und Erleben, gerade deshalb ist der Verkauf, Kauf oder die Vermietung einer Immobilie Vertrauenssache. Persönlichkeit, Fairness, Transparenz und gegenseitiges Vertrauen sind uns ausgesprochen wichtig. Dank unserer Erfahrung, Expertise und Marktkenntnis im Raum Andernach, Koblenz, Neuwied und Umgebung bis zum vorderen Westerwald, kurzum zwischen Köln und Wiesbaden, verstehen wir uns als „Allgemeinmediziner für Wohnraum“.</p>
-        <p>Ihre Wünsche und Ziele definieren die Anforderungen an uns. Gemeinsam mit Ihnen gestalten wir von Anfang an den für Sie optimalen Weg zur Realisierung Ihres Wohntraumes – das Haus für Ihr Leben, damit alles passt. Beim Verkauf Ihrer Immobilie erzielen wir für Sie durch professionelle Bewertung den Bestpreis, optimal beworben, freundlich präsentiert und erfolgreich verkauft. Wir finden für Sie den perfekten Mieter oder die ideale Kapitalanlage mit durchdachtem Finanzierungskonzept.</p>
-        <p>Dabei ist es uns besonders wichtig, und dies zählen wir auch zu einer unserer ganz großen Stärken, dass Sie von uns einen Leitfaden erhalten, der transparent und realistisch ist und keinerlei Lücken aufweist. Im Mittelpunkt unserer Arbeit stehen dabei immer Sie als Kunde im Hinblick auf Ihre individuellen Wünsche, Ziele und Interessen, sowohl persönlich als auch finanziell. Das ist unser Anspruch für Ihr Vertrauen.</p>
-        <p>Wir garantieren Ihnen eine fachkundige Beratung und eine professionelle Betreuung bis zur Übergabe des Objektes:</p>
-        <p class="welcome-motto"><strong>PERSÖNLICH – ZUVERLÄSSIG – PROFESSIONELL</strong></p>
-        <p>Herzlichst, Ihr</p>
-        <img class="sig" src="assets/haller-unterschrift.png" alt="Unterschrift Waldemar Haller" width="300" height="39" loading="lazy">
-      </div>
-      <div class="actions" style="margin-top:28px">
-        <a class="btn" href="ueber-uns.html">Mehr über uns</a>
-      </div>
-    </div>
-    <img class="wide welcome-photo" data-reveal="scale" src="assets/team/waldemar-haller-welcome.jpg" alt="Waldemar Haller" loading="lazy">
-  </div>
-</section>
-
-<section class="section trust-section" aria-label="Partner und Kooperationen">
-  <div class="section-head" data-reveal="up">
-    <p class="kicker">Netzwerk &amp; Partner</p>
-    <h2>Besondere Leistungen — für uns selbstverständlich</h2>
-  </div>
-  <div class="trust-strip" data-reveal="up">
-    <span class="trust-item" title="Anne Ehl Stiftung (Fördert Kinder in Bildung, Kultur &amp; Sport)">
-      <img src="assets/ehl.jpg" alt="Anne Ehl Stiftung" loading="lazy">
-    </span>
-    <a class="trust-item" href="https://mplus-architekten.de/" target="_blank" rel="noopener noreferrer" title="MPLUS Architekten">
-      <img src="assets/mplus.jpg" alt="MPLUS Architekten" loading="lazy">
-    </a>
-    <a class="trust-item" href="http://www.rahmig.pro/" target="_blank" rel="noopener noreferrer" title="Rahmig Architekturbüro">
-      <img src="assets/rahmig.jpg" alt="Rahmig Architekturbüro" loading="lazy">
-    </a>
-    <a class="trust-item" href="https://www.sprung-risos.de/" target="_blank" rel="noopener noreferrer" title="Sprung &amp; Risos Heizung-Sanitär-Solar">
-      <img src="assets/sprung_risos.jpg" alt="Sprung &amp; Risos Heizung-Sanitär-Solar" loading="lazy">
-    </a>
-    <a class="trust-item" href="https://vdiv.de/hp1/Startseite.htm" target="_blank" rel="noopener noreferrer" title="Verband der Immobilienverwalter Rheinland-Pfalz/Saarland e.V.">
-      <img src="assets/vdiv.jpg" alt="Verband der Immobilienverwalter Rheinland-Pfalz/Saarland e.V." loading="lazy">
-    </a>
-    <a class="trust-item" href="https://www.immowelt.de/profil/d9f7f306efffb14aa0ffaf43b2974eb8#objects" target="_blank" rel="noopener noreferrer" title="immowelt Diamond Partner">
-      <img src="assets/immowelt3.jpg" alt="immowelt Diamond Partner" loading="lazy">
-    </a>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section-head" data-reveal="up">
-    <p class="kicker">Ablauf</p>
-    <h2>Vom Gespräch zum Notar</h2>
-  </div>
-  <div class="steps">
-    <div class="step" data-reveal="up" data-reveal-delay="0">
-      <em>01</em>
-      <h3>Anfrage</h3>
-      <p>Telefon, Formular oder Besuch in Andernach. Eine Person antwortet — nicht ein Ticket-System.</p>
-    </div>
-    <div class="step" data-reveal="up" data-reveal-delay="90">
-      <em>02</em>
-      <h3>Einschätzung</h3>
-      <p>Objekt oder Suche klären. Preisrahmen, Markt, nächste Schritte — ohne Portal-Drama.</p>
-    </div>
-    <div class="step" data-reveal="up" data-reveal-delay="180">
-      <em>03</em>
-      <h3>Abschluss</h3>
-      <p>Vermarktung, Begleitung oder Verwaltung. Bis zum Notar und darüber hinaus.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <blockquote class="quote" data-reveal="up">
-    <p>„Sie nahm sich die Zeit, genau zu verstehen, was wir wollten — und fand uns ein Zuhause, das unsere Erwartungen übertroffen hat.“</p>
-    <footer>
-      <img src="assets/stock/portrait.jpg" alt="">
-      <div>
-        <strong>Kundin aus der Region</strong>
-        <span>Kaufbegleitung in der Region</span>
-      </div>
-    </footer>
-  </blockquote>
-  <img class="sig" data-reveal="fade" src="assets/haller-unterschrift.png" alt="Unterschrift Waldemar Haller" width="300" height="39">
-</section>
-
-<section class="cta-band">
-  <div class="cta-inner" data-reveal="up">
-    <p class="kicker">Kontakt</p>
-    <h2>Nächster Schritt.</h2>
-    <p>Kirchberg 42, 56626 Andernach<br>02632 9458-0 · info@haller-immobilien.de</p>
-    <div class="actions">
-      <a class="btn" href="kontakt.html">Anfrage absenden</a>
-      <a class="btn ghost" href="objekte.html">Objekte</a>
+      <p class="calc-disclaimer">Keine Finanzierungszusage. Werte sind gerundet.</p>
     </div>
   </div>
 </section>
@@ -281,6 +197,7 @@
   <div class="footer-brand">Haller Immobilienberatung GmbH · Andernach</div>
   <div class="footer-nav">
     <a href="ueber-uns.html">Über uns</a>
+    <a href="suchprofil.html">Suchprofil</a>
     <a href="leistungen.html">Leistungen</a>
     <a href="projekte.html">Projekte</a>
     <a href="kontakt.html">Kontakt</a>
@@ -289,16 +206,16 @@
     <a href="impressum.html">Impressum</a>
     <a href="datenschutz.html">Datenschutz</a>
     <a href="agb.html">AGB</a>
-    <button type="button" class="cookie-settings" onclick="if(window.klaro){klaro.show();}">Cookie-Einstellungen</button>
   </div>
 </footer>
-<script defer type="text/javascript" src="klaro-config.js"></script>
-<script defer type="text/javascript" src="vendor/klaro/klaro.min.js"></script>
 <script src="config.js"></script>
 <script src="listings.js"></script>
+<script src="sold-refs.js"></script>
 <script src="calc.js"></script>
 <script src="nav.js"></script>
 <script src="motion.js"></script>
+<script src="hero-video.js"></script>
 <script src="seo.js"></script>
+<script src="kirchberg.js"></script>
 </body>
 </html>

@@ -5,6 +5,7 @@ const { checkRateLimit } = require("../lib/rate-limit");
 const { listAll, recordInquiry } = require("../lib/listings-repo");
 const { isPublicListing } = require("../lib/listings");
 const { config } = require("../lib/supabase");
+const { envMail, sendInquiryMail } = require("../lib/smtp-mail");
 
 function clip(s, max) {
   if (s == null) return "";
@@ -19,9 +20,30 @@ function asArray(v) {
   return [v];
 }
 
+function fieldMap(body) {
+  return {
+    name: clip(body.name, 120),
+    email: clip(body.email, 180),
+    phone: clip(body.phone || body.tel, 80),
+    intent: clip(body.intent, 80),
+    kind: clip(body.kind || body.form_kind, 40) || "anfrage",
+    place: clip(body.place, 160),
+    message: clip(body.message || body.note, 4000),
+    financing: clip(body.financing, 80),
+    equity: clip(body.equity, 80),
+    use: clip(body.use, 80),
+    move_in: clip(body.move_in, 80),
+    property_type: clip(body.property_type, 80),
+    area: clip(body.area, 40),
+    price_expect: clip(body.price_expect, 80),
+    rooms: clip(body.rooms, 20),
+    deal: clip(body.deal, 20),
+    budget: clip(body.budget, 80)
+  };
+}
+
 /**
- * Records a successful browser→Web3Forms inquiry (metrics only).
- * Mail is sent from the client to avoid Cloudflare blocking Vercel IPs.
+ * Sends the inquiry by SMTP to the EU mailbox, then records metrics.
  */
 module.exports = async function handler(req, res) {
   applyCors(res, req.headers.origin || "", "POST, OPTIONS");
@@ -35,8 +57,8 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  if (!config()) {
-    res.status(503).json({ ok: false, error: "listings_store_unconfigured" });
+  if (!envMail()) {
+    res.status(503).json({ ok: false, error: "smtp_unconfigured" });
     return;
   }
 
@@ -62,6 +84,12 @@ module.exports = async function handler(req, res) {
     return;
   }
 
+  var fields = fieldMap(body);
+  if (!fields.name || !fields.email) {
+    res.status(400).json({ ok: false, error: "name_email_required" });
+    return;
+  }
+
   var listingIds = asArray(body.object_ids || body.object_id || body.listing_ids)
     .map(function (x) {
       return clip(x, 80);
@@ -76,46 +104,95 @@ module.exports = async function handler(req, res) {
     })
     .slice(0, 12);
 
-  var titles = [];
-  try {
-    if (listingIds.length) {
+  var titles = asArray(body.object_titles || body.object_title)
+    .map(function (x) {
+      return clip(x, 180);
+    })
+    .filter(Boolean);
+
+  if (config() && listingIds.length) {
+    try {
       var all = await listAll();
       var byId = {};
       all.forEach(function (x) {
         byId[x.id] = x;
       });
       var valid = [];
+      titles = [];
       listingIds.forEach(function (id) {
         var item = byId[id];
-        if (item && isPublicListing(item)) {
+        if (item && (isPublicListing(item) || item.status === "verkauft")) {
           valid.push(id);
           titles.push(item.title || id);
         }
       });
       listingIds = valid;
+    } catch (e) {
+      console.error("inquiries list", e && e.message);
     }
+  }
+
+  var kindLabel =
+    fields.kind === "bewertung"
+      ? "Bewertung"
+      : fields.kind === "suchprofil"
+        ? "Suchprofil"
+        : "Anfrage";
+  var subject = clip(body.subject, 180) || kindLabel + " · Haller";
+  if (titles.length) subject = kindLabel + " · " + titles.join(" · ") + " · Haller";
+
+  try {
+    await sendInquiryMail({
+      subject: subject,
+      name: fields.name,
+      email: fields.email,
+      phone: fields.phone,
+      intent: fields.intent,
+      kind: fields.kind,
+      place: fields.place,
+      message: fields.message,
+      object_ids: listingIds.join(", "),
+      object_titles: titles.join(" · "),
+      financing: fields.financing,
+      equity: fields.equity,
+      use: fields.use,
+      move_in: fields.move_in,
+      property_type: fields.property_type,
+      area: fields.area,
+      price_expect: fields.price_expect,
+      rooms: fields.rooms,
+      deal: fields.deal,
+      budget: fields.budget,
+      page_path: clip(body.page_path, 300),
+      privacy: "accepted",
+      region: "EU"
+    });
   } catch (e) {
-    console.error("inquiries list", e && e.message);
-    res.status(502).json({ ok: false, error: "listings_unavailable" });
+    console.error("inquiry_smtp", e && e.message);
+    res.status(502).json({
+      ok: false,
+      error: e && e.code === "smtp_unconfigured" ? "smtp_unconfigured" : "mail_failed"
+    });
     return;
   }
 
-  try {
-    await recordInquiry({
-      listingIds: listingIds,
-      intent: clip(body.intent, 80) || null,
-      visitorKey: clip(body.visitor_key, 64) || null,
-      pagePath: clip(body.page_path, 300) || null
-    });
-  } catch (e) {
-    console.error("inquiry_record", e && e.message, e && e.body);
-    res.status(502).json({ ok: false, error: "record_failed" });
-    return;
+  if (config()) {
+    try {
+      await recordInquiry({
+        listingIds: listingIds,
+        intent: fields.intent || fields.kind || null,
+        visitorKey: clip(body.visitor_key, 64) || null,
+        pagePath: clip(body.page_path, 300) || null
+      });
+    } catch (e) {
+      console.error("inquiry_record", e && e.message);
+    }
   }
 
   res.status(200).json({
     ok: true,
     success: true,
-    objectTitles: titles
+    objectTitles: titles,
+    calUrl: process.env.CAL_COM_EVENT_URL || ""
   });
 };

@@ -1,7 +1,12 @@
 (function () {
-  var BASE = (window.RAIS_SITE_BASE || "https://haller-immobilien.de").replace(/\/$/, "");
-  var LOGO = "https://haller-immobilien.de/assets/brand/logo_240.png";
-  var OG_DEFAULT = "https://haller-immobilien.de/assets/stock/interior.jpg";
+  var BASE = (function () {
+    try {
+      if (location.origin && /^https?:/.test(location.origin)) return location.origin.replace(/\/$/, "");
+    } catch (e) {}
+    return (window.RAIS_SITE_BASE || "https://haller-haven-demo.vercel.app").replace(/\/$/, "");
+  })();
+  var OG_DEFAULT = BASE + "/assets/stock/interior.jpg";
+  var LOGO = BASE + "/assets/brand/logo_240.png";
 
   function schemaLocal() {
     return {
@@ -23,33 +28,12 @@
         addressRegion: "Rheinland-Pfalz",
         addressCountry: "DE"
       },
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: 50.4392,
-        longitude: 7.4016
-      },
+      geo: { "@type": "GeoCoordinates", latitude: 50.4392, longitude: 7.4016 },
       areaServed: [
         { "@type": "City", name: "Andernach" },
         { "@type": "City", name: "Koblenz" },
-        { "@type": "City", name: "Neuwied" },
-        { "@type": "AdministrativeArea", name: "Mayen-Koblenz" }
-      ],
-      priceRange: "$$",
-      openingHoursSpecification: [
-        {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: ["Monday", "Tuesday", "Thursday"],
-          opens: "09:00",
-          closes: "17:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: ["Friday"],
-          opens: "09:00",
-          closes: "12:00"
-        }
-      ],
-      sameAs: ["https://haller-immobilien.de/"]
+        { "@type": "City", name: "Neuwied" }
+      ]
     };
   }
 
@@ -64,9 +48,7 @@
 
   function upsertMeta(attr, key, value) {
     if (!value) return;
-    var sel = attr === "property"
-      ? 'meta[property="' + key + '"]'
-      : 'meta[name="' + key + '"]';
+    var sel = attr === "property" ? 'meta[property="' + key + '"]' : 'meta[name="' + key + '"]';
     var el = document.head.querySelector(sel);
     if (!el) {
       el = document.createElement("meta");
@@ -97,11 +79,12 @@
         item.area ? item.area + " m²" : "",
         item.rooms ? item.rooms + " Zimmer" : "",
         item.price,
-        "Besichtigungstermin bei Haller Immobilien Andernach anfragen."
-      ].filter(Boolean).join(" · ");
+        "Besichtigung bei Haller Immobilien Andernach."
+      ]
+        .filter(Boolean)
+        .join(" · ");
       var url = BASE + "/objekt.html?id=" + encodeURIComponent(item.id || "");
       var img = (item.images && item.images[0]) || OG_DEFAULT;
-
       document.title = title;
       upsertMeta("name", "description", desc);
       upsertMeta("property", "og:title", title);
@@ -112,42 +95,18 @@
       upsertMeta("name", "twitter:description", desc);
       upsertMeta("name", "twitter:image", img);
       setCanonical(url);
-
-      injectJsonLd({
-        "@context": "https://schema.org",
-        "@type": "RealEstateListing",
-        name: item.title || "Objekt",
-        description: item.note || desc,
-        url: url,
-        image: item.images || [img],
-        datePosted: item.createdAt || undefined,
-        offers: item.price ? {
-          "@type": "Offer",
-          priceCurrency: "EUR",
-          price: String(item.price).replace(/[^\d.,]/g, "").replace(/\./g, "").replace(",", ".") || undefined,
-          availability: item.status === "verkauft"
-            ? "https://schema.org/SoldOut"
-            : "https://schema.org/InStock"
-        } : undefined,
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: item.place || "Andernach",
-          addressRegion: "Rheinland-Pfalz",
-          addressCountry: "DE"
-        },
-        floorSize: item.area ? {
-          "@type": "QuantitativeValue",
-          value: Number(item.area) || undefined,
-          unitCode: "MTK"
-        } : undefined,
-        numberOfRooms: item.rooms ? Number(item.rooms) || undefined : undefined,
-        seller: { "@id": BASE + "/#organization" }
-      }, "rais-ld-listing");
     }
   };
 
-  var path = (location.pathname || "/").replace(/\\/g, "/");
-  if (path === "/" || /\/index\.html$/i.test(path) || /\/kontakt\.html$/i.test(path)) {
+  var path = location.pathname + (location.search || "");
+  var here = BASE + (location.pathname || "/") + (location.search || "");
+  if (!/objekt\.html/i.test(location.pathname)) {
+    upsertMeta("property", "og:url", here);
+    upsertMeta("property", "og:image", OG_DEFAULT);
+    setCanonical(BASE + (location.pathname || "/"));
+  }
+
+  if (path === "/" || /\/index\.html$/i.test(location.pathname) || /\/kontakt\.html$/i.test(location.pathname)) {
     injectJsonLd(schemaLocal(), "rais-ld-org");
   }
 })();
