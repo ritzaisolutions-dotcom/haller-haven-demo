@@ -47,12 +47,27 @@ h1 {
   position: sticky !important;
   top: 0;
   z-index: 50;
-  background: transparent;
+  background: var(--basalt);
   color: #fff;
-  transition: background 180ms ease;
 }
+.top.is-solid,
 .top.is-scrolled {
   background: var(--basalt);
+  color: #fff;
+  border-bottom: 0;
+  background-image: none;
+}
+@media (min-width: 901px) {
+  #site-nav {
+    display: flex !important;
+    flex-direction: row;
+    flex-basis: auto;
+    background: transparent;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    color: rgba(255, 255, 255, 0.88);
+  }
 }
 .top .btn {
   background: var(--brass);
