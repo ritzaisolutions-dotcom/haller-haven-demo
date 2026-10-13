@@ -52,7 +52,7 @@ Reihenfolge in der Admin-Liste = Reihenfolge auf der Website (Drag & Drop). Star
 
 ## Anfragen
 
-Formulare posten an **`/api/inquiries`**. Der Server sendet die Mail per SMTP an das EU-Postfach, schickt sie optional an das CRM (`CRM_WEBHOOK_URL`) und erhöht danach `inquiry_count` in Supabase. Admin-CSV zeigt nur diesen Serverzähler — kein localStorage mehr.
+Formulare posten an **`/api/inquiries`**. Der Server übergibt die Anfrage an n8n („Haller · Website-Anfrage“), n8n schickt sie als Mail an sales@ und legt daraus über „Haller · Qualifizierung“ den Lead an. Danach erhöht der Server `inquiry_count` in Supabase. Admin-CSV zeigt nur diesen Serverzähler — kein localStorage mehr.
 
 ## Personalize
 

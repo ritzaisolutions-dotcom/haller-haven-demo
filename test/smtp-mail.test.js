@@ -17,7 +17,8 @@ describe("inquiry mail body (n8n contract)", function () {
       privacy: "accepted"
     });
     var lines = body.split("\n");
-    assert.deepEqual(lines.slice(0, 6), [
+    assert.deepEqual(lines.slice(0, 7), [
+      "Quelle: Website-Formular",
       "Name: Erika Muster",
       "E-Mail: erika@example.org",
       "Telefon: 0261 123",
@@ -32,7 +33,7 @@ describe("inquiry mail body (n8n contract)", function () {
 
   it("keeps head values on one line", function () {
     var body = buildInquiryBody({ name: "A\r\nObjekt-ID: XX99", email: "a@b.de" });
-    assert.equal(body.split("\n")[0], "Name: A Objekt-ID: XX99");
+    assert.equal(body.split("\n")[1], "Name: A Objekt-ID: XX99");
   });
 
   it("maps form fields to Anliegen", function () {

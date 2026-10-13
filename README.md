@@ -2,7 +2,7 @@
 
 Website der Haller Immobilienberatung GmbH (Andernach). Demo: **https://haller-haven-demo.vercel.app/**
 
-- **Formulare:** Browser → `POST /api/inquiries` → SMTP an das Postfach, das der n8n-Workflow „Haller · Qualifizierung“ liest → n8n legt den Lead in `leads` an und qualifiziert. Kein Direkt-Insert von der Website. Der Mailkopf (`X-Haller-Source: website`, `Reply-To`) und die Kopfzeilen `Name:` / `E-Mail:` / `Telefon:` / `Anliegen:` / `Objekt-ID:` sind der Vertrag mit n8n (`lib/smtp-mail.js` → `buildInquiryBody`).
+- **Formulare:** Browser → `POST /api/inquiries` → n8n-Webhook „Haller · Website-Anfrage“ → Mail von sales@ an sales@ (`Reply-To` = Besucher) → „Haller · Qualifizierung“ liest sales@ per IMAP, legt den Lead in `leads` an und qualifiziert. Kein Direkt-Insert von der Website. Die Kopfzeilen `Quelle: Website-Formular` / `Name:` / `E-Mail:` / `Telefon:` / `Anliegen:` / `Objekt-ID:` sind der Vertrag mit dem n8n-Parser (`lib/smtp-mail.js` → `buildInquiryBody`). Direkter SMTP-Versand bleibt nur als Fallback, wenn kein Webhook gesetzt ist.
 - **Admin:** `/admin` — Objekte (formatierte Beschreibung, Provision, Grundrisse, Energieausweis-PDF, max. 12 Bilder, 6 auf der Startseite) und **Website-Inhalte** (Banner/Event-Banner, Partner-Logos, Bewertungen, Texte, Hausverwaltung-PDF)
 - **Daten:** Supabase `website_listings` + `website_settings`, Dateien im Bucket `listing-images` (PDFs per signierter Upload-URL direkt aus dem Browser)
 - **Cal.com:** Env `CAL_COM_EVENT_URL` (optional). Auf `kontakt.html#erstgespraech` lädt der Kalender erst nach Klick — ohne URL springt der Button zum Formular.
@@ -15,19 +15,18 @@ Website der Haller Immobilienberatung GmbH (Andernach). Demo: **https://haller-h
 | `ADMIN_PASSWORD` | Admin-Login |
 | `ADMIN_SESSION_SECRET` | HMAC für Cookie |
 | `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` | Listings, Uploads |
-| `SMTP_HOST` `SMTP_PORT` `SMTP_USER` `SMTP_PASS` | EU-Mailversand (Port 465 / implicit TLS) |
-| `SMTP_FROM` / `INQUIRY_TO` | Absender / Empfänger. `INQUIRY_TO` muss das Postfach sein, das n8n per IMAP liest (Test: marco@, später vertrieb@) |
+| `CRM_WEBHOOK_URL` | **Pflicht.** `https://n8n.ritz-ai.solutions/webhook/haller-website-anfrage`. Antwortet erst nach dem Mailversand (Timeout 10 s); Fehler → Formular zeigt 502. |
+| `CRM_WEBHOOK_SECRET` | **Pflicht.** Header `X-Webhook-Secret`, gleicher Wert wie das Header-Auth-Credential „Haller Website Webhook“ in n8n |
+| `SMTP_HOST` `SMTP_PORT` `SMTP_USER` `SMTP_PASS` `SMTP_FROM` `INQUIRY_TO` | Optional, nur Fallback ohne Webhook (Port 465 / implicit TLS). `INQUIRY_TO` wäre sales@. |
 | `CAL_COM_EVENT_URL` | Öffentliche Buchungs-URL |
-| `CRM_WEBHOOK_URL` | Optional, `https://…` — jede Anfrage zusätzlich als JSON an das CRM (Zapier/Make/n8n oder CRM-Intake). Timeout 4 s, blockiert den Versand nie. |
-| `CRM_WEBHOOK_SECRET` | Optional, wird als Header `X-Webhook-Secret` mitgeschickt |
 
 Web Analytics / Speed Insights in Vercel müssen aus bleiben — sonst wäre wieder ein Banner nötig.
 
 ## Go-Live
 
-1. SMTP-Env setzen, sonst liefern Formulare 503.
-2. Migrationen in Supabase anwenden: `20261006_listing_energy.sql`, `20261013_site_settings.sql` (Tabelle `website_settings`, PDFs im Bucket).
-3. CRM-Anbindung läuft per Mail an n8n (siehe oben). `CRM_WEBHOOK_URL` bleibt leer.
+1. `CRM_WEBHOOK_URL` + `CRM_WEBHOOK_SECRET` setzen (Production und Preview), sonst liefern Formulare 503.
+2. Migrationen in Supabase anwenden: `20261006_listing_energy.sql`, `20261013_site_settings.sql`, `20261013_listings_keep_objekt_id.sql`, `20261013_website_rpc_service_only.sql`.
+3. n8n: Workflow „Haller · Website-Anfrage“ aktiv; Parser in „Haller · Qualifizierung“ erkennt `Quelle: Website-Formular`.
 4. Inhalte von Haller im Admin pflegen: Texte, Hero-/Teambilder Raum Koblenz, Partner-Logos, Hausverwaltung-PDF, Bewertungszahlen (Google).
 5. DNS später auf haller-immobilien.de; OG-Tags der Demo zeigen auf vercel.app.
 

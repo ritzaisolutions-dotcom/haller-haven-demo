@@ -38,7 +38,7 @@
   <p>Die Website liegt bei Vercel Inc., USA, inkl. Serverless-Funktionen unter <code>/api/*</code>. Logs: IP, URL, Zeitpunkt, User-Agent. AVV/DPA abgeschlossen. Drittland: EU-US Data Privacy Framework bzw. Standardvertragsklauseln, soweit einschlägig.</p>
 
   <h2>3. Formulare (EU-Mail)</h2>
-  <p>Kontakt, Objektanfrage, Bewertung und Suchprofil sendet der Browser an <code>POST /api/inquiries</code> auf Vercel. Der Server verschickt eine E-Mail per SMTP an ein Postfach in der EU (Demo: konfiguriertes Inquiry-Postfach). Es wird <strong>kein</strong> Web3Forms und kein Versand in Drittländer über Formular-SaaS genutzt.</p>
+  <p>Kontakt, Objektanfrage, Bewertung und Suchprofil sendet der Browser an <code>POST /api/inquiries</code> auf Vercel. Der Server übergibt die Anfrage an unser Anfrage-System (n8n), das sie als E-Mail an das Postfach der Haller Immobilienberatung in der EU zustellt. Es wird <strong>kein</strong> Web3Forms und kein Versand in Drittländer über Formular-SaaS genutzt.</p>
   <p>Pflicht: Name, E-Mail, Telefon, Einwilligungs-Checkbox. Objektformular zusätzlich: Finanzierung, Eigenkapital, Nutzung, Einzugszeitraum. Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO; ergänzend lit.&nbsp;b bei vorvertraglicher Anfrage.</p>
   <p>Zusätzlich schreibt der Server bei Erfolg Anfragezähler in Supabase (EU Frankfurt), ohne den Nachrichteninhalt.</p>
   <!-- ENTWURF 2026-10-13: n8n-Hosting (Anbieter/Region) und xAI-Drittlandtransfer vor Livegang mit Haller/DSB klären. -->
@@ -48,7 +48,7 @@
   <p>Nach einer erfolgreichen Anfrage kann ein Buchungsfenster (iframe) zu Cal.com erscheinen, sofern eine öffentliche Event-URL gesetzt ist. Dann gelten zusätzlich die Hinweise von Cal.com. Ohne URL erscheint nur ein Rückruf-Hinweis — kein Dritt-Embed.</p>
 
   <h2>5. Supabase</h2>
-  <p>Objektliste, Uploads (Bucket <code>listing-images</code>), Consent-Log, Rate-Limits. Region EU (Frankfurt). AVV abgeschlossen.</p>
+  <p>Objektliste, Uploads (Bucket <code>listing-images</code>), Rate-Limits. Region EU (Frankfurt). AVV abgeschlossen.</p>
 
   <h2>6. Kein Consent-Manager</h2>
   <p>Diese Website setzt <strong>kein</strong> Analyse-Tracking, keine Marketing-Pixel und keinen Consent-Manager. Es gibt keinen Cookie-Banner, weil keine nicht-notwendigen Tracking-Cookies gesetzt werden.</p>

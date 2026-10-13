@@ -128,7 +128,9 @@
               ? "Formular derzeit nicht konfiguriert. Bitte später erneut versuchen."
               : result.status === 429
                 ? "Zu viele Anfragen. Bitte kurz warten."
-                : (result.data && result.data.error) || "Senden fehlgeschlagen."
+                : result.status === 502
+                  ? "Senden fehlgeschlagen. Bitte erneut versuchen oder rufen Sie uns an."
+                  : (result.data && result.data.error) || "Senden fehlgeschlagen."
           );
           throw err;
         }

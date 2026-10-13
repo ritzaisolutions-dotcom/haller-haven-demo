@@ -5,8 +5,11 @@ const { checkRateLimit } = require("../lib/rate-limit");
 const { listAll, recordInquiry } = require("../lib/listings-repo");
 const { isPublicListing } = require("../lib/listings");
 const { config } = require("../lib/supabase");
-const { envMail, sendInquiryMail } = require("../lib/smtp-mail");
-const { sendToCrm } = require("../lib/crm-webhook");
+const { envMail, sendInquiryMail, buildInquiryBody } = require("../lib/smtp-mail");
+const { sendToCrm, crmWebhookUrl } = require("../lib/crm-webhook");
+
+// n8n answers only after the mail is sent, so allow more than the default webhook timeout.
+var N8N_TIMEOUT_MS = 10000;
 
 function clip(s, max) {
   if (s == null) return "";
@@ -58,8 +61,10 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  if (!envMail()) {
-    res.status(503).json({ ok: false, error: "smtp_unconfigured" });
+  // Primary route: n8n webhook (mails into the sales@ inbox). Direct SMTP is only a fallback.
+  var viaN8n = !!crmWebhookUrl();
+  if (!viaN8n && !envMail()) {
+    res.status(503).json({ ok: false, error: "inquiry_unconfigured" });
     return;
   }
 
@@ -172,18 +177,28 @@ module.exports = async function handler(req, res) {
     region: "EU"
   };
 
-  try {
-    await sendInquiryMail(mail);
-  } catch (e) {
-    console.error("inquiry_smtp", e && e.message);
-    res.status(502).json({
-      ok: false,
-      error: e && e.code === "smtp_unconfigured" ? "smtp_unconfigured" : "mail_failed"
-    });
-    return;
+  if (viaN8n) {
+    var sent = await sendToCrm(
+      Object.assign({}, mail, {
+        listing_ids: listingIds,
+        object_titles: titles,
+        body_text: buildInquiryBody(mail)
+      }),
+      { timeoutMs: N8N_TIMEOUT_MS }
+    );
+    if (!sent.sent) {
+      res.status(502).json({ ok: false, error: "mail_failed" });
+      return;
+    }
+  } else {
+    try {
+      await sendInquiryMail(mail);
+    } catch (e) {
+      console.error("inquiry_smtp", e && e.message);
+      res.status(502).json({ ok: false, error: "mail_failed" });
+      return;
+    }
   }
-
-  await sendToCrm(Object.assign({}, mail, { listing_ids: listingIds, object_titles: titles }));
 
   if (config()) {
     try {
