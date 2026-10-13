@@ -18,8 +18,8 @@
 <header class="top">
   <a class="brand" href="index.html"><img src="assets/brand/logo_240.png" alt="Haller"></a>
   <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menü</button>
-  <nav id="site-nav" aria-label="Hauptnavigation"><a href="objekte.html">Objekte</a><a href="verkaufen.html">Verkaufen</a><a href="suchprofil.html">Suchprofil</a><a href="hausverwaltung.html" aria-current="page">Verwaltung</a><a href="ueber-uns.html">Über uns</a></nav>
-  <a class="btn" href="kontakt.html">Kontakt</a>
+  <nav id="site-nav" aria-label="Hauptnavigation"><a href="objekte.html">Objekte</a><a href="leistungen.html">Leistungen</a><a href="ueber-uns.html">Über uns</a><a href="team.html">Team</a><a href="hausverwaltung.html" aria-current="page">Hausverwaltung</a><a href="kontakt.html">Kontakt</a><a class="nav-cta" href="kontakt.html#erstgespraech">Erstgespräch buchen</a></nav>
+  <a class="btn btn-cta" href="kontakt.html#erstgespraech">Erstgespräch buchen</a>
 </header>
 <section class="hero overlay page-hero">
   <img class="hero-media" src="assets/stock/keys.jpg" alt="">
@@ -29,7 +29,14 @@
   </div>
 </section>
 <section class="page">
-  <p class="page-lead">Wir betreuen ab 3 Wohneinheiten in Mayen-Koblenz, Koblenz und Neuwied. Mitglied im <a href="https://vdiv.de/hp1/Startseite.htm" target="_blank" rel="noopener noreferrer">VDIV</a> — Verband der Immobilienverwalter; Abrechnung und Wechsel nach Verbandsstandard. Zertifizierter WEG-Verwalter IHK.</p>
+  <div class="page-lead prose" data-cms="hausverwaltungIntro"><p>Wir betreuen ab 3 Wohneinheiten in Mayen-Koblenz, Koblenz und Neuwied. Mitglied im <a href="https://vdiv.de/hp1/Startseite.htm" target="_blank" rel="noopener noreferrer">VDIV</a> — Verband der Immobilienverwalter; Abrechnung und Wechsel nach Verbandsstandard. Zertifizierter WEG-Verwalter IHK.</p></div>
+  <div class="hv-download" data-hv-pdf hidden>
+    <div>
+      <p class="kicker">Download</p>
+      <p class="hv-download-name" data-hv-pdf-name>Leistungsübersicht Hausverwaltung</p>
+    </div>
+    <a class="btn" href="#">PDF herunterladen</a>
+  </div>
   <article class="service-block">
     <div class="service-copy">
       <p class="kicker">01 · WEG</p>
@@ -54,14 +61,17 @@
     </div>
   </article>
   <p>Technische Hausverwaltung: <strong>Björn Jonas</strong> · <a href="tel:+4915161063806">0151 610 638 06</a> · <a href="mailto:bj@haller-immobilien.de">bj@haller-immobilien.de</a></p>
-  <div class="actions"><a class="btn" href="kontakt.html">Verwaltung anfragen</a></div>
+  <div class="actions"><a class="btn" href="kontakt.html#erstgespraech">Erstgespräch buchen</a></div>
 </section>
 <footer class="site-footer">
   <div class="footer-brand">Haller Immobilienberatung GmbH · Andernach</div>
   <div class="footer-nav">
-    <a href="ueber-uns.html">Über uns</a>
+    <a href="verkaufen.html">Verkaufen</a>
     <a href="suchprofil.html">Suchprofil</a>
     <a href="leistungen.html">Leistungen</a>
+    <a href="ueber-uns.html">Über uns</a>
+    <a href="team.html">Team</a>
+    <a href="hausverwaltung.html">Hausverwaltung</a>
     <a href="faq.html">FAQ</a>
     <a href="region.html">Region</a>
     <a href="projekte.html">Projekte</a>
@@ -78,5 +88,6 @@
 <script src="config.js"></script>
 <script src="seo.js"></script>
 <script src="kirchberg.js"></script>
+<script src="site-settings.js"></script>
 </body>
 </html>

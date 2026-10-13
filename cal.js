@@ -32,7 +32,32 @@
     root.hidden = false;
   }
 
+  /**
+   * Erstgespräch block: Cal.com (third party) loads only after the visitor clicks —
+   * no consent banner needed. Without a Cal URL the button jumps to the contact form.
+   */
+  function bindInline(root) {
+    var btn = root.querySelector("[data-cal-load]");
+    var frameSlot = root.querySelector("[data-cal-frame]");
+    if (!btn || !frameSlot) return;
+    btn.addEventListener("click", function (e) {
+      var href = url();
+      if (!href) return; // plain link to the form (#f) stays in effect
+      e.preventDefault();
+      var iframe = document.createElement("iframe");
+      iframe.title = "Erstgespräch buchen";
+      iframe.src = href;
+      iframe.className = "cal-frame";
+      frameSlot.innerHTML = "";
+      frameSlot.appendChild(iframe);
+      frameSlot.hidden = false;
+      btn.hidden = true;
+    });
+  }
+
   window.RAIS_CAL = { mount: mount, url: url };
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-cal-inline]"), bindInline);
 
   fetch("/api/public-config", { cache: "no-store" })
     .then(function (r) {

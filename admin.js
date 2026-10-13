@@ -221,57 +221,6 @@
     if (zone) zone.classList.remove("is-dragover");
   }
 
-  function compress(file) {
-    return new Promise(function (resolve, reject) {
-      if (!file || !file.type || file.type.indexOf("image") !== 0) {
-        reject(new Error("kein Bild"));
-        return;
-      }
-      var img = new Image();
-      var url = URL.createObjectURL(file);
-      img.onload = function () {
-        var max = 1600;
-        var w = img.width;
-        var h = img.height;
-        if (w > max || h > max) {
-          if (w > h) { h = Math.round(h * max / w); w = max; }
-          else { w = Math.round(w * max / h); h = max; }
-        }
-        var c = document.createElement("canvas");
-        c.width = w;
-        c.height = h;
-        c.getContext("2d").drawImage(img, 0, 0, w, h);
-        URL.revokeObjectURL(url);
-        resolve(c.toDataURL("image/webp", 0.82));
-      };
-      img.onerror = function () { reject(new Error("Bild kaputt")); };
-      img.src = url;
-    });
-  }
-
-  function uploadDataUrl(dataUrl, listingId) {
-    return fetch("/api/upload", {
-      method: "POST",
-      credentials: "same-origin",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ dataUrl: dataUrl, listingId: listingId || "misc" })
-    }).then(function (r) {
-      return r.json().then(function (j) {
-        if (r.status === 401) {
-          var err = new Error("unauthorized");
-          err.status = 401;
-          throw err;
-        }
-        if (!r.ok) {
-          var e = new Error((j && j.error) || "Upload fehlgeschlagen");
-          e.status = r.status;
-          throw e;
-        }
-        return j.url;
-      });
-    });
-  }
-
   function uploadFiles(fileList) {
     var files = Array.prototype.slice.call(fileList || []).filter(function (f) {
       return f && f.type && f.type.indexOf("image") === 0;
@@ -286,11 +235,11 @@
     var listingId = $("fid").value || ("new-" + Date.now());
     msg("Bilder werden hochgeladen …");
     setDropzoneBusy(true);
-    Promise.all(files.slice(0, room).map(compress))
+    Promise.all(files.slice(0, room).map(function (f) { return window.RAIS_UPLOAD.compress(f); }))
       .then(function (dataUrls) {
         return dataUrls.reduce(function (chain, dataUrl) {
           return chain.then(function (urls) {
-            return uploadDataUrl(dataUrl, listingId).then(function (url) {
+            return window.RAIS_UPLOAD.uploadDataUrl(dataUrl, { listingId: listingId }).then(function (url) {
               urls.push(url);
               return urls;
             });

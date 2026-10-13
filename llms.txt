@@ -23,7 +23,8 @@
 ## Seiten
 
 - [Start](https://haller-immobilien.de/): Überblick und Einstieg
-- [Über uns](https://haller-immobilien.de/ueber-uns.html): Team und Büro
+- [Über uns](https://haller-immobilien.de/ueber-uns.html): Büro, Service und häufige Fragen
+- [Team](https://haller-immobilien.de/team.html): Ansprechpartner mit Rolle und Kontakt
 - [Leistungen](https://haller-immobilien.de/leistungen.html): Verkauf, Kauf, Verwaltung
 - [Verkaufen](https://haller-immobilien.de/verkaufen.html): Verkaufsprozess Wertermittlung bis Notar
 - [Hausverwaltung](https://haller-immobilien.de/hausverwaltung.html): WEG- und Mietverwaltung

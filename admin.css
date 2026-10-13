@@ -452,3 +452,74 @@
       .listing .thumb { width: 80px; height: 60px; }
       .switch { width: 100%; justify-content: flex-start; }
     }
+
+    /* Rich text (admin-richtext.js) */
+    .field-label { font-weight: 600; font-size: 15px; margin: 14px 0 6px; }
+    .rt { border: 1px solid var(--line); border-radius: 10px; background: #fff; overflow: hidden; }
+    .rt:focus-within { border-color: var(--acc); box-shadow: 0 0 0 3px var(--soft); }
+    .rt-bar { display: flex; flex-wrap: wrap; gap: 4px; padding: 6px; border-bottom: 1px solid var(--line); background: var(--bg); }
+    .rt-bar button {
+      margin: 0; padding: 6px 10px; font-size: 14px; min-height: 34px;
+      background: #fff; color: var(--txt); border: 1px solid var(--line); border-radius: 6px;
+    }
+    .rt-bar button:hover { background: var(--soft); border-color: var(--acc); color: var(--acc); }
+    .rt-bar .rt-b { font-weight: 800; }
+    .rt-bar .rt-i { font-style: italic; font-family: Georgia, serif; }
+    .rt-editor { padding: 12px 14px; min-height: 120px; outline: none; font-size: 16px; }
+    .rt-editor.is-empty::before { content: attr(data-placeholder); color: var(--mut); pointer-events: none; }
+    .rt-editor p, .rt-editor ul, .rt-editor ol { margin: 0 0 10px; }
+    .rt-editor ul, .rt-editor ol { padding-left: 22px; }
+    .rt-editor h2 { font-size: 20px; margin: 12px 0 6px; }
+    .rt-editor h3 { font-size: 17px; margin: 10px 0 6px; }
+    .rt-editor a { color: var(--acc); }
+    .fw-500 { font-weight: 500; }
+    .fw-600 { font-weight: 600; }
+
+    /* Exposé documents (admin-expose.js) */
+    .docs-block { margin: 18px 0 8px; }
+    .doc-list { display: grid; gap: 8px; margin: 8px 0; }
+    .doc-row { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; }
+    .doc-row .doc-kind {
+      font-size: 13px; font-weight: 700; color: var(--acc); background: var(--soft);
+      border-radius: 6px; padding: 6px 10px; text-decoration: none;
+    }
+    .doc-row button.sm { margin-top: 0; }
+    .doc-row input, .partner-fields input { margin-top: 0; padding: 10px 12px; font-size: 15px; }
+    .file-btn {
+      display: inline-flex; align-items: center; cursor: pointer; margin: 4px 0 10px;
+      padding: 10px 14px; border: 1px dashed var(--acc); border-radius: 10px;
+      color: var(--acc); font-weight: 600; font-size: 15px; background: var(--soft);
+    }
+    .file-btn:hover { background: #fff; }
+    .file-btn:focus-within { outline: 3px solid var(--acc); outline-offset: 2px; }
+
+    /* Website-Inhalte (admin-site.js) */
+    .site-admin { margin-top: 24px; }
+    .site-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 6px; }
+    .site-tabs button[aria-selected="true"] { background: var(--acc); color: #fff; border-color: var(--acc); }
+    .site-pane { padding-top: 10px; }
+    .site-save { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 16px; }
+    .site-save button { margin-top: 0; }
+    .site-msg:not(:empty) { color: var(--acc); font-weight: 600; font-size: 15px; }
+    .site-msg.is-err { color: var(--off); }
+    .partner-list { display: grid; gap: 10px; margin: 12px 0; }
+    .partner-row {
+      display: grid; grid-template-columns: 96px 1fr auto; gap: 12px; align-items: center;
+      padding: 10px; border: 1px solid var(--line); border-radius: 10px;
+    }
+    .partner-row img { width: 96px; height: 56px; object-fit: contain; background: #fff; }
+    .partner-fields { display: grid; gap: 6px; }
+    .partner-actions { display: flex; gap: 6px; }
+    .partner-actions button.sm { margin-top: 0; }
+    .review-row { border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px 14px; margin: 12px 0; }
+    .review-row legend { padding: 0 6px; font-weight: 650; }
+    label.inline { display: inline-flex; align-items: center; gap: 8px; margin: 0; }
+    label.inline input { width: auto; }
+    @media (max-width: 640px) {
+      .partner-row { grid-template-columns: 64px 1fr; }
+      .partner-row img { width: 64px; }
+      .partner-actions { grid-column: 1 / -1; }
+      .doc-row { grid-template-columns: auto 1fr; }
+      .doc-row button.sm { grid-column: 1 / -1; justify-self: start; }
+    }
+

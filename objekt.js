@@ -4,6 +4,11 @@
   var box = document.getElementById("xg");
   var heroImg = document.querySelector(".page-hero .hero-media");
   var API = window.RAIS_LISTINGS_URL || "/api/listings";
+  var S = window.RAIS_SANITIZE;
+  var PLACEHOLDER_NOTES = [
+    "Aktuelles Kaufangebot. Besichtigung nach Terminvereinbarung.",
+    "Aktuelles Mietangebot. Besichtigung nach Terminvereinbarung."
+  ];
 
   function isPublicListing(item) {
     return !!(item && item.enabled !== false && item.status !== "verkauft");
@@ -19,6 +24,10 @@
     }
   }
 
+  function isSafeAsset(url) {
+    return isSafeHttps(url) || /^\/?[a-zA-Z0-9_./-]+$/.test(String(url || ""));
+  }
+
   function displayTitle(raw) {
     var t = String(raw || "").replace(/\s+/g, " ").trim();
     if (!t) return "Objekt";
@@ -29,6 +38,142 @@
       t = t.charAt(0) + t.slice(1).toLowerCase();
     }
     return t;
+  }
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  /** Rich text (sanitized on save) or legacy plain text. */
+  function descriptionNode(raw) {
+    var div = el("div", "expose-body prose");
+    var v = String(raw || "").trim();
+    if (/<\/?(p|br|strong|em|h2|h3|ul|ol|li|span|a)\b/i.test(v) && S) {
+      div.innerHTML = S.sanitizeHtml(v);
+    } else {
+      v.split(/\n{2,}/).forEach(function (para) {
+        if (!para.trim()) return;
+        var p = el("p");
+        para.split("\n").forEach(function (line, i) {
+          if (i) p.appendChild(document.createElement("br"));
+          p.appendChild(document.createTextNode(line));
+        });
+        div.appendChild(p);
+      });
+    }
+    return div;
+  }
+
+  function gallery(item, shown) {
+    var imgs = (item.images || []).filter(isSafeAsset).slice(0, 12);
+    var wrap = el("div", "expose-gallery");
+    if (!imgs.length) {
+      wrap.appendChild(el("p", "muted-note", "Bilder folgen."));
+      return wrap;
+    }
+    var main = el("img", "expose-main");
+    main.src = imgs[0];
+    main.alt = shown + " — Bild 1 von " + imgs.length;
+    main.decoding = "async";
+    wrap.appendChild(main);
+    if (imgs.length > 1) {
+      var strip = el("div", "expose-thumbs");
+      strip.setAttribute("role", "list");
+      imgs.forEach(function (src, i) {
+        var b = el("button", "expose-thumb" + (i === 0 ? " is-active" : ""));
+        b.type = "button";
+        b.setAttribute("role", "listitem");
+        b.setAttribute("aria-label", "Bild " + (i + 1) + " von " + imgs.length + " anzeigen");
+        var t = el("img");
+        t.src = src;
+        t.alt = "";
+        t.loading = "lazy";
+        b.appendChild(t);
+        b.addEventListener("click", function () {
+          main.src = src;
+          main.alt = shown + " — Bild " + (i + 1) + " von " + imgs.length;
+          Array.prototype.forEach.call(strip.children, function (c) {
+            c.classList.toggle("is-active", c === b);
+          });
+        });
+        strip.appendChild(b);
+      });
+      wrap.appendChild(strip);
+    }
+    return wrap;
+  }
+
+  function docLink(doc, fallback) {
+    var a = el("a", "doc-link");
+    a.href = doc.url;
+    a.target = "_blank";
+    a.rel = "noopener";
+    var isPdf = /\.pdf($|\?)/i.test(doc.url);
+    a.appendChild(el("span", "doc-type", isPdf ? "PDF" : "Bild"));
+    a.appendChild(el("span", "doc-name", doc.name || fallback));
+    return a;
+  }
+
+  function sidePanel(item) {
+    var aside = el("aside", "expose-side");
+
+    if (item.price) {
+      aside.appendChild(el("p", "expose-price-label", item.type === "miete" ? "Miete" : "Kaufpreis"));
+      aside.appendChild(el("p", "expose-price", item.price));
+    }
+
+    var courtage = el("div", "courtage-box");
+    courtage.appendChild(el("p", "courtage-label", "Provision"));
+    courtage.appendChild(el("p", "", item.provision || "Auf Anfrage — Details im Erstgespräch."));
+    aside.appendChild(courtage);
+
+    var docs = el("div", "expose-docs");
+    docs.appendChild(el("h2", "", "Unterlagen"));
+    var plans = (item.floorplans || []).filter(function (d) {
+      return d && isSafeAsset(d.url);
+    });
+    plans.forEach(function (d, i) {
+      docs.appendChild(docLink(d, "Grundriss" + (plans.length > 1 ? " " + (i + 1) : "")));
+    });
+    if (item.energyPdf && isSafeAsset(item.energyPdf.url)) {
+      docs.appendChild(docLink(item.energyPdf, "Energieausweis"));
+    }
+    if (docs.children.length === 1) {
+      docs.appendChild(el("p", "muted-note", "Grundrisse und Energieausweis erhalten Sie auf Anfrage."));
+    }
+    aside.appendChild(docs);
+
+    var cta = el("div", "expose-cta");
+    var book = el("a", "btn btn-sell", "Erstgespräch buchen");
+    book.href = "kontakt.html#erstgespraech";
+    var visit = el("a", "btn ghost", "Besichtigung anfragen");
+    visit.href = "#anfrage";
+    cta.appendChild(book);
+    cta.appendChild(visit);
+    aside.appendChild(cta);
+    return aside;
+  }
+
+  function pills(item) {
+    var list = [
+      item.type === "miete" ? "Miete" : "Kauf",
+      item.category,
+      item.place,
+      item.area ? item.area + " m²" : "",
+      item.rooms ? item.rooms + " Zimmer" : "",
+      item.yearBuilt ? "Baujahr " + item.yearBuilt : "",
+      item.energyValue ? "Energie " + item.energyValue : "",
+      item.heating
+    ].filter(Boolean);
+    var ul = el("ul", "fact-pills");
+    ul.setAttribute("aria-label", "Eckdaten");
+    list.forEach(function (t) {
+      ul.appendChild(el("li", "", t));
+    });
+    return ul;
   }
 
   if (box) {
@@ -59,43 +204,28 @@
       }
 
       box.innerHTML = "";
-      (item.images || []).forEach(function (src) {
-        if (!src) return;
-        var img = document.createElement("img");
-        img.src = src;
-        img.alt = shown;
-        img.loading = "lazy";
-        img.style.cssText = "width:100%;max-height:420px;object-fit:cover;margin-bottom:8px";
-        box.appendChild(img);
-      });
 
-      var meta = [
-        item.type === "miete" ? "Miete" : "Kauf",
-        item.category,
-        item.place,
-        item.area ? item.area + " m²" : "",
-        item.rooms ? item.rooms + " Zi." : "",
-        item.price
-      ]
-        .filter(Boolean)
-        .join(" · ");
-      var metaP = document.createElement("p");
-      var strong = document.createElement("strong");
-      strong.textContent = meta;
-      metaP.appendChild(strong);
-      box.appendChild(metaP);
+      var top = el("div", "expose-top");
+      top.appendChild(gallery(item, shown));
+      top.appendChild(sidePanel(item));
+      box.appendChild(top);
 
-      var body = (item.description || "").trim() || (item.note || "").trim();
-      if (body && body !== "Aktuelles Kaufangebot. Besichtigung nach Terminvereinbarung." && body !== "Aktuelles Mietangebot. Besichtigung nach Terminvereinbarung.") {
-        var noteP = document.createElement("p");
-        noteP.className = "expose-body";
-        noteP.textContent = body;
-        box.appendChild(noteP);
+      var summary = el("div", "expose-summary");
+      var shortText = (item.note || "").trim();
+      var lead = el("div", "expose-lead");
+      if (shortText && PLACEHOLDER_NOTES.indexOf(shortText) === -1) {
+        lead.appendChild(el("p", "expose-short", shortText));
+      }
+      if (item.ref) lead.appendChild(el("p", "muted-note", "Objekt-Nr. " + item.ref));
+      summary.appendChild(lead);
+      summary.appendChild(pills(item));
+      box.appendChild(summary);
+
+      var body = (item.description || "").trim();
+      if (body && PLACEHOLDER_NOTES.indexOf(body) === -1) {
+        box.appendChild(descriptionNode(body));
       } else {
-        var wait = document.createElement("p");
-        wait.className = "muted-note";
-        wait.textContent = "Ausführliche Objektbeschreibung folgt. Bis dahin klären wir Details im Gespräch.";
-        box.appendChild(wait);
+        box.appendChild(el("p", "muted-note", "Ausführliche Objektbeschreibung folgt. Bis dahin klären wir Details im Gespräch."));
       }
 
       var energyBits = [
@@ -104,21 +234,11 @@
         item.yearBuilt ? "Baujahr: " + item.yearBuilt : "",
         item.heating ? "Energieträger: " + item.heating : ""
       ].filter(Boolean);
-      var energyBox = document.createElement("div");
-      energyBox.className = "energy-box";
-      var eh = document.createElement("h2");
-      eh.textContent = "Energieausweis";
-      energyBox.appendChild(eh);
-      if (energyBits.length) {
-        var el = document.createElement("p");
-        el.textContent = energyBits.join(" · ");
-        energyBox.appendChild(el);
-      } else {
-        var missing = document.createElement("p");
-        missing.className = "muted-note";
-        missing.textContent = "Energieausweis auf Anfrage.";
-        energyBox.appendChild(missing);
-      }
+      var energyBox = el("div", "energy-box");
+      energyBox.appendChild(el("h2", "", "Energieausweis"));
+      energyBox.appendChild(
+        energyBits.length ? el("p", "", energyBits.join(" · ")) : el("p", "muted-note", "Energieausweis auf Anfrage.")
+      );
       box.appendChild(energyBox);
 
       var links = [];
@@ -128,23 +248,16 @@
       if (item.links && isSafeHttps(item.links.immowelt)) {
         links.push({ href: item.links.immowelt.trim(), label: "Immowelt" });
       }
-      if (item.ref || links.length) {
-        var refP = document.createElement("p");
-        refP.className = "muted-note portal-also";
-        if (item.ref) refP.appendChild(document.createTextNode("Objekt-Nr. " + item.ref));
-        if (links.length) {
-          if (item.ref) refP.appendChild(document.createTextNode(" · "));
-          refP.appendChild(document.createTextNode("Auch auf "));
-          links.forEach(function (link, i) {
-            if (i > 0) refP.appendChild(document.createTextNode(" und "));
-            var a = document.createElement("a");
-            a.href = link.href;
-            a.target = "_blank";
-            a.rel = "noopener noreferrer";
-            a.textContent = link.label;
-            refP.appendChild(a);
-          });
-        }
+      if (links.length) {
+        var refP = el("p", "muted-note portal-also", "Auch auf ");
+        links.forEach(function (link, i) {
+          if (i > 0) refP.appendChild(document.createTextNode(" und "));
+          var a = el("a", "", link.label);
+          a.href = link.href;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          refP.appendChild(a);
+        });
         box.appendChild(refP);
       }
 

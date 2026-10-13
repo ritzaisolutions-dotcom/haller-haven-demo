@@ -6,6 +6,7 @@ const { listAll, recordInquiry } = require("../lib/listings-repo");
 const { isPublicListing } = require("../lib/listings");
 const { config } = require("../lib/supabase");
 const { envMail, sendInquiryMail } = require("../lib/smtp-mail");
+const { sendToCrm } = require("../lib/crm-webhook");
 
 function clip(s, max) {
   if (s == null) return "";
@@ -141,32 +142,34 @@ module.exports = async function handler(req, res) {
   var subject = clip(body.subject, 180) || kindLabel + " · Haller";
   if (titles.length) subject = kindLabel + " · " + titles.join(" · ") + " · Haller";
 
+  var mail = {
+    subject: subject,
+    name: fields.name,
+    email: fields.email,
+    phone: fields.phone,
+    intent: fields.intent,
+    kind: fields.kind,
+    place: fields.place,
+    message: fields.message,
+    object_ids: listingIds.join(", "),
+    object_titles: titles.join(" · "),
+    financing: fields.financing,
+    equity: fields.equity,
+    use: fields.use,
+    move_in: fields.move_in,
+    property_type: fields.property_type,
+    area: fields.area,
+    price_expect: fields.price_expect,
+    rooms: fields.rooms,
+    deal: fields.deal,
+    budget: fields.budget,
+    page_path: clip(body.page_path, 300),
+    privacy: "accepted",
+    region: "EU"
+  };
+
   try {
-    await sendInquiryMail({
-      subject: subject,
-      name: fields.name,
-      email: fields.email,
-      phone: fields.phone,
-      intent: fields.intent,
-      kind: fields.kind,
-      place: fields.place,
-      message: fields.message,
-      object_ids: listingIds.join(", "),
-      object_titles: titles.join(" · "),
-      financing: fields.financing,
-      equity: fields.equity,
-      use: fields.use,
-      move_in: fields.move_in,
-      property_type: fields.property_type,
-      area: fields.area,
-      price_expect: fields.price_expect,
-      rooms: fields.rooms,
-      deal: fields.deal,
-      budget: fields.budget,
-      page_path: clip(body.page_path, 300),
-      privacy: "accepted",
-      region: "EU"
-    });
+    await sendInquiryMail(mail);
   } catch (e) {
     console.error("inquiry_smtp", e && e.message);
     res.status(502).json({
@@ -175,6 +178,8 @@ module.exports = async function handler(req, res) {
     });
     return;
   }
+
+  await sendToCrm(Object.assign({}, mail, { listing_ids: listingIds, object_titles: titles }));
 
   if (config()) {
     try {

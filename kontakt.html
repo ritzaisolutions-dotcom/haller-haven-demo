@@ -21,8 +21,8 @@
 <header class="top">
   <a class="brand" href="index.html"><img src="assets/brand/logo_240.png" alt="Haller"></a>
   <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menü</button>
-  <nav id="site-nav" aria-label="Hauptnavigation"><a href="objekte.html">Objekte</a><a href="verkaufen.html">Verkaufen</a><a href="suchprofil.html">Suchprofil</a><a href="hausverwaltung.html">Verwaltung</a><a href="ueber-uns.html">Über uns</a></nav>
-  <a class="btn" href="kontakt.html">Kontakt</a>
+  <nav id="site-nav" aria-label="Hauptnavigation"><a href="objekte.html">Objekte</a><a href="leistungen.html">Leistungen</a><a href="ueber-uns.html">Über uns</a><a href="team.html">Team</a><a href="hausverwaltung.html">Hausverwaltung</a><a href="kontakt.html" aria-current="page">Kontakt</a><a class="nav-cta" href="kontakt.html#erstgespraech">Erstgespräch buchen</a></nav>
+  <a class="btn btn-cta" href="kontakt.html#erstgespraech">Erstgespräch buchen</a>
 </header>
 
 <section class="hero overlay page-hero">
@@ -35,6 +35,20 @@
 </section>
 
 <section class="page">
+  <div class="erstgespraech" id="erstgespraech" data-cal-inline>
+    <div>
+      <p class="kicker">Erstgespräch</p>
+      <h2>Erstgespräch buchen</h2>
+      <p>Kostenlos und unverbindlich: Wir klären Ihr Anliegen — Verkauf, Kauf, Vermietung oder Verwaltung — und die nächsten Schritte. Im Büro am Kirchberg 42, am Telefon oder bei Ihnen vor Ort.</p>
+    </div>
+    <div class="erstgespraech-actions">
+      <a class="btn" href="#f" data-cal-load>Termin im Kalender wählen</a>
+      <a class="btn ghost" href="#f">Lieber Rückruf per Formular</a>
+      <p class="muted-note">Der Kalender (Cal.com) wird erst nach Klick geladen.</p>
+    </div>
+    <div class="cal-inline" data-cal-frame hidden></div>
+  </div>
+
   <div class="split contact-split">
     <div>
       <p class="page-lead">Seit 1995 auf dem Immobilienmarkt. Beratung zu Verkauf, Kauf, Vermietung und Hausverwaltung.</p>
@@ -78,7 +92,7 @@
       </div>
     </div>
 
-    <form class="box" id="f" novalidate>
+    <form class="box" id="f" novalidate aria-label="Kontaktformular">
       <div class="ok" id="ok">Gesendet. Wir antworten am selben Werktag — Verarbeitung in der EU.</div>
       <input type="hidden" name="kind" value="anfrage">
       <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
@@ -116,9 +130,12 @@
 <footer class="site-footer">
   <div class="footer-brand">Haller Immobilienberatung GmbH · Andernach</div>
   <div class="footer-nav">
-    <a href="ueber-uns.html">Über uns</a>
+    <a href="verkaufen.html">Verkaufen</a>
     <a href="suchprofil.html">Suchprofil</a>
     <a href="leistungen.html">Leistungen</a>
+    <a href="ueber-uns.html">Über uns</a>
+    <a href="team.html">Team</a>
+    <a href="hausverwaltung.html">Hausverwaltung</a>
     <a href="faq.html">FAQ</a>
     <a href="region.html">Region</a>
     <a href="projekte.html">Projekte</a>
@@ -139,5 +156,6 @@
 <script src="motion.js"></script>
 <script src="seo.js"></script>
 <script src="kirchberg.js"></script>
+<script src="site-settings.js"></script>
 </body>
 </html>

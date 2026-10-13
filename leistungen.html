@@ -18,8 +18,8 @@
 <header class="top">
   <a class="brand" href="index.html"><img src="assets/brand/logo_240.png" alt="Haller"></a>
   <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menü</button>
-  <nav id="site-nav" aria-label="Hauptnavigation"><a href="objekte.html">Objekte</a><a href="verkaufen.html">Verkaufen</a><a href="suchprofil.html">Suchprofil</a><a href="hausverwaltung.html">Verwaltung</a><a href="ueber-uns.html">Über uns</a></nav>
-  <a class="btn" href="kontakt.html">Kontakt</a>
+  <nav id="site-nav" aria-label="Hauptnavigation"><a href="objekte.html">Objekte</a><a href="leistungen.html" aria-current="page">Leistungen</a><a href="ueber-uns.html">Über uns</a><a href="team.html">Team</a><a href="hausverwaltung.html">Hausverwaltung</a><a href="kontakt.html">Kontakt</a><a class="nav-cta" href="kontakt.html#erstgespraech">Erstgespräch buchen</a></nav>
+  <a class="btn btn-cta" href="kontakt.html#erstgespraech">Erstgespräch buchen</a>
 </header>
 <section class="hero overlay page-hero">
   <img class="hero-media" src="assets/stock/facade.jpg" alt="">
@@ -30,6 +30,9 @@
   </div>
 </section>
 <section class="page">
+  <div class="page-lead prose" data-cms="leistungenIntro">
+    <p>Drei Leistungen, ein Büro, feste Ansprechpartner. Sie wissen bei jedem Schritt, wer zuständig ist und was als Nächstes passiert.</p>
+  </div>
   <article class="service-block" id="verkaufen">
     <div class="service-copy">
       <p class="kicker">01 · Verkaufen</p>
@@ -62,13 +65,19 @@
       </div>
     </div>
   </article>
+  <div class="actions" style="margin-top:40px">
+    <a class="btn" href="kontakt.html#erstgespraech">Erstgespräch buchen</a>
+  </div>
 </section>
 <footer class="site-footer">
   <div class="footer-brand">Haller Immobilienberatung GmbH · Andernach</div>
   <div class="footer-nav">
-    <a href="ueber-uns.html">Über uns</a>
+    <a href="verkaufen.html">Verkaufen</a>
     <a href="suchprofil.html">Suchprofil</a>
     <a href="leistungen.html">Leistungen</a>
+    <a href="ueber-uns.html">Über uns</a>
+    <a href="team.html">Team</a>
+    <a href="hausverwaltung.html">Hausverwaltung</a>
     <a href="faq.html">FAQ</a>
     <a href="region.html">Region</a>
     <a href="projekte.html">Projekte</a>
@@ -85,5 +94,6 @@
 <script src="config.js"></script>
 <script src="seo.js"></script>
 <script src="kirchberg.js"></script>
+<script src="site-settings.js"></script>
 </body>
 </html>

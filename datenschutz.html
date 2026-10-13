@@ -18,8 +18,8 @@
 <header class="top">
   <a class="brand" href="index.html"><img src="assets/brand/logo_240.png" alt="Haller"></a>
   <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menü</button>
-  <nav id="site-nav" aria-label="Hauptnavigation"><a href="objekte.html">Objekte</a><a href="verkaufen.html">Verkaufen</a><a href="suchprofil.html">Suchprofil</a><a href="hausverwaltung.html">Verwaltung</a><a href="ueber-uns.html">Über uns</a></nav>
-  <a class="btn" href="kontakt.html">Kontakt</a>
+  <nav id="site-nav" aria-label="Hauptnavigation"><a href="objekte.html">Objekte</a><a href="leistungen.html">Leistungen</a><a href="ueber-uns.html">Über uns</a><a href="team.html">Team</a><a href="hausverwaltung.html">Hausverwaltung</a><a href="kontakt.html">Kontakt</a><a class="nav-cta" href="kontakt.html#erstgespraech">Erstgespräch buchen</a></nav>
+  <a class="btn btn-cta" href="kontakt.html#erstgespraech">Erstgespräch buchen</a>
 </header>
 <section class="hero overlay page-hero">
   <img class="hero-media" src="assets/stock/interior.jpg" alt="">
@@ -54,10 +54,10 @@
   <h2>7. Technisch notwendige Speicherung</h2>
   <ul>
     <li><code>rais_admin</code> — nur nach Login auf <code>/admin</code>, Sitzung rund 8 Stunden, für den Objekteditor.</li>
-    <li>Finanzierungsrechner — optionale Werte im Browser (<code>localStorage</code>), ohne Profilbildung.</li>
+    <li><code>rais_banner_closed</code> — <code>sessionStorage</code>, merkt sich bis zum Schließen des Tabs, dass Sie einen Hinweis-Banner weggeklickt haben.</li>
     <li>Hosting-Logs bei Vercel (IP, URL, Zeitpunkt, User-Agent) — Betrieb und Sicherheit, keine Reichweitenmessung.</li>
   </ul>
-  <p>Formular-Einwilligungen (Checkbox) bleiben die Rechtsgrundlage für Anfragen. Cal.com wird nur nach erfolgreichem Absenden als iframe geladen, sofern eine Event-URL gesetzt ist.</p>
+  <p>Formular-Einwilligungen (Checkbox) bleiben die Rechtsgrundlage für Anfragen. Cal.com wird nur geladen, wenn Sie auf „Termin im Kalender wählen“ klicken oder nach erfolgreichem Absenden eines Formulars — vorher werden keine Daten an Cal.com übertragen.</p>
 
   <h2>8. Empfänger</h2>
   <ul>
@@ -76,9 +76,12 @@
 <footer class="site-footer">
   <div class="footer-brand">Haller Immobilienberatung GmbH · Andernach</div>
   <div class="footer-nav">
-    <a href="ueber-uns.html">Über uns</a>
+    <a href="verkaufen.html">Verkaufen</a>
     <a href="suchprofil.html">Suchprofil</a>
     <a href="leistungen.html">Leistungen</a>
+    <a href="ueber-uns.html">Über uns</a>
+    <a href="team.html">Team</a>
+    <a href="hausverwaltung.html">Hausverwaltung</a>
     <a href="faq.html">FAQ</a>
     <a href="region.html">Region</a>
     <a href="projekte.html">Projekte</a>
@@ -94,5 +97,6 @@
 <script src="config.js"></script>
 <script src="seo.js"></script>
 <script src="kirchberg.js"></script>
+<script src="site-settings.js"></script>
 </body>
 </html>

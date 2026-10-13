@@ -16,6 +16,7 @@ var today = new Date().toISOString().slice(0, 10);
 var staticPages = [
   { loc: "/", priority: "1.0", changefreq: "weekly" },
   { loc: "/ueber-uns.html", priority: "0.8", changefreq: "monthly" },
+  { loc: "/team.html", priority: "0.7", changefreq: "monthly" },
   { loc: "/leistungen.html", priority: "0.8", changefreq: "monthly" },
   { loc: "/verkaufen.html", priority: "0.85", changefreq: "monthly" },
   { loc: "/hausverwaltung.html", priority: "0.85", changefreq: "monthly" },
@@ -98,7 +99,8 @@ var llms = `# Haller Immobilienberatung GmbH
 ## Seiten
 
 - [Start](${base}/): Überblick und Einstieg
-- [Über uns](${base}/ueber-uns.html): Team und Büro
+- [Über uns](${base}/ueber-uns.html): Büro, Service und häufige Fragen
+- [Team](${base}/team.html): Ansprechpartner mit Rolle und Kontakt
 - [Leistungen](${base}/leistungen.html): Verkauf, Kauf, Verwaltung
 - [Verkaufen](${base}/verkaufen.html): Verkaufsprozess Wertermittlung bis Notar
 - [Hausverwaltung](${base}/hausverwaltung.html): WEG- und Mietverwaltung

@@ -5,7 +5,6 @@
 
   function extraFromDom() {
     return {
-      description: ($("description") && $("description").value.trim()) || "",
       yearBuilt: ($("yearBuilt") && $("yearBuilt").value.trim()) || "",
       energyType: ($("energyType") && $("energyType").value) || "",
       energyValue: ($("energyValue") && $("energyValue").value.trim()) || "",
@@ -15,7 +14,6 @@
   }
 
   function extraToDom(item) {
-    if ($("description")) $("description").value = (item && item.description) || "";
     if ($("yearBuilt")) $("yearBuilt").value = (item && item.yearBuilt) || "";
     if ($("energyType")) $("energyType").value = (item && item.energyType) || "";
     if ($("energyValue")) $("energyValue").value = (item && item.energyValue) || "";

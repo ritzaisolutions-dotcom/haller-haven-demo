@@ -123,7 +123,9 @@
                 </select>
               </label>
             </div>
-            <label>Beschreibung (Exposé) <textarea id="description" placeholder="Lage, Schnitt, Ausstattung …"></textarea></label>
+            <label>Provision (für Käufer sichtbar) <input id="provision" maxlength="160" placeholder="z. B. 3,57 % inkl. MwSt. vom Kaufpreis" /></label>
+            <p class="field-label">Beschreibung (Exposé)</p>
+            <div id="description-rt"></div>
             <div class="grid">
               <label>Baujahr <input id="yearBuilt" placeholder="1992" /></label>
               <label>Energieausweis
@@ -152,17 +154,36 @@
               </div>
               <div class="thumbs" id="thumbs"></div>
             </div>
+            <div class="docs-block">
+              <p class="images-label">Grundrisse <span class="mut" id="fpcount">0 / 6</span></p>
+              <div class="doc-list" id="floorplans"></div>
+              <label class="file-btn">Grundriss hinzufügen (PDF oder Bild)
+                <input id="fp-files" type="file" accept="application/pdf,image/*" multiple hidden />
+              </label>
+              <p class="images-label">Energieausweis (PDF)</p>
+              <div class="doc-list" id="energy-pdf"></div>
+              <label class="file-btn" id="energy-pick">Energieausweis hochladen (PDF, max. 10 MB)
+                <input id="energy-file" type="file" accept="application/pdf" hidden />
+              </label>
+            </div>
             <button type="button" id="save">Speichern</button>
             <button type="button" class="ghost" id="reset">Abbrechen</button>
             <p id="form-msg"></p>
           </div>
         </div>
       </div>
+
+      <section class="card site-admin" id="site-admin" aria-label="Website-Inhalte"></section>
     </section>
   </div>
   <script src="/config.js"></script>
+  <script src="/lib/sanitize-html.js"></script>
   <script src="/store.js"></script>
+  <script src="/admin-uploads.js"></script>
+  <script src="/admin-richtext.js"></script>
   <script src="/admin.js"></script>
   <script src="/admin-energy.js"></script>
+  <script src="/admin-expose.js"></script>
+  <script src="/admin-site.js"></script>
 </body>
 </html>

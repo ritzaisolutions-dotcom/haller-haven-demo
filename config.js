@@ -7,7 +7,7 @@ window.RAIS_SITE_BASE = (function () {
   return "https://haller-haven-demo.vercel.app";
 })();
 window.RAIS_CANONICAL_HOST = "https://haller-immobilien.de";
-window.RAIS_HOME_MAX = 4;
+window.RAIS_HOME_MAX = 6;
 window.RAIS_LISTINGS_URL = "/api/listings";
 window.RAIS_INQUIRIES_URL = "/api/inquiries";
 /** Public Cal.com event URL. Empty = show fallback button only. Set CAL_COM_EVENT_URL on the server too. */
