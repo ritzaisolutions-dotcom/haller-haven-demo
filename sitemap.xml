@@ -8,9 +8,15 @@
   </url>
   <url>
     <loc>https://haller-immobilien.de/ueber-uns.html</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://haller-immobilien.de/team.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://haller-immobilien.de/leistungen.html</loc>

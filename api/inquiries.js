@@ -5,7 +5,11 @@ const { checkRateLimit } = require("../lib/rate-limit");
 const { listAll, recordInquiry } = require("../lib/listings-repo");
 const { isPublicListing } = require("../lib/listings");
 const { config } = require("../lib/supabase");
-const { envMail, sendInquiryMail } = require("../lib/smtp-mail");
+const { envMail, sendInquiryMail, buildInquiryBody } = require("../lib/smtp-mail");
+const { sendToCrm, crmWebhookUrl } = require("../lib/crm-webhook");
+
+// n8n answers only after the mail is sent, so allow more than the default webhook timeout.
+var N8N_TIMEOUT_MS = 10000;
 
 function clip(s, max) {
   if (s == null) return "";
@@ -57,8 +61,10 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  if (!envMail()) {
-    res.status(503).json({ ok: false, error: "smtp_unconfigured" });
+  // Primary route: n8n webhook (mails into the sales@ inbox). Direct SMTP is only a fallback.
+  var viaN8n = !!crmWebhookUrl();
+  if (!viaN8n && !envMail()) {
+    res.status(503).json({ ok: false, error: "inquiry_unconfigured" });
     return;
   }
 
@@ -110,6 +116,8 @@ module.exports = async function handler(req, res) {
     })
     .filter(Boolean);
 
+  // CRM objekte.id per listing; the n8n qualification workflow matches on the "Objekt-ID:" mail line.
+  var objektIds = [];
   if (config() && listingIds.length) {
     try {
       var all = await listAll();
@@ -124,6 +132,7 @@ module.exports = async function handler(req, res) {
         if (item && (isPublicListing(item) || item.status === "verkauft")) {
           valid.push(id);
           titles.push(item.title || id);
+          if (item.objektId) objektIds.push(item.objektId);
         }
       });
       listingIds = valid;
@@ -141,39 +150,54 @@ module.exports = async function handler(req, res) {
   var subject = clip(body.subject, 180) || kindLabel + " · Haller";
   if (titles.length) subject = kindLabel + " · " + titles.join(" · ") + " · Haller";
 
-  try {
-    await sendInquiryMail({
-      subject: subject,
-      name: fields.name,
-      email: fields.email,
-      phone: fields.phone,
-      intent: fields.intent,
-      kind: fields.kind,
-      place: fields.place,
-      message: fields.message,
-      object_ids: listingIds.join(", "),
-      object_titles: titles.join(" · "),
-      financing: fields.financing,
-      equity: fields.equity,
-      use: fields.use,
-      move_in: fields.move_in,
-      property_type: fields.property_type,
-      area: fields.area,
-      price_expect: fields.price_expect,
-      rooms: fields.rooms,
-      deal: fields.deal,
-      budget: fields.budget,
-      page_path: clip(body.page_path, 300),
-      privacy: "accepted",
-      region: "EU"
-    });
-  } catch (e) {
-    console.error("inquiry_smtp", e && e.message);
-    res.status(502).json({
-      ok: false,
-      error: e && e.code === "smtp_unconfigured" ? "smtp_unconfigured" : "mail_failed"
-    });
-    return;
+  var mail = {
+    subject: subject,
+    name: fields.name,
+    email: fields.email,
+    phone: fields.phone,
+    intent: fields.intent,
+    kind: fields.kind,
+    place: fields.place,
+    message: fields.message,
+    object_ids: listingIds.join(", "),
+    object_titles: titles.join(" · "),
+    objekt_ids: objektIds,
+    financing: fields.financing,
+    equity: fields.equity,
+    use: fields.use,
+    move_in: fields.move_in,
+    property_type: fields.property_type,
+    area: fields.area,
+    price_expect: fields.price_expect,
+    rooms: fields.rooms,
+    deal: fields.deal,
+    budget: fields.budget,
+    page_path: clip(body.page_path, 300),
+    privacy: "accepted",
+    region: "EU"
+  };
+
+  if (viaN8n) {
+    var sent = await sendToCrm(
+      Object.assign({}, mail, {
+        listing_ids: listingIds,
+        object_titles: titles,
+        body_text: buildInquiryBody(mail)
+      }),
+      { timeoutMs: N8N_TIMEOUT_MS }
+    );
+    if (!sent.sent) {
+      res.status(502).json({ ok: false, error: "mail_failed" });
+      return;
+    }
+  } else {
+    try {
+      await sendInquiryMail(mail);
+    } catch (e) {
+      console.error("inquiry_smtp", e && e.message);
+      res.status(502).json({ ok: false, error: "mail_failed" });
+      return;
+    }
   }
 
   if (config()) {

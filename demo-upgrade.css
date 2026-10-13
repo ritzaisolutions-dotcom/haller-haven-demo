@@ -326,3 +326,308 @@ textarea:focus-visible {
 .hours-board .warn-slot { color: var(--acc-deep); }
 .map-block iframe { display: block; }
 
+/* ===== Classic relaunch ===== */
+
+/* Rich-text weights from the admin editor */
+.fw-500 { font-weight: 500; }
+.fw-600 { font-weight: 600; }
+
+/* Banner / Event-Banner (site-settings.js) — in flow above the sticky header */
+.site-banner {
+  position: relative;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px var(--pad-x);
+  background: var(--acc);
+  color: #fff;
+  font-size: 14px;
+}
+.site-banner.is-event { background: #1d2a3a; }
+.site-banner-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 16px;
+  flex: 1;
+  min-width: 0;
+  max-width: var(--content);
+  margin: 0 auto;
+}
+.site-banner-text { min-width: 0; overflow-wrap: break-word; }
+.site-banner-text p { margin: 0; }
+.site-banner-text a,
+.site-banner a.site-banner-link { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.site-banner a.site-banner-link { font-weight: 500; white-space: nowrap; }
+.site-banner.is-event a.site-banner-link { color: #9cc8ff; }
+.site-banner-close {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font-size: 22px;
+  line-height: 1;
+  min-width: 44px;
+  min-height: 44px;
+  cursor: pointer;
+  margin: -10px -12px -10px 0;
+}
+
+/* Long German compounds ("Immobilienpartner") must not overflow narrow heroes */
+.hero-copy h1,
+.section-head h2,
+.partner-strip-title {
+  overflow-wrap: break-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* Grid columns may shrink below their widest child (long <select> options on phones) */
+.split > *,
+.contact-split > * { min-width: 0; }
+.box select { max-width: 100%; }
+
+/* The hero media zooms in (scale 1.08) on load — keep that inside the hero on phones */
+.hero.overlay { overflow: hidden; }
+
+@media (max-width: 420px) {
+  .hero-copy h1 { font-size: 36px; }
+}
+
+/* Team cards: two contact links side by side need a gap */
+.person-contact { flex-wrap: wrap; gap: 6px 16px; }
+
+/* Header CTA — on phones it moves into the opened menu (logo + Menü + CTA don't fit one row) */
+.top .btn-cta { white-space: nowrap; }
+#site-nav a.nav-cta { display: none; }
+@media (max-width: 480px) {
+  .top .btn-cta { display: none; }
+  #site-nav a.nav-cta {
+    display: flex;
+    justify-content: center;
+    margin: 12px 0 4px;
+    background: var(--acc);
+    color: #fff;
+    font-weight: 500;
+  }
+}
+
+/* Homepage intro */
+.home-intro { padding-bottom: 0; }
+.home-intro-copy { max-width: 62ch; }
+.home-intro-copy p { font-size: clamp(17px, 1.6vw, 20px); color: var(--txt); line-height: 1.6; }
+
+/* Partner logos */
+.partner-strip[hidden] { display: none; }
+.partner-strip > .partner-strip-title {
+  font-family: "IBM Plex Sans", Inter, system-ui, sans-serif;
+  line-height: 1.4;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mut);
+  margin: 0 0 20px;
+}
+.page .partner-strip { margin: 48px 0 0; }
+.partner-logos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.partner-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  padding: 18px 20px;
+  min-height: 96px;
+}
+.partner-logo img {
+  max-width: 100%;
+  max-height: 56px;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.85;
+  transition: filter 0.2s, opacity 0.2s;
+}
+a.partner-logo:hover img,
+a.partner-logo:focus-visible img { filter: none; opacity: 1; }
+
+/* Reviews (Google · ImmoScout24 · Immowelt) */
+.review-card { display: flex; flex-direction: column; }
+.review-card .review-count { font-size: 13px; color: var(--mut); margin-top: -4px; }
+.review-card a.source { margin-top: auto; padding-top: 6px; }
+
+/* Erstgespräch block on Kontakt */
+.erstgespraech {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 24px 48px;
+  align-items: end;
+  padding: 32px;
+  margin: 0 0 48px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--acc);
+  scroll-margin-top: 120px;
+}
+.erstgespraech h2 { margin: 0 0 12px; }
+.erstgespraech p { color: var(--mut); max-width: 58ch; }
+.erstgespraech-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.erstgespraech-actions .muted-note { flex-basis: 100%; margin: 4px 0 0; font-size: 13px; }
+.cal-inline { grid-column: 1 / -1; }
+.cal-inline .cal-frame { min-height: 680px; }
+@media (max-width: 900px) {
+  .erstgespraech { grid-template-columns: 1fr; padding: 22px 18px; }
+}
+
+/* Hausverwaltung PDF */
+.hv-download {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding: 18px 22px;
+  margin: 8px 0 40px;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+.hv-download[hidden] { display: none; }
+.hv-download .kicker { margin: 0 0 4px; }
+.hv-download-name { font-size: 18px; font-weight: 500; margin: 0; }
+
+/* Über uns → Team teaser */
+.team-teaser {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: center;
+  margin: 56px 0;
+}
+.team-teaser img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; }
+.team-teaser h2 { margin: 0 0 20px; }
+.about-service { max-width: 70ch; margin-bottom: 24px; }
+@media (max-width: 900px) {
+  .team-teaser { grid-template-columns: 1fr; gap: 20px; }
+}
+
+/* ===== Exposé (objekt.js) ===== */
+.expose-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(280px, 1fr);
+  gap: 28px;
+  align-items: start;
+  margin: 0 0 32px;
+}
+.expose-gallery { min-width: 0; }
+.expose-main {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  background: var(--card);
+}
+.expose-thumbs {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 6px;
+}
+.expose-thumb {
+  padding: 0;
+  border: 2px solid transparent;
+  background: none;
+  cursor: pointer;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+.expose-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.75; }
+.expose-thumb:hover img,
+.expose-thumb.is-active img { opacity: 1; }
+.expose-thumb.is-active { border-color: var(--acc); }
+
+.expose-side {
+  position: sticky;
+  top: 24px;
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 22px;
+}
+.expose-price-label,
+.courtage-label {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mut);
+  margin: 0 0 4px;
+}
+.expose-price { font-size: 28px; font-weight: 500; color: var(--txt); margin: 0 0 18px; }
+.expose-side .courtage-box { margin: 0 0 18px; background: var(--card); }
+.expose-side .courtage-box p:last-child { margin: 0; font-weight: 500; }
+.expose-docs h2 { font-size: 16px; margin: 0 0 10px; }
+.doc-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+  color: var(--txt);
+}
+.doc-link:hover { color: var(--acc); }
+.doc-type {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--acc);
+  border: 1px solid currentColor;
+  padding: 2px 6px;
+}
+.doc-name { overflow-wrap: anywhere; }
+.expose-docs .muted-note { font-size: 14px; }
+.expose-cta { display: grid; gap: 8px; margin-top: 18px; }
+.expose-cta .btn { width: 100%; justify-content: center; text-align: center; }
+
+.expose-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px 40px;
+  align-items: start;
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin: 0 0 28px;
+}
+.expose-short { font-size: 18px; line-height: 1.55; margin: 0 0 8px; color: var(--txt); }
+.fact-pills {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  align-content: flex-start;
+}
+.fact-pills li {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.expose-body { max-width: 72ch; margin: 0 0 24px; }
+.expose-body p { color: var(--txt); }
+
+@media (max-width: 900px) {
+  .expose-top { grid-template-columns: 1fr; }
+  .expose-side { position: static; }
+  .expose-summary { grid-template-columns: 1fr; }
+  .expose-thumbs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+

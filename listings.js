@@ -4,7 +4,7 @@
   var pickRoot = document.getElementById("object-pick");
   if (!fullRoot && !homeRoot && !pickRoot) return;
 
-  var HOME_MAX = Number(window.RAIS_HOME_MAX) || 4;
+  var HOME_MAX = Number(window.RAIS_HOME_MAX) || 6;
   var API = window.RAIS_LISTINGS_URL || "/api/listings";
   var filterState = "all";
 

@@ -18,8 +18,8 @@
 <header class="top">
   <a class="brand" href="index.html"><img src="assets/brand/logo_240.png" alt="Haller"></a>
   <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menü</button>
-  <nav id="site-nav" aria-label="Hauptnavigation"><a href="objekte.html">Objekte</a><a href="verkaufen.html">Verkaufen</a><a href="suchprofil.html">Suchprofil</a><a href="hausverwaltung.html">Verwaltung</a><a href="ueber-uns.html">Über uns</a></nav>
-  <a class="btn" href="kontakt.html">Kontakt</a>
+  <nav id="site-nav" aria-label="Hauptnavigation"><a href="objekte.html">Objekte</a><a href="leistungen.html">Leistungen</a><a href="ueber-uns.html">Über uns</a><a href="team.html">Team</a><a href="hausverwaltung.html">Hausverwaltung</a><a href="kontakt.html">Kontakt</a><a class="nav-cta" href="kontakt.html#erstgespraech">Erstgespräch buchen</a></nav>
+  <a class="btn btn-cta" href="kontakt.html#erstgespraech">Erstgespräch buchen</a>
 </header>
 <section class="hero overlay page-hero">
   <img class="hero-media" src="assets/stock/interior.jpg" alt="">
@@ -38,15 +38,17 @@
   <p>Die Website liegt bei Vercel Inc., USA, inkl. Serverless-Funktionen unter <code>/api/*</code>. Logs: IP, URL, Zeitpunkt, User-Agent. AVV/DPA abgeschlossen. Drittland: EU-US Data Privacy Framework bzw. Standardvertragsklauseln, soweit einschlägig.</p>
 
   <h2>3. Formulare (EU-Mail)</h2>
-  <p>Kontakt, Objektanfrage, Bewertung und Suchprofil sendet der Browser an <code>POST /api/inquiries</code> auf Vercel. Der Server verschickt eine E-Mail per SMTP an ein Postfach in der EU (Demo: konfiguriertes Inquiry-Postfach). Es wird <strong>kein</strong> Web3Forms und kein Versand in Drittländer über Formular-SaaS genutzt.</p>
+  <p>Kontakt, Objektanfrage, Bewertung und Suchprofil sendet der Browser an <code>POST /api/inquiries</code> auf Vercel. Der Server übergibt die Anfrage an unser Anfrage-System (n8n), das sie als E-Mail an das Postfach der Haller Immobilienberatung in der EU zustellt. Es wird <strong>kein</strong> Web3Forms und kein Versand in Drittländer über Formular-SaaS genutzt.</p>
   <p>Pflicht: Name, E-Mail, Telefon, Einwilligungs-Checkbox. Objektformular zusätzlich: Finanzierung, Eigenkapital, Nutzung, Einzugszeitraum. Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO; ergänzend lit.&nbsp;b bei vorvertraglicher Anfrage.</p>
   <p>Zusätzlich schreibt der Server bei Erfolg Anfragezähler in Supabase (EU Frankfurt), ohne den Nachrichteninhalt.</p>
+  <!-- ENTWURF 2026-10-13: n8n-Hosting (Anbieter/Region) und xAI-Drittlandtransfer vor Livegang mit Haller/DSB klären. -->
+  <p><strong>Weiterverarbeitung im Anfrage-System:</strong> Die E-Mail mit Ihrer Anfrage wird in unserem Anfrage-System automatisch verarbeitet: Ihre Angaben (Name, E-Mail, Telefon, Nachricht, angefragtes Objekt) werden als Interessentendatensatz in Supabase (EU Frankfurt) gespeichert. Ein Workflow-System (n8n) ordnet die Anfrage dem Objekt zu, prüft sie und bereitet Antwort- und Terminvorschläge vor. Dabei wird der Anfragetext an KI-Sprachmodelle übermittelt: Mistral AI (Frankreich, EU) und xAI (USA; Drittlandtransfer auf Basis von Standardvertragsklauseln). Eine Entscheidung mit rechtlicher Wirkung trifft das System nicht; unklare Fälle prüft ein Mitarbeiter. Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO (vorvertragliche Anfrage). Interessentendaten ohne Geschäftsabschluss werden nach 60 Tagen automatisch gelöscht.</p>
 
   <h2>4. Cal.com</h2>
   <p>Nach einer erfolgreichen Anfrage kann ein Buchungsfenster (iframe) zu Cal.com erscheinen, sofern eine öffentliche Event-URL gesetzt ist. Dann gelten zusätzlich die Hinweise von Cal.com. Ohne URL erscheint nur ein Rückruf-Hinweis — kein Dritt-Embed.</p>
 
   <h2>5. Supabase</h2>
-  <p>Objektliste, Uploads (Bucket <code>listing-images</code>), Consent-Log, Rate-Limits. Region EU (Frankfurt). AVV abgeschlossen.</p>
+  <p>Objektliste, Uploads (Bucket <code>listing-images</code>), Rate-Limits. Region EU (Frankfurt). AVV abgeschlossen.</p>
 
   <h2>6. Kein Consent-Manager</h2>
   <p>Diese Website setzt <strong>kein</strong> Analyse-Tracking, keine Marketing-Pixel und keinen Consent-Manager. Es gibt keinen Cookie-Banner, weil keine nicht-notwendigen Tracking-Cookies gesetzt werden.</p>
@@ -54,16 +56,17 @@
   <h2>7. Technisch notwendige Speicherung</h2>
   <ul>
     <li><code>rais_admin</code> — nur nach Login auf <code>/admin</code>, Sitzung rund 8 Stunden, für den Objekteditor.</li>
-    <li>Finanzierungsrechner — optionale Werte im Browser (<code>localStorage</code>), ohne Profilbildung.</li>
+    <li><code>rais_banner_closed</code> — <code>sessionStorage</code>, merkt sich bis zum Schließen des Tabs, dass Sie einen Hinweis-Banner weggeklickt haben.</li>
     <li>Hosting-Logs bei Vercel (IP, URL, Zeitpunkt, User-Agent) — Betrieb und Sicherheit, keine Reichweitenmessung.</li>
   </ul>
-  <p>Formular-Einwilligungen (Checkbox) bleiben die Rechtsgrundlage für Anfragen. Cal.com wird nur nach erfolgreichem Absenden als iframe geladen, sofern eine Event-URL gesetzt ist.</p>
+  <p>Formular-Einwilligungen (Checkbox) bleiben die Rechtsgrundlage für Anfragen. Cal.com wird nur geladen, wenn Sie auf „Termin im Kalender wählen“ klicken oder nach erfolgreichem Absenden eines Formulars — vorher werden keine Daten an Cal.com übertragen.</p>
 
   <h2>8. Empfänger</h2>
   <ul>
     <li>Vercel (Hosting, Formular-API)</li>
     <li>Supabase (EU)</li>
     <li>EU-Mailpostfach der verantwortlichen Stelle bzw. des Demo-Postfachs</li>
+    <li>Anfrage-System: n8n (Workflow-Automatisierung), Supabase (EU), Mistral AI (EU), xAI (USA)</li>
     <li>Cal.com nur bei gesetzter Buchungs-URL und Nutzung des Embeds</li>
   </ul>
 
@@ -71,14 +74,17 @@
   <p>Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit, Widerruf, Widerspruch, Beschwerde beim LfDI RLP, Hintere Bleiche 34, 55116 Mainz.</p>
 
   <h2>10. Was nicht läuft</h2>
-  <p>Kein Web3Forms, kein n8n-Webhook im Frontend, kein Analyse-Tracking, kein Google-Fonts-CDN, kein Klaro. Schriften liegen auf diesem Host. Hero-Video liegt auf diesem Host.</p>
+  <p>Kein Web3Forms, kein n8n-Aufruf aus dem Browser (die Weiterverarbeitung startet erst serverseitig mit der E-Mail, siehe Abschnitt 3), kein Analyse-Tracking, kein Google-Fonts-CDN, kein Klaro. Schriften liegen auf diesem Host. Hero-Video liegt auf diesem Host.</p>
 </section>
 <footer class="site-footer">
   <div class="footer-brand">Haller Immobilienberatung GmbH · Andernach</div>
   <div class="footer-nav">
-    <a href="ueber-uns.html">Über uns</a>
+    <a href="verkaufen.html">Verkaufen</a>
     <a href="suchprofil.html">Suchprofil</a>
     <a href="leistungen.html">Leistungen</a>
+    <a href="ueber-uns.html">Über uns</a>
+    <a href="team.html">Team</a>
+    <a href="hausverwaltung.html">Hausverwaltung</a>
     <a href="faq.html">FAQ</a>
     <a href="region.html">Region</a>
     <a href="projekte.html">Projekte</a>
@@ -94,5 +100,6 @@
 <script src="config.js"></script>
 <script src="seo.js"></script>
 <script src="kirchberg.js"></script>
+<script src="site-settings.js"></script>
 </body>
 </html>

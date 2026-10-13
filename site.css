@@ -412,6 +412,10 @@ a.listing-card:hover {
 .hero.overlay.page-hero .hero-media {
   min-height: 48vh;
 }
+/* Portrait Altbau photo: the centre strip is mostly sky, show the facades instead */
+.hero.overlay.page-hero .hero-media[src$="altbau-strasse.jpg"] {
+  object-position: 50% 60%;
+}
 .hero.overlay.page-hero .hero-copy {
   padding-top: calc(var(--pad-y) + 24px);
   padding-bottom: clamp(40px, 6vw, 64px);
@@ -968,117 +972,6 @@ body:not(:has(.hero.overlay)) #site-nav a:hover { color: var(--txt); }
 }
 .section-head.row .actions { margin: 0; }
 
-.calc {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 28px;
-  align-items: start;
-  margin-top: 8px;
-}
-.calc[hidden] {
-  display: none !important;
-}
-.calc-modules {
-  display: grid;
-  gap: 18px;
-}
-.calc-module {
-  border-top: 1px solid var(--line);
-  padding-top: 16px;
-}
-.calc-module:first-child { border-top: none; padding-top: 0; }
-.calc-module h3 {
-  font-family: "IBM Plex Sans", Inter, system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--mut);
-  margin-bottom: 12px;
-}
-.calc-fields {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-.calc-fields label {
-  display: grid;
-  gap: 6px;
-  font-size: 12px;
-  color: var(--mut);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-.calc-fields input[type="number"] {
-  width: 100%;
-  padding: 12px;
-  background: var(--bg);
-  border: 1px solid var(--line);
-  color: var(--txt);
-  font: inherit;
-}
-.calc-toggle {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 14px;
-  color: var(--txt);
-  letter-spacing: 0;
-  text-transform: none;
-  cursor: pointer;
-  margin-bottom: 12px;
-}
-.calc-toggle input {
-  width: auto;
-  margin-top: 3px;
-  accent-color: var(--acc);
-}
-.calc-result {
-  background: var(--card);
-  border: 1px solid var(--line);
-  padding: 24px;
-  position: sticky;
-  top: 88px;
-}
-.calc-result dl {
-  display: grid;
-  gap: 14px;
-  margin: 0 0 20px;
-}
-.calc-result dt {
-  font-size: 12px;
-  color: var(--mut);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-.calc-result dd {
-  margin: 4px 0 0;
-  font-family: Fraunces, serif;
-  font-size: clamp(22px, 3vw, 32px);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: var(--txt);
-}
-.calc-result dd.accent { color: var(--acc); }
-.calc-note {
-  font-size: 13px;
-  color: var(--mut);
-  line-height: 1.45;
-  margin: 0 0 18px;
-}
-.calc-disclaimer {
-  font-size: 12px;
-  color: var(--mut);
-  margin-top: 14px;
-  line-height: 1.4;
-}
-
-@media (max-width: 900px) {
-  .calc { grid-template-columns: 1fr; }
-  .calc-result { position: static; }
-  .calc-fields { grid-template-columns: 1fr; }
-}
-
 @media (max-width: 900px) {
   .split,
   .grid3,
@@ -1508,86 +1401,3 @@ form.box .muted-note { margin: 4px 0 8px; }
     height: 36vh;
   }
 }
-
-/* Klaro Consent Manager — Haven light theme */
-.klaro .cookie-notice,
-.klaro .cookie-modal .cm-modal,
-.klaro .cookie-modal-notice {
-  background: var(--card) !important;
-  color: var(--txt) !important;
-  border: 1px solid var(--line) !important;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12) !important;
-  border-radius: 0 !important;
-  backdrop-filter: none !important;
-}
-.klaro .cookie-notice {
-  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)) !important;
-  margin-bottom: env(safe-area-inset-bottom, 0px) !important;
-}
-.klaro .cookie-notice p,
-.klaro .cookie-notice strong,
-.klaro .cookie-notice h1,
-.klaro .cookie-notice h2,
-.klaro .cookie-modal .cm-modal p,
-.klaro .cookie-modal .cm-modal strong,
-.klaro .cookie-modal .cm-modal h1,
-.klaro .cookie-modal .cm-modal h2,
-.klaro .cookie-modal .cm-modal li,
-.klaro .cookie-modal-notice p {
-  color: var(--txt) !important;
-}
-.klaro .cookie-modal .cm-modal .cm-header,
-.klaro .cookie-modal .cm-modal .cm-footer {
-  border-color: var(--line) !important;
-}
-.klaro .cookie-modal .cm-modal .hide svg {
-  stroke: var(--txt) !important;
-}
-.klaro .cookie-notice .cn-buttons button.cm-btn,
-.klaro .cookie-modal .cm-modal .cm-footer button.cm-btn {
-  border-radius: 0 !important;
-  font-family: inherit !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.03em !important;
-  padding: 10px 20px !important;
-  min-height: 44px !important;
-}
-.klaro .cm-btn.cm-btn-accept-all,
-.klaro .cm-btn.cm-btn-accept,
-.klaro .cm-btn.cm-btn-success {
-  background: var(--acc) !important;
-  color: #fff !important;
-  border: none !important;
-}
-.klaro .cm-btn.cm-btn-accept-all:hover,
-.klaro .cm-btn.cm-btn-accept:hover,
-.klaro .cm-btn.cm-btn-success:hover {
-  background: var(--acc-deep) !important;
-  filter: none;
-}
-.klaro .cm-btn.cm-btn-decline,
-.klaro .cm-btn.cm-btn-info {
-  background: transparent !important;
-  color: var(--txt) !important;
-  border: 1px solid var(--line) !important;
-}
-.klaro a,
-.klaro .cookie-notice a,
-.klaro .cookie-modal a {
-  color: var(--acc) !important;
-}
-.klaro .cookie-modal .cm-list-input:checked + .cm-list-label .slider,
-.klaro .cookie-notice .cm-list-input:checked + .cm-list-label .slider,
-.klaro .cookie-modal .cm-list-input.required:checked + .cm-list-label .slider {
-  background-color: var(--acc) !important;
-  opacity: 1 !important;
-}
-.klaro .cookie-modal .cm-list-description,
-.klaro .cookie-notice .cm-list-description {
-  color: var(--mut) !important;
-}
-.klaro .cookie-modal .cm-footer .cm-powered-by,
-.klaro .cookie-modal .cm-footer .cm-powered-by a {
-  display: none !important;
-}
-
