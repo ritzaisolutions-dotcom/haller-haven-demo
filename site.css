@@ -412,6 +412,10 @@ a.listing-card:hover {
 .hero.overlay.page-hero .hero-media {
   min-height: 48vh;
 }
+/* Portrait Altbau photo: the centre strip is mostly sky, show the facades instead */
+.hero.overlay.page-hero .hero-media[src$="altbau-strasse.jpg"] {
+  object-position: 50% 60%;
+}
 .hero.overlay.page-hero .hero-copy {
   padding-top: calc(var(--pad-y) + 24px);
   padding-bottom: clamp(40px, 6vw, 64px);
