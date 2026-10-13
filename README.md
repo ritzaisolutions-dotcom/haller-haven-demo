@@ -31,12 +31,16 @@ Web Analytics / Speed Insights in Vercel müssen aus bleiben — sonst wäre wie
 4. Inhalte von Haller im Admin pflegen: Texte, Hero-/Teambilder Raum Koblenz, Partner-Logos, Hausverwaltung-PDF, Bewertungszahlen (Google).
 5. DNS später auf haller-immobilien.de; OG-Tags der Demo zeigen auf vercel.app.
 
-## Bildnachweis Koblenz (Unsplash License, frei nutzbar, keine Namensnennung nötig)
+## Bildnachweis (Unsplash License, frei nutzbar, keine Namensnennung nötig)
 
-| Datei | Motiv | Fotograf | Quelle |
-|---|---|---|---|
-| `assets/koblenz/rhein-panorama.jpg` | Rheinpanorama Koblenz | Maxime Vandenberge | https://unsplash.com/photos/9wUQEBf03D0 |
-| `assets/koblenz/deutsches-eck-seilbahn.jpg` | Deutsches Eck mit Seilbahn | Dmitro Meow | https://unsplash.com/photos/Ro5kRqclv8A |
-| `assets/koblenz/deutsches-eck.jpg` | Deutsches Eck von oben | Jonathan Kemper | https://unsplash.com/photos/UNfICJ1CSjg |
-| `assets/koblenz/ehrenbreitstein.jpg` | Festung Ehrenbreitstein | Michael Schreiber | https://unsplash.com/photos/1CzgDFaSKAQ |
-| `assets/koblenz/stolzenfels.jpg` | Schloss Stolzenfels | Freysteinn G. Jonsson | https://unsplash.com/photos/1HGkn5_CzME |
+Motive bewusst aus dem Marktsegment (ca. 200 k bis 1 Mio. €): Wohnhäuser statt Sehenswürdigkeiten.
+
+| Datei | Seite | Motiv | Fotograf | Quelle |
+|---|---|---|---|---|
+| `assets/koblenz/wohnhaeuser-rheinufer.jpg` | Startseite (Poster, OG) | Wohnhäuser am Ufer, Koblenz | Anand krishnan | https://unsplash.com/photos/n7kcNCkrLUs |
+| `assets/koblenz/einfamilienhaus.jpg` | Objekte | Einfamilienhaus (Aufnahme: Viersen, NRW) | Chris Weiher | https://unsplash.com/photos/Bu9hDBQ0ntE |
+| `assets/koblenz/neubau.jpg` | Leistungen | Neubau mit Wärmepumpe (Ort unbekannt) | alpha innotec | https://unsplash.com/photos/kblddocwPa0 |
+| `assets/koblenz/altbau-strasse.jpg` | Hausverwaltung | Altbau-Mehrfamilienhäuser, Koblenz | Felix Braas | https://unsplash.com/photos/MJdmJGgl3MU |
+| `assets/koblenz/rhein-panorama.jpg` | Kontakt | Rheinpanorama Koblenz | Maxime Vandenberge | https://unsplash.com/photos/9wUQEBf03D0 |
+
+Platzhalter, bis Haller eigene Fotos aus dem Bestand liefert (Spec Abschnitt 6).
