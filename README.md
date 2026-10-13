@@ -30,3 +30,13 @@ Web Analytics / Speed Insights in Vercel müssen aus bleiben — sonst wäre wie
 3. Sobald das CRM feststeht: `CRM_WEBHOOK_URL` setzen und die Datenschutzerklärung um den CRM-Anbieter als Empfänger ergänzen.
 4. Inhalte von Haller im Admin pflegen: Texte, Hero-/Teambilder Raum Koblenz, Partner-Logos, Hausverwaltung-PDF, Bewertungszahlen (Google).
 5. DNS später auf haller-immobilien.de; OG-Tags der Demo zeigen auf vercel.app.
+
+## Bildnachweis Koblenz (Unsplash License, frei nutzbar, keine Namensnennung nötig)
+
+| Datei | Motiv | Fotograf | Quelle |
+|---|---|---|---|
+| `assets/koblenz/rhein-panorama.jpg` | Rheinpanorama Koblenz | Maxime Vandenberge | https://unsplash.com/photos/9wUQEBf03D0 |
+| `assets/koblenz/deutsches-eck-seilbahn.jpg` | Deutsches Eck mit Seilbahn | Dmitro Meow | https://unsplash.com/photos/Ro5kRqclv8A |
+| `assets/koblenz/deutsches-eck.jpg` | Deutsches Eck von oben | Jonathan Kemper | https://unsplash.com/photos/UNfICJ1CSjg |
+| `assets/koblenz/ehrenbreitstein.jpg` | Festung Ehrenbreitstein | Michael Schreiber | https://unsplash.com/photos/1CzgDFaSKAQ |
+| `assets/koblenz/stolzenfels.jpg` | Schloss Stolzenfels | Freysteinn G. Jonsson | https://unsplash.com/photos/1HGkn5_CzME |
