@@ -111,6 +111,8 @@ module.exports = async function handler(req, res) {
     })
     .filter(Boolean);
 
+  // CRM objekte.id per listing; the n8n qualification workflow matches on the "Objekt-ID:" mail line.
+  var objektIds = [];
   if (config() && listingIds.length) {
     try {
       var all = await listAll();
@@ -125,6 +127,7 @@ module.exports = async function handler(req, res) {
         if (item && (isPublicListing(item) || item.status === "verkauft")) {
           valid.push(id);
           titles.push(item.title || id);
+          if (item.objektId) objektIds.push(item.objektId);
         }
       });
       listingIds = valid;
@@ -153,6 +156,7 @@ module.exports = async function handler(req, res) {
     message: fields.message,
     object_ids: listingIds.join(", "),
     object_titles: titles.join(" · "),
+    objekt_ids: objektIds,
     financing: fields.financing,
     equity: fields.equity,
     use: fields.use,
